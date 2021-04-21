@@ -1,0 +1,1247 @@
+<?xml version="1.0" ?>
+
+<!-- This URDF was automatically created by SolidWorks to URDF Exporter! Originally created by Stephen Brawner (brawner@gmail.com) 
+     Commit Version: 1.6.0-1-g15f4949  Build Version: 1.6.7594.29634
+     For more information, please see http://wiki.ros.org/sw_urdf_exporter -->
+
+<robot name="rscuad" xmlns:xacro="http://www.ros.org/wiki/xacro">
+
+  <xacro:include filename="$(find rscuad)/urdf/rscuad.gazebo" />
+
+  <gazebo>
+    <plugin name="gazebo_ros_control" filename="libgazebo_ros_control.so">
+      <robotNamespace>/rscuad</robotNamespace>
+    </plugin>
+  </gazebo>
+
+
+  <link
+    name="body">
+    <inertial>
+      <origin
+        xyz="0.0357056190627579 0.0719364874349917 0.124774491029847"
+        rpy="0 0 0" />
+      <mass
+        value="0.845681147773924" />
+      <inertia
+        ixx="0.000942220952716164"
+        ixy="-2.09951911714263E-09"
+        ixz="-5.82097094435726E-08"
+        iyy="0.0017318252778068"
+        iyz="-1.03521875266935E-06"
+        izz="0.00124711287069091" />
+    </inertial>
+    <visual>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://rscuad/meshes/body.STL" />
+      </geometry>
+      <material
+        name="">
+        <color
+          rgba="0.752941176470588 0.752941176470588 0.752941176470588 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://rscuad/meshes/body.STL" />
+      </geometry>
+    </collision>
+  </link>
+  <link
+    name="head_pan">
+    <inertial>
+      <origin
+        xyz="5.68989300120393E-16 -0.00822795113008323 0.0023274800004647"
+        rpy="0 0 0" />
+      <mass
+        value="0.0127468700670499" />
+      <inertia
+        ixx="1.79344391432726E-06"
+        ixy="-2.0975806235736E-19"
+        ixz="-6.00252605549835E-20"
+        iyy="4.1896342976115E-06"
+        iyz="3.39828602459364E-07"
+        izz="4.30251924868049E-06" />
+    </inertial>
+    <visual>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://rscuad/meshes/head_pan.STL" />
+      </geometry>
+      <material
+        name="">
+        <color
+          rgba="0.898039215686275 0.917647058823529 0.929411764705882 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://rscuad/meshes/head_pan.STL" />
+      </geometry>
+    </collision>
+  </link>
+  <joint
+    name="head_pan"
+    type="continuous">
+    <origin
+      xyz="0.035958 -0.1394 0.14298"
+      rpy="-1.5708 0 -3.1416" />
+    <parent
+      link="body" />
+    <child
+      link="head_pan" />
+    <axis
+      xyz="0 1 0" />
+    <limit
+      lower="0"
+      upper="0"
+      effort="50"
+      velocity="0" />
+  </joint>
+  
+  <transmission name="head_pan_trans">
+    <type>transmission_interface/SimpleTransmission</type>
+    <joint name="head_pan">
+      <hardwareInterface>EffortJointInterface</hardwareInterface>
+    </joint>
+    <actuator name="head_pan_motor">
+      <hardwareInterface>EffortJointInterface</hardwareInterface>
+      <mechanicalReduction>1</mechanicalReduction>
+    </actuator>
+  </transmission>
+
+
+  <link
+    name="head_tilt">
+    <inertial>
+      <origin
+        xyz="0.000104621828214489 0.0371739829464326 0.000780731992570616"
+        rpy="0 0 0" />
+      <mass
+        value="0.12573924511903" />
+      <inertia
+        ixx="4.42942214862057E-05"
+        ixy="1.33185070586968E-08"
+        ixz="-1.54689849752873E-08"
+        iyy="5.02585908476386E-05"
+        iyz="-4.89972787819791E-08"
+        izz="4.4092437431138E-05" />
+    </inertial>
+    <visual>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://rscuad/meshes/head_tilt.STL" />
+      </geometry>
+      <material
+        name="">
+        <color
+          rgba="0.752941176470588 0.752941176470588 0.752941176470588 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://rscuad/meshes/head_tilt.STL" />
+      </geometry>
+    </collision>
+  </link>
+  <joint
+    name="head_tilt"
+    type="continuous">
+    <origin
+      xyz="0 -0.0285 0.01"
+      rpy="0 0 3.1416" />
+    <parent
+      link="head_pan" />
+    <child
+      link="head_tilt" />
+    <axis
+      xyz="-1 0 0" />
+    <limit
+      lower="0"
+      upper="0"
+      effort="50"
+      velocity="0" />
+  </joint>
+
+  <transmission name="head_tilt_trans">
+    <type>transmission_interface/SimpleTransmission</type>
+    <joint name="head_tilt">
+      <hardwareInterface>EffortJointInterface</hardwareInterface>
+    </joint>
+    <actuator name="head_tilt_motor">
+      <hardwareInterface>EffortJointInterface</hardwareInterface>
+      <mechanicalReduction>1</mechanicalReduction>
+    </actuator>
+  </transmission>
+
+
+
+
+
+  <link
+    name="l_sho_pitch">
+    <inertial>
+      <origin
+        xyz="0.0152336162387284 -0.00180063582781188 6.66133814775094E-16"
+        rpy="0 0 0" />
+      <mass
+        value="0.016476449424892" />
+      <inertia
+        ixx="4.47813381956679E-06"
+        ixy="3.39828602459356E-07"
+        ixz="1.79079949513068E-19"
+        iyy="4.47784883764015E-06"
+        iyz="6.04884335805419E-20"
+        izz="1.96877350328692E-06" />
+    </inertial>
+    <visual>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://rscuad/meshes/l_sho_pitch.STL" />
+      </geometry>
+      <material
+        name="">
+        <color
+          rgba="0.752941176470588 0.752941176470588 0.752941176470588 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://rscuad/meshes/l_sho_pitch.STL" />
+      </geometry>
+    </collision>
+  </link>
+  <joint
+    name="l_sho_pitch"
+    type="revolute">
+    <origin
+      xyz="0.10096 -0.1394 0.12423"
+      rpy="1.5708 0 0" />
+    <parent
+      link="body" />
+    <child
+      link="l_sho_pitch" />
+    <axis
+      xyz="-1 0 0" />
+    <limit
+      lower="0"
+      upper="0"
+      effort="0"
+      velocity="0" />
+  </joint>
+  <link
+    name="l_sho_roll">
+    <inertial>
+      <origin
+        xyz="0.0315938109781102 0.000680134592121545 0.000553421997326997"
+        rpy="0 0 0" />
+      <mass
+        value="0.0884003305596694" />
+      <inertia
+        ixx="1.54544096501495E-05"
+        ixy="2.90930703710243E-07"
+        ixz="-3.1936718627683E-07"
+        iyy="1.80602730144738E-05"
+        iyz="3.0377515300486E-13"
+        izz="1.77147455885611E-05" />
+    </inertial>
+    <visual>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://rscuad/meshes/l_sho_roll.STL" />
+      </geometry>
+      <material
+        name="">
+        <color
+          rgba="0.752941176470588 0.752941176470588 0.752941176470588 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://rscuad/meshes/l_sho_roll.STL" />
+      </geometry>
+    </collision>
+  </link>
+  <joint
+    name="l_sho_roll"
+    type="revolute">
+    <origin
+      xyz="0.0385 -0.01 0"
+      rpy="0 0 0" />
+    <parent
+      link="l_sho_pitch" />
+    <child
+      link="l_sho_roll" />
+    <axis
+      xyz="0 0 -1" />
+    <limit
+      lower="0"
+      upper="0"
+      effort="0"
+      velocity="0" />
+  </joint>
+  <link
+    name="l_el">
+    <inertial>
+      <origin
+        xyz="0.0134578975462598 0.00385263451594457 0.0152675229649245"
+        rpy="0 0 0" />
+      <mass
+        value="0.0561826372694756" />
+      <inertia
+        ixx="2.9049589881886E-05"
+        ixy="2.03830392463693E-08"
+        ixz="3.79159526035902E-07"
+        iyy="3.38921458240999E-05"
+        iyz="1.12947145945233E-14"
+        izz="1.34693310072719E-05" />
+    </inertial>
+    <visual>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://rscuad/meshes/l_el.STL" />
+      </geometry>
+      <material
+        name="">
+        <color
+          rgba="0.752941176470588 0.752941176470588 0.752941176470588 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://rscuad/meshes/l_el.STL" />
+      </geometry>
+    </collision>
+  </link>
+  <joint
+    name="l_el"
+    type="revolute">
+    <origin
+      xyz="0.0874466726391421 0 0.0100000000000002"
+      rpy="0 0 0" />
+    <parent
+      link="l_sho_roll" />
+    <child
+      link="l_el" />
+    <axis
+      xyz="0 -1 0" />
+    <limit
+      lower="0"
+      upper="0"
+      effort="0"
+      velocity="0" />
+  </joint>
+  <link
+    name="r_sho_pitch">
+    <inertial>
+      <origin
+        xyz="-0.0152336162387284 -0.00180063582780762 -2.77555756156289E-15"
+        rpy="0 0 0" />
+      <mass
+        value="0.0164764494248921" />
+      <inertia
+        ixx="4.4781338195668E-06"
+        ixy="-3.39828602459362E-07"
+        ixz="2.01210430228637E-19"
+        iyy="4.47784883764016E-06"
+        iyz="-5.87818990239026E-20"
+        izz="1.96877350328693E-06" />
+    </inertial>
+    <visual>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://rscuad/meshes/r_sho_pitch.STL" />
+      </geometry>
+      <material
+        name="">
+        <color
+          rgba="0.752941176470588 0.752941176470588 0.752941176470588 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://rscuad/meshes/r_sho_pitch.STL" />
+      </geometry>
+    </collision>
+  </link>
+  <joint
+    name="r_sho_pitch"
+    type="revolute">
+    <origin
+      xyz="-0.0290205030447131 -0.139400454049433 0.124229542783902"
+      rpy="1.5707963267949 0 0" />
+    <parent
+      link="body" />
+    <child
+      link="r_sho_pitch" />
+    <axis
+      xyz="-1 0 0" />
+    <limit
+      lower="0"
+      upper="0"
+      effort="0"
+      velocity="0" />
+  </joint>
+  <link
+    name="r_sho_roll">
+    <inertial>
+      <origin
+        xyz="-0.0346452133269944 0.000680134426259818 0.000553937880485106"
+        rpy="0 0 0" />
+      <mass
+        value="0.0884003307974895" />
+      <inertia
+        ixx="1.54544096503321E-05"
+        ixy="-2.90930609797706E-07"
+        ixz="3.19523950275379E-07"
+        iyy="1.8060273013059E-05"
+        iyz="-3.03961651424894E-13"
+        izz="1.7714745586952E-05" />
+    </inertial>
+    <visual>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://rscuad/meshes/r_sho_roll.STL" />
+      </geometry>
+      <material
+        name="">
+        <color
+          rgba="0.752941176470588 0.752941176470588 0.752941176470588 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://rscuad/meshes/r_sho_roll.STL" />
+      </geometry>
+    </collision>
+  </link>
+  <joint
+    name="r_sho_roll"
+    type="revolute">
+    <origin
+      xyz="-0.0384999999999999 -0.00999999999999629 0"
+      rpy="0 0 0" />
+    <parent
+      link="r_sho_pitch" />
+    <child
+      link="r_sho_roll" />
+    <axis
+      xyz="0 0 -1" />
+    <limit
+      lower="0"
+      upper="0"
+      effort="0"
+      velocity="0" />
+  </joint>
+  <link
+    name="r_el">
+    <inertial>
+      <origin
+        xyz="-0.0134578975462585 0.00385263451578942 0.0152675231335785"
+        rpy="0 0 0" />
+      <mass
+        value="0.0561826372694755" />
+      <inertia
+        ixx="2.90495898818859E-05"
+        ixy="-2.03830290064609E-08"
+        ixz="-3.79159620555639E-07"
+        iyy="3.38921458240998E-05"
+        iyz="-1.12946351407492E-14"
+        izz="1.34693310072719E-05" />
+    </inertial>
+    <visual>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://rscuad/meshes/r_el.STL" />
+      </geometry>
+      <material
+        name="">
+        <color
+          rgba="0.752941176470588 0.752941176470588 0.752941176470588 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://rscuad/meshes/r_el.STL" />
+      </geometry>
+    </collision>
+  </link>
+  <joint
+    name="r_el"
+    type="revolute">
+    <origin
+      xyz="-0.0936500000000009 0 0.0099999999999961"
+      rpy="0 0 0" />
+    <parent
+      link="r_sho_roll" />
+    <child
+      link="r_el" />
+    <axis
+      xyz="0 -1 0" />
+    <limit
+      lower="0"
+      upper="0"
+      effort="0"
+      velocity="0" />
+  </joint>
+  <link
+    name="l_hip_yaw">
+    <inertial>
+      <origin
+        xyz="-4.29815663380295E-07 -0.0108141173114426 0.00278343252511654"
+        rpy="0 0 0" />
+      <mass
+        value="0.0229829364852389" />
+      <inertia
+        ixx="1.43427059428117E-05"
+        ixy="8.27728850430916E-11"
+        ixz="1.78618118574046E-10"
+        iyy="1.40196878929158E-05"
+        iyz="3.77243123517952E-08"
+        izz="5.34102862853241E-06" />
+    </inertial>
+    <visual>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://rscuad/meshes/l_hip_yaw.STL" />
+      </geometry>
+      <material
+        name="">
+        <color
+          rgba="0.752941176470588 0.752941176470588 0.752941176470588 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://rscuad/meshes/l_hip_yaw.STL" />
+      </geometry>
+    </collision>
+  </link>
+  <joint
+    name="l_hip_yaw"
+    type="revolute">
+    <origin
+      xyz="0.0809483118859766 -0.13794445404943 0.00675246433967373"
+      rpy="1.5707963267949 0.00102499964103206 0" />
+    <parent
+      link="body" />
+    <child
+      link="l_hip_yaw" />
+    <axis
+      xyz="0 -1 0" />
+    <limit
+      lower="0"
+      upper="0"
+      effort="0"
+      velocity="0" />
+  </joint>
+  <link
+    name="l_hip_roll">
+    <inertial>
+      <origin
+        xyz="-0.000117953958974196 -0.0149128586946627 -0.0249453119100794"
+        rpy="0 0 0" />
+      <mass
+        value="0.151586182496668" />
+      <inertia
+        ixx="5.5028175022932E-05"
+        ixy="-8.98410976515644E-07"
+        ixz="1.16956229470377E-12"
+        iyy="3.44253544650063E-05"
+        iyz="-9.07683611385409E-07"
+        izz="5.54170402685468E-05" />
+    </inertial>
+    <visual>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://rscuad/meshes/l_hip_roll.STL" />
+      </geometry>
+      <material
+        name="">
+        <color
+          rgba="0.752941176470588 0.752941176470588 0.752941176470588 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://rscuad/meshes/l_hip_roll.STL" />
+      </geometry>
+    </collision>
+  </link>
+  <joint
+    name="l_hip_roll"
+    type="revolute">
+    <origin
+      xyz="0 -0.0360348499633859 0"
+      rpy="0 0 0.00102499964103206" />
+    <parent
+      link="l_hip_yaw" />
+    <child
+      link="l_hip_roll" />
+    <axis
+      xyz="0 0 -1" />
+    <limit
+      lower="0"
+      upper="0"
+      effort="0"
+      velocity="0" />
+  </joint>
+  <link
+    name="l_hip_pitch">
+    <inertial>
+      <origin
+        xyz="0.000243254808011836 -0.0898667305909595 0.000209659949259006"
+        rpy="0 0 0" />
+      <mass
+        value="0.100631639038866" />
+      <inertia
+        ixx="4.17310749465033E-05"
+        ixy="8.88098878734448E-07"
+        ixz="5.42245635048738E-09"
+        iyy="3.2141171755086E-05"
+        iyz="6.05524366448529E-07"
+        izz="5.70627485423253E-05" />
+    </inertial>
+    <visual>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://rscuad/meshes/l_hip_pitch.STL" />
+      </geometry>
+      <material
+        name="">
+        <color
+          rgba="0.752941176470588 0.752941176470588 0.752941176470588 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://rscuad/meshes/l_hip_pitch.STL" />
+      </geometry>
+    </collision>
+  </link>
+  <joint
+    name="l_hip_pitch"
+    type="revolute">
+    <origin
+      xyz="0 0 -0.000599999999901152"
+      rpy="0 0 0" />
+    <parent
+      link="l_hip_roll" />
+    <child
+      link="l_hip_pitch" />
+    <axis
+      xyz="-1 0 0" />
+    <limit
+      lower="0"
+      upper="0"
+      effort="0"
+      velocity="0" />
+  </joint>
+  <link
+    name="l_knee">
+    <inertial>
+      <origin
+        xyz="-0.000851388457390925 -0.0468684890675609 0.00801828716169498"
+        rpy="0 0 0" />
+      <mass
+        value="0.0624359207391482" />
+      <inertia
+        ixx="0.000103909612579584"
+        ixy="2.24696234615877E-10"
+        ixz="1.61509844645296E-10"
+        iyy="4.75106496264908E-05"
+        iyz="-1.78798066876229E-05"
+        izz="0.000119654238933631" />
+    </inertial>
+    <visual>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://rscuad/meshes/l_knee.STL" />
+      </geometry>
+      <material
+        name="">
+        <color
+          rgba="0.752941176470588 0.752941176470588 0.752941176470588 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://rscuad/meshes/l_knee.STL" />
+      </geometry>
+    </collision>
+  </link>
+  <joint
+    name="l_knee"
+    type="revolute">
+    <origin
+      xyz="0 -0.121999999999998 -3.60787874466861E-05"
+      rpy="0 0 0" />
+    <parent
+      link="l_hip_pitch" />
+    <child
+      link="l_knee" />
+    <axis
+      xyz="-1 0 0" />
+    <limit
+      lower="0"
+      upper="0"
+      effort="0"
+      velocity="0" />
+  </joint>
+  <link
+    name="l_ank_pitch">
+    <inertial>
+      <origin
+        xyz="0.000117962348445882 -0.0149128586946611 -0.0243453045375506"
+        rpy="0 0 0" />
+      <mass
+        value="0.151586182496668" />
+      <inertia
+        ixx="5.50281750229324E-05"
+        ixy="8.98440761834264E-07"
+        ixz="1.16956223612234E-12"
+        iyy="3.44253544650064E-05"
+        iyz="-9.07656515072525E-07"
+        izz="5.54170402685473E-05" />
+    </inertial>
+    <visual>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://rscuad/meshes/l_ank_pitch.STL" />
+      </geometry>
+      <material
+        name="">
+        <color
+          rgba="0.752941176470588 0.752941176470588 0.752941176470588 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://rscuad/meshes/l_ank_pitch.STL" />
+      </geometry>
+    </collision>
+  </link>
+  <joint
+    name="l_ank_pitch"
+    type="revolute">
+    <origin
+      xyz="0 -0.12200007459305 0.000539974593052855"
+      rpy="0 0 -3.14159265358979" />
+    <parent
+      link="l_knee" />
+    <child
+      link="l_ank_pitch" />
+    <axis
+      xyz="1 0 0" />
+    <limit
+      lower="0"
+      upper="0"
+      effort="0"
+      velocity="0" />
+  </joint>
+  <link
+    name="l_ank_roll">
+    <inertial>
+      <origin
+        xyz="0.00433834985207866 -0.0308901133838574 0.0023510035149302"
+        rpy="0 0 0" />
+      <mass
+        value="0.0443088669743472" />
+      <inertia
+        ixx="3.98750519227104E-05"
+        ixy="8.27728807804659E-11"
+        ixz="3.17919598040036E-09"
+        iyy="5.39463274407849E-05"
+        iyz="-3.77243123537462E-08"
+        izz="1.97495395193279E-05" />
+    </inertial>
+    <visual>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://rscuad/meshes/l_ank_roll.STL" />
+      </geometry>
+      <material
+        name="">
+        <color
+          rgba="0.752941176470588 0.752941176470588 0.752941176470588 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://rscuad/meshes/l_ank_roll.STL" />
+      </geometry>
+    </collision>
+  </link>
+  <joint
+    name="l_ank_roll"
+    type="revolute">
+    <origin
+      xyz="0 0 0"
+      rpy="0 0 3.14159265358979" />
+    <parent
+      link="l_ank_pitch" />
+    <child
+      link="l_ank_roll" />
+    <axis
+      xyz="0 0 -1" />
+    <limit
+      lower="0"
+      upper="0"
+      effort="0"
+      velocity="0" />
+  </joint>
+  <link
+    name="r_hip_yaw">
+    <inertial>
+      <origin
+        xyz="-4.29815663359479E-07 -0.010814117311443 0.00278343252511634"
+        rpy="0 0 0" />
+      <mass
+        value="0.0229829364852389" />
+      <inertia
+        ixx="1.43427059428118E-05"
+        ixy="8.27728850397696E-11"
+        ixz="1.78618118586269E-10"
+        iyy="1.40196878929159E-05"
+        iyz="3.77243123518229E-08"
+        izz="5.34102862853243E-06" />
+    </inertial>
+    <visual>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://rscuad/meshes/r_hip_yaw.STL" />
+      </geometry>
+      <material
+        name="">
+        <color
+          rgba="0.752941176470588 0.752941176470588 0.752941176470588 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://rscuad/meshes/r_hip_yaw.STL" />
+      </geometry>
+    </collision>
+  </link>
+  <joint
+    name="r_hip_yaw"
+    type="revolute">
+    <origin
+      xyz="-0.00903979651901684 -0.13794425404943 0.00679279956234802"
+      rpy="1.5707963267949 0.00102499964103848 0" />
+    <parent
+      link="body" />
+    <child
+      link="r_hip_yaw" />
+    <axis
+      xyz="0 -1 0" />
+    <limit
+      lower="0"
+      upper="0"
+      effort="0"
+      velocity="0" />
+  </joint>
+  <link
+    name="r_hip_roll">
+    <inertial>
+      <origin
+        xyz="0.000117962348444769 -0.0149128586946632 -0.0249453045374453"
+        rpy="0 0 0" />
+      <mass
+        value="0.151586182496668" />
+      <inertia
+        ixx="5.50281750229322E-05"
+        ixy="8.98440761834266E-07"
+        ixz="1.16956224699704E-12"
+        iyy="3.44253544650064E-05"
+        iyz="-9.07656515072372E-07"
+        izz="5.54170402685471E-05" />
+    </inertial>
+    <visual>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://rscuad/meshes/r_hip_roll.STL" />
+      </geometry>
+      <material
+        name="">
+        <color
+          rgba="0.752941176470588 0.752941176470588 0.752941176470588 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://rscuad/meshes/r_hip_roll.STL" />
+      </geometry>
+    </collision>
+  </link>
+  <joint
+    name="r_hip_roll"
+    type="revolute">
+    <origin
+      xyz="0 -0.0360348499633864 0"
+      rpy="0 0 0.00102499964103848" />
+    <parent
+      link="r_hip_yaw" />
+    <child
+      link="r_hip_roll" />
+    <axis
+      xyz="0 0 -1" />
+    <limit
+      lower="0"
+      upper="0"
+      effort="0"
+      velocity="0" />
+  </joint>
+  <link
+    name="r_hip_pitch">
+    <inertial>
+      <origin
+        xyz="-0.00023617866960057 -0.0898667305909591 0.0002096488435121"
+        rpy="0 0 0" />
+      <mass
+        value="0.100631639038866" />
+      <inertia
+        ixx="4.17310749465033E-05"
+        ixy="-9.08752859615629E-07"
+        ixz="5.42245635045147E-09"
+        iyy="3.21411717550871E-05"
+        iyz="6.05551462761427E-07"
+        izz="5.70627485423264E-05" />
+    </inertial>
+    <visual>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://rscuad/meshes/r_hip_pitch.STL" />
+      </geometry>
+      <material
+        name="">
+        <color
+          rgba="0.752941176470588 0.752941176470588 0.752941176470588 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://rscuad/meshes/r_hip_pitch.STL" />
+      </geometry>
+    </collision>
+  </link>
+  <joint
+    name="r_hip_pitch"
+    type="revolute">
+    <origin
+      xyz="0 0 -0.000599999999901429"
+      rpy="0 0 0" />
+    <parent
+      link="r_hip_roll" />
+    <child
+      link="r_hip_pitch" />
+    <axis
+      xyz="-1 0 0" />
+    <limit
+      lower="0"
+      upper="0"
+      effort="0"
+      velocity="0" />
+  </joint>
+  <link
+    name="r_knee">
+    <inertial>
+      <origin
+        xyz="0.000851143901047947 -0.0468684890675623 0.00801828716169503"
+        rpy="0 0 0" />
+      <mass
+        value="0.0624359207391501" />
+      <inertia
+        ixx="0.000103909612579586"
+        ixy="2.24696234577128E-10"
+        ixz="1.61509844866009E-10"
+        iyy="4.75106496264916E-05"
+        iyz="-1.78798066876231E-05"
+        izz="0.000119654238933633" />
+    </inertial>
+    <visual>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://rscuad/meshes/r_knee.STL" />
+      </geometry>
+      <material
+        name="">
+        <color
+          rgba="0.752941176470588 0.752941176470588 0.752941176470588 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://rscuad/meshes/r_knee.STL" />
+      </geometry>
+    </collision>
+  </link>
+  <joint
+    name="r_knee"
+    type="revolute">
+    <origin
+      xyz="0 -0.121999999999998 -3.60787874468527E-05"
+      rpy="0 0 0" />
+    <parent
+      link="r_hip_pitch" />
+    <child
+      link="r_knee" />
+    <axis
+      xyz="-1 0 0" />
+    <limit
+      lower="0"
+      upper="0"
+      effort="0"
+      velocity="0" />
+  </joint>
+  <link
+    name="r_ank_pitch">
+    <inertial>
+      <origin
+        xyz="-0.000117953958976062 -0.0149128586946587 -0.0243453119101897"
+        rpy="0 0 0" />
+      <mass
+        value="0.151586182496669" />
+      <inertia
+        ixx="5.50281750229329E-05"
+        ixy="-8.98410976515744E-07"
+        ixz="1.16956237258369E-12"
+        iyy="3.44253544650069E-05"
+        iyz="-9.07683611384809E-07"
+        izz="5.54170402685478E-05" />
+    </inertial>
+    <visual>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://rscuad/meshes/r_ank_pitch.STL" />
+      </geometry>
+      <material
+        name="">
+        <color
+          rgba="0.752941176470588 0.752941176470588 0.752941176470588 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://rscuad/meshes/r_ank_pitch.STL" />
+      </geometry>
+    </collision>
+  </link>
+  <joint
+    name="r_ank_pitch"
+    type="revolute">
+    <origin
+      xyz="0 -0.122 0.00053997"
+      rpy="0 0 -3.1416" />
+    <parent
+      link="r_knee" />
+    <child
+      link="r_ank_pitch" />
+    <axis
+      xyz="1 0 0" />
+    <limit
+      lower="0"
+      upper="0"
+      effort="0"
+      velocity="0" />
+  </joint>
+  <link
+    name="r_ank_roll">
+    <inertial>
+      <origin
+        xyz="-0.0043379039627217 -0.0308901133838572 0.00235100351492532"
+        rpy="0 0 0" />
+      <mass
+        value="0.0443088669743472" />
+      <inertia
+        ixx="3.98750519227104E-05"
+        ixy="8.27728806761196E-11"
+        ixz="-3.5364322178513E-09"
+        iyy="5.3946327440785E-05"
+        iyz="-3.77243123497183E-08"
+        izz="1.97495395193279E-05" />
+    </inertial>
+    <visual>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://rscuad/meshes/r_ank_roll.STL" />
+      </geometry>
+      <material
+        name="">
+        <color
+          rgba="0.752941176470588 0.752941176470588 0.752941176470588 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://rscuad/meshes/r_ank_roll.STL" />
+      </geometry>
+    </collision>
+  </link>
+  <joint
+    name="r_ank_roll"
+    type="revolute">
+    <origin
+      xyz="0 0 0"
+      rpy="0 0 3.1416" />
+    <parent
+      link="r_ank_pitch" />
+    <child
+      link="r_ank_roll" />
+    <axis
+      xyz="0 0 -1" />
+    <limit
+      lower="0"
+      upper="0"
+      effort="0"
+      velocity="0" />
+  </joint>
+</robot>

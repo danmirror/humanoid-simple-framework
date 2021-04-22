@@ -109,7 +109,7 @@
       effort="50"
       velocity="0" />
   </joint>
-  <transmissions joint="head_pan"/>
+  <insert_transmission name="head_pan"/>
 
 
   <link
@@ -171,7 +171,7 @@
       velocity="0" />
   </joint>
 
-  <transmissions joint="head_tilt"/>
+  <insert_transmission name="head_tilt"/>
 
 
   <link
@@ -229,10 +229,10 @@
     <limit
       lower="0"
       upper="0"
-      effort="0"
-      velocity="0" />
+      effort="100"
+      velocity="1000" />
   </joint>
-  <transmissions joint="l_sho_pitch"/>
+  <insert_transmission name="l_sho_pitch"/>
 
   <link
     name="l_sho_roll">
@@ -292,7 +292,7 @@
       effort="0"
       velocity="0" />
   </joint>
-  <transmissions joint="l_sho_roll"/>
+  <insert_transmission name="l_sho_roll"/>
 
   <link
     name="l_el">
@@ -352,7 +352,7 @@
       effort="0"
       velocity="0" />
   </joint>
-  <transmissions joint="l_el"/>
+  <insert_transmission name="l_el"/>
 
   <link
     name="r_sho_pitch">
@@ -412,7 +412,7 @@
       effort="0"
       velocity="0" />
   </joint>
-  <transmissions joint="r_sho_pitch"/>
+  <insert_transmission name="r_sho_pitch"/>
 
   <link
     name="r_sho_roll">
@@ -472,7 +472,7 @@
       effort="0"
       velocity="0" />
   </joint>
-  <transmissions joint="r_sho_roll"/>
+  <insert_transmission name="r_sho_roll"/>
 
   <link
     name="r_el">
@@ -532,7 +532,7 @@
       effort="0"
       velocity="0" />
   </joint>
-  <transmissions joint="r_el"/>
+  <insert_transmission name="r_el"/>
 
   <link
     name="l_hip_yaw">
@@ -592,7 +592,7 @@
       effort="0"
       velocity="0" />
   </joint>
-  <transmissions joint="l_hip_yaw"/>
+  <insert_transmission name="l_hip_yaw"/>
 
   <link
     name="l_hip_roll">
@@ -652,7 +652,7 @@
       effort="0"
       velocity="0" />
   </joint>
-  <transmissions joint="l_hip_roll"/>
+  <insert_transmission name="l_hip_roll"/>
 
   <link
     name="l_hip_pitch">
@@ -712,7 +712,7 @@
       effort="0"
       velocity="0" />
   </joint>
-  <transmissions joint="l_hip_pitch"/>
+  <insert_transmission name="l_hip_pitch"/>
 
   <link
     name="l_knee">
@@ -772,7 +772,7 @@
       effort="0"
       velocity="0" />
   </joint>
-  <transmissions joint="l_knee"/>
+  <insert_transmission name="l_knee"/>
 
   <link
     name="l_ank_pitch">
@@ -832,7 +832,7 @@
       effort="0"
       velocity="0" />
   </joint>
-  <transmissions joint="l_ank_pitch"/>
+  <insert_transmission name="l_ank_pitch"/>
 
   <link
     name="l_ank_roll">
@@ -892,7 +892,7 @@
       effort="0"
       velocity="0" />
   </joint>
-  <transmissions joint="l_ank_roll"/>
+  <insert_transmission name="l_ank_roll"/>
 
   <link
     name="r_hip_yaw">
@@ -952,7 +952,7 @@
       effort="0"
       velocity="0" />
   </joint>
-  <transmissions joint="r_hip_yaw"/>
+  <insert_transmission name="r_hip_yaw"/>
 
   <link
     name="r_hip_roll">
@@ -1012,7 +1012,7 @@
       effort="0"
       velocity="0" />
   </joint>
-  <transmissions joint="r_hip_roll"/>
+  <insert_transmission name="r_hip_roll"/>
 
   <link
     name="r_hip_pitch">
@@ -1072,7 +1072,7 @@
       effort="0"
       velocity="0" />
   </joint>
-  <transmissions joint="r_hip_pitch"/>
+  <insert_transmission name="r_hip_pitch"/>
 
   <link
     name="r_knee">
@@ -1132,7 +1132,7 @@
       effort="0"
       velocity="0" />
   </joint>
-  <transmissions joint="r_knee"/>
+  <insert_transmission name="r_knee"/>
 
   <link
     name="r_ank_pitch">
@@ -1192,7 +1192,7 @@
       effort="0"
       velocity="0" />
   </joint>
-  <transmissions joint="r_ank_pitch"/>
+  <insert_transmission name="r_ank_pitch"/>
 
   <link
     name="r_ank_roll">
@@ -1252,5 +1252,5 @@
       effort="0"
       velocity="0" />
   </joint>
-  <transmissions joint="r_ank_roll"/>
+  <insert_transmission name="r_ank_roll"/>
 </robot>

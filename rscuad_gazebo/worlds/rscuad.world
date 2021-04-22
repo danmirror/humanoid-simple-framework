@@ -12,7 +12,7 @@
 	</include>
 
    <include>
-		<uri>model://rscuad_description</uri>	
+		<uri>model://rscuad</uri>	
 	</include>
 
 </sdf>

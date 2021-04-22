@@ -1,0 +1,16 @@
+<?xml version="1.0" ?>
+    <robot name="rscuad">
+
+        <macro name="transmissions" params="joint">
+            <transmission name="${joint}_trans">
+                <type>transmission_interface/SimpleTransmission</type>
+                <joint name="${joint}">
+                <hardwareInterface>EffortJointInterface</hardwareInterface>
+                </joint>
+                <actuator name="${joint}_motor">
+                <hardwareInterface>EffortJointInterface</hardwareInterface>
+                <mechanicalReduction>1</mechanicalReduction>
+                </actuator>
+            </transmission>
+        </macro>
+    </robot>

@@ -4,7 +4,6 @@
      <!-- <arg name="world_name" value="$(find rscuad_gazebo)/worlds/rscuad.world"/>	     -->
   </include>
 
-
   <rosparam file="$(find rscuad_gazebo)/config/joint_names_rscuad.yaml" command="load"/>
 
   <node name="controller_spawner" 
@@ -36,19 +35,13 @@
           head_tilt_position"
         />
 
-  <!-- <node
-    name="tf_footprint_base"
-    pkg="tf"
-    type="static_transform_publisher"
-    args="0 0 0 0 0 0 base_link base_footprint 40" /> -->
-<!-- <param name="robot_description" command="$(find xacro)/xacro.py $(find robot_description)/robots/robot.urdf.xacro" /> -->
   <param name="robot_description" command="$(find xacro)/xacro  --inorder '$(find rscuad_description)/urdf/rscuad.xacro'" />
 
+  <!-- rscuad model -->
   <node name="spawn_model" pkg="gazebo_ros" type="spawn_model"
     args="-param robot_description -urdf -model rscuad_a -z 0.315"
     output="screen" />
   
-
  <!-- convert joint states to TF transforms for rviz, etc -->
   <node name="robot_state_publisher" pkg="robot_state_publisher" type="robot_state_publisher" respawn="false" output="screen">
     <remap from="/joint_states" to="/rscuad/joint_states" />
@@ -59,4 +52,7 @@
     pkg="rostopic"
     type="rostopic"
     args="pub /calibrated std_msgs/Bool true" />
+
+    <!-- rscuad listen-->
+    <node pkg="rscuad_gazebo" type="rscuad_gazebo_listener" name="rscuad_gazebo_listener" output="screen"/>
 </launch>

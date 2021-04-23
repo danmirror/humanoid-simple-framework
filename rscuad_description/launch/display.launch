@@ -1,9 +1,9 @@
-<launch>
+<!-- <launch>
   <arg
     name="model" />
   <param
     name="robot_description"
-    textfile="$(find rscuad)/urdf/rscuad.urdf" />
+    textfile="$(find rscuad_description)/urdf/rscuad.xacro" />
   <node
     name="joint_state_publisher_gui"
     pkg="joint_state_publisher_gui"
@@ -16,5 +16,5 @@
     name="rviz"
     pkg="rviz"
     type="rviz"
-    args="-d $(find rscuad)/urdf.rviz " />
-</launch>
+    args="-d $(find rscuad_description)/urdf.rviz " />
+</launch> -->

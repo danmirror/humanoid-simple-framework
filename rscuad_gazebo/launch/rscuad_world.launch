@@ -13,27 +13,39 @@
     respawn="false"
     output="screen" ns="/rscuad" 
     args="joint_state_controller  
-         
-            l_sho_pitch_position
-            r_sho_pitch_position
-       
-            head_pan_position
-            head_tilt_position" />
-                                         " />
+    
+          l_hip_yaw_position
+          l_hip_roll_position
+          l_hip_pitch_position
+          l_knee_position
+          l_ank_roll_position
+          l_ank_pitch_position
+          r_hip_yaw_position
+          r_hip_roll_position
+          r_hip_pitch_position
+          r_knee_position
+          r_ank_roll_position
+          r_ank_pitch_position
+          l_sho_pitch_position
+          l_sho_roll_position
+          l_el_position
+          r_sho_pitch_position
+          r_sho_roll_position
+          r_el_position
+          head_pan_position
+          head_tilt_position"
+        />
 
   <!-- <node
     name="tf_footprint_base"
     pkg="tf"
     type="static_transform_publisher"
     args="0 0 0 0 0 0 base_link base_footprint 40" /> -->
+<!-- <param name="robot_description" command="$(find xacro)/xacro.py $(find robot_description)/robots/robot.urdf.xacro" /> -->
+  <param name="robot_description" command="$(find xacro)/xacro  --inorder '$(find rscuad_description)/urdf/rscuad.xacro'" />
 
-  <param name="robot_desc" command="$(find xacro)/xacro  --inorder '$(find rscuad)/urdf/rscuad.xacro'" />
-
-  <node
-    name="spawn_model"
-    pkg="gazebo_ros"
-    type="spawn_model"
-    args="-param robot_desc -urdf -model rscuad -z 0.315"
+  <node name="spawn_model" pkg="gazebo_ros" type="spawn_model"
+    args="-param robot_description -urdf -model rscuad_a -z 0.315"
     output="screen" />
   
 

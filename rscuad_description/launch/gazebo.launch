@@ -1,4 +1,4 @@
-<launch>
+<!-- <launch>
   <include file="$(find gazebo_ros)/launch/empty_world.launch" >
      <arg name="paused" value="true"/>
   </include>
@@ -9,7 +9,7 @@
     type="static_transform_publisher"
     args="0 0 0 0 0 0 base_link base_footprint 40" />
 
-  <param name="robot_desc" command="$(find xacro)/xacro  --inorder '$(find rscuad)/urdf/rscuad.xacro'" />
+  <param name="robot_desc" command="$(find xacro)/xacro  --inorder '$(find robot_description)/urdf/rscuad.xacro'" />
 
   <node
     name="spawn_model"
@@ -24,4 +24,4 @@
     pkg="rostopic"
     type="rostopic"
     args="pub /calibrated std_msgs/Bool true" />
-</launch>
+</launch> -->

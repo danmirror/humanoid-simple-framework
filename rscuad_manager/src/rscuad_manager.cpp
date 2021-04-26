@@ -35,6 +35,7 @@ void rscuad::rscuad_manager::manager_init()
 
 void rscuad::rscuad_manager::move(char *str){
     joint rscuad_joint;
+    
 
     ROS_INFO("data masuk: ,%s", str);
     ros::Rate loop_rate(10);

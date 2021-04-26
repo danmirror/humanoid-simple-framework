@@ -9,7 +9,10 @@
 
 void Callback(const std_msgs::String::ConstPtr& msg){
     rscuad::rscuad_manager *rscuad =  new rscuad::rscuad_manager;
-    rscuad->move("tilt");
+    char *newdata = (char*)msg->data.c_str();
+    // ROS_INFO("newdata");
+    // ROS_INFO(newdata);
+    rscuad->move(newdata);
 }
 
 int main(int argc, char **argv)

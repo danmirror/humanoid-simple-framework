@@ -1,11 +1,14 @@
+/*
+ des  : rscuad control gazebo
+ year : 2021
+ 
+*/
+
+// author : danu andrean
+
 #include "ros/ros.h"
 #include "std_msgs/String.h"
 #include <std_msgs/Float64.h>
-
-/**
- * This tutorial demonstrates simple receipt of messages over the ROS system.
- */
-
 
 void chatterCallback(const std_msgs::String::ConstPtr& msg)
 {

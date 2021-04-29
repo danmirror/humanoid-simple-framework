@@ -1,11 +1,16 @@
+/*
+ des  : rscuad control gazebo
+ year : 2021
+ 
+*/
+
+// author : danu andrean
+
 #include "ros/ros.h"
 #include "std_msgs/String.h"
 
 #include <sstream>
 
-/**
- * This tutorial demonstrates simple sending of messages over the ROS system.
- */
 int main(int argc, char **argv)
 {
   ros::init(argc, argv, "rscuad_gazebo_talker");
@@ -17,19 +22,12 @@ int main(int argc, char **argv)
 
   ros::Rate loop_rate(10);
 
-  /**
-   * A count of how many messages we have sent. This is used to create
-   * a unique string for each message.
-   */
   int count = 0;
   float value = 0.5;
   while (ros::ok())
   {
-    /**
-     * This is a message object. You stuff it with data, and then publish it.
-     */
-    std_msgs::String msg;
 
+    std_msgs::String msg;
     std::stringstream joint, value_str;
     value_str << value;
     joint << "tilt";

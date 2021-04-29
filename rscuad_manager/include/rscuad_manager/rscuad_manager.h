@@ -1,3 +1,11 @@
+/*
+ des  : rscuad control gazebo
+ year :2021
+ 
+*/
+
+// author : danu andrean
+
 #ifndef RSCUAD_MANAGER_H_
 #define RSCUAD_MANAGER_H_
 

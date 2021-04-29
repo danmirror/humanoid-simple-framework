@@ -29,8 +29,10 @@ int main(int argc, char **argv)
 
     std_msgs::String msg;
     std::stringstream joint, value_str;
+    
+    // set value and id joint
     value_str << value;
-    joint << "tilt";
+    joint << "1";
     msg.data = joint.str()+","+value_str.str();
 
     ROS_INFO("%s", msg.data.c_str());

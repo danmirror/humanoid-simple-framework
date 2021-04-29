@@ -15,9 +15,9 @@
 
 
 namespace rscuad{
-    
-    typedef struct {
 
+    // declear data joint movement
+    typedef struct {
         char *l_hip_yaw_position= "/rscuad/l_hip_yaw_position/command";
         char *l_hip_roll_position= "/rscuad/l_hip_roll_position/command";
         char *l_hip_pitch_position= "/rscuad/l_hip_pitch_position/command";
@@ -64,7 +64,7 @@ namespace rscuad{
     class rscuad_manager{
         public:
             void manager_init(); 
-            void move(char *str); 
+            void move_joint(char *str); 
     };
 }
 #endif

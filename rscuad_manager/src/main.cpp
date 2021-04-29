@@ -18,15 +18,15 @@ void Callback(const std_msgs::String::ConstPtr& msg){
     char *newdata = (char*)msg->data.c_str();
     // ROS_INFO("newdata");
     // ROS_INFO(newdata);
-    rscuad->move(newdata);
+    rscuad->move_joint(newdata);
 }
 
 int main(int argc, char **argv)
 {
     // alocation memory
-    // rscuad::rscuad_manager *rscuad = new rscuad::rscuad_manager;
-
-    // rscuad->manager_init();
+    rscuad::rscuad_manager *rscuad = new rscuad::rscuad_manager;
+    //not use
+    rscuad->manager_init();
 
 
     ros::init(argc, argv, "rscuad_manager");

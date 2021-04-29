@@ -14,7 +14,7 @@
 
 #include <sstream>
 
-void rscuad::rscuad_manager::manager_init(int str)
+void rscuad::rscuad_manager::manager_init()
 {
     ROS_INFO("manager init");
     joint rscuad_joint;
@@ -43,9 +43,11 @@ void rscuad::rscuad_manager::manager_init(int str)
 
 }
 
-void rscuad::rscuad_manager::move(char *str){
+void rscuad::rscuad_manager::move_joint(char *str){
     joint rscuad_joint;
+    char *on_move;
 
+    // ------------------data parsing------------------
     bool lock=false;
     int memory = 0;
     int count = 0;
@@ -57,9 +59,9 @@ void rscuad::rscuad_manager::move(char *str){
             lock =true;
 
         if (lock == false)
-            if (count == 0 )
+            if (count == 0)
                 joint[i] = str[i]; 
-            if (count == 1 )
+            if (count == 1)
                 value[i-memory] = str[i]; 
 
         if(lock== true){
@@ -68,18 +70,59 @@ void rscuad::rscuad_manager::move(char *str){
             memory = i+1;
         }
     }
-
-
     ROS_WARN("join:  %s", joint);
     ROS_WARN("value: %f",  atof(value));
     ROS_INFO("data masuk: %s", str);
 
-    rscuad::rscuad_manager::manager_init(123);
+    // -----------------servo selection--------------
+    if(atoi(joint) == 1){
+        ROS_WARN(">>>>>>>>>>>>>>>");
+        ROS_ERROR("masukk");
+        on_move = rscuad_joint.r_sho_pitch_position; 
+    }
+    else if(atoi(joint) == 2)
+        on_move = rscuad_joint.l_sho_pitch_position;
+    else if(atoi(joint) == 3)
+        on_move = rscuad_joint.r_sho_roll_position; 
+    else if(atoi(joint) == 4)
+        on_move = rscuad_joint.l_sho_roll_position; 
+    else if(atoi(joint) == 5)
+        on_move = rscuad_joint.r_el_position; 
+    else if(atoi(joint) == 6)
+        on_move = rscuad_joint.l_el_position; 
+    else if(atoi(joint) == 7)
+        on_move = rscuad_joint.r_hip_yaw_position; 
+    else if(atoi(joint) == 8)
+        on_move = rscuad_joint.l_hip_yaw_position; 
+    else if(atoi(joint) == 9)
+        on_move = rscuad_joint.r_hip_roll_position; 
+    else if(atoi(joint) == 10)
+        on_move = rscuad_joint.l_hip_roll_position;
+    else if(atoi(joint) == 11)
+        on_move = rscuad_joint.r_hip_pitch_position; 
+    else if(atoi(joint) == 12)
+        on_move = rscuad_joint.l_hip_pitch_position; 
+    else if(atoi(joint) == 13)
+        on_move = rscuad_joint.r_knee_position; 
+    else if(atoi(joint) == 14)
+        on_move = rscuad_joint.l_knee_position; 
+    else if(atoi(joint) == 15)
+        on_move = rscuad_joint.r_ank_roll_position; 
+    else if(atoi(joint) == 16)
+        on_move = rscuad_joint.l_ank_roll_position; 
+    else if(atoi(joint) == 17)
+        on_move = rscuad_joint.r_ank_pitch_position; 
+    else if(atoi(joint) == 18)
+        on_move = rscuad_joint.l_ank_pitch_position; 
+    else if(atoi(joint) == 19)
+        on_move = rscuad_joint.head_pan_position;
+    else if(atoi(joint) == 20)
+        on_move = rscuad_joint.head_tilt_position;
 
     ros::Rate loop_rate(10);
     ros::NodeHandle nh; 
 
-    ros::Publisher pub = nh.advertise<std_msgs::Float64>(joint, 1000);
+    ros::Publisher pub = nh.advertise<std_msgs::Float64>(on_move, 1000);
 
     // ROS_INFO("%s",rscuad_joint.l_hip_yaw_position);
 

@@ -1,8 +1,12 @@
 <?xml version="1.0" ?>
 
-<!-- This URDF was automatically created by SolidWorks to URDF Exporter! Originally created by Stephen Brawner (brawner@gmail.com) 
-     Commit Version: 1.6.0-1-g15f4949  Build Version: 1.6.7594.29634
-     For more information, please see http://wiki.ros.org/sw_urdf_exporter -->
+<!-- 
+
+author danu andrean 
+date  9 mei 2021
+approach rscuad default inertia  by rian 
+
+-->
 
 <robot name="rscuad" xmlns:xacro="http://www.ros.org/wiki/xacro">
 

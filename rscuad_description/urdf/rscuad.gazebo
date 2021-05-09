@@ -6,4 +6,26 @@
         <!-- <robotSimType>gazebo_ros_control/DefaultRobotHWSim</robotSimType> -->
       </plugin>
     </gazebo>
+
+    <gazebo reference="l_ank_roll">
+      <material>Gazebo/Yellow</material>
+      <static>true</static>
+      <turnGravityOff>true</turnGravityOff>
+    </gazebo>
+     <gazebo reference="l_ank_pitch">
+      <material>Gazebo/Yellow</material>
+      <static>true</static>
+      <turnGravityOff>true</turnGravityOff>
+    </gazebo>
+     <gazebo reference="r_ank_roll">
+      <material>Gazebo/Yellow</material>
+      <static>true</static>
+      <turnGravityOff>true</turnGravityOff>
+    </gazebo>
+     <gazebo reference="r_ank_pitch">
+      <material>Gazebo/Yellow</material>
+      <static>true</static>
+      <turnGravityOff>true</turnGravityOff>
+    </gazebo>
+
   </robot>  

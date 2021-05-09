@@ -19,13 +19,9 @@
         rpy="0 0 0" />
       <mass
         value="0.845681147773924" />
-      <inertia
-        ixx="0.000942220952716164"
-        ixy="-2.09951911714263E-09"
-        ixz="-5.82097094435726E-08"
-        iyy="0.0017318252778068"
-        iyz="-1.03521875266935E-06"
-        izz="0.00124711287069091" />
+      <inertia ixx="0.00340499" ixy="0.00000572" ixz="-0.00004256"
+             iyy="0.00296939" iyz="-0.00000059"
+             izz="0.00317331" />
     </inertial>
     <visual>
       <origin
@@ -59,13 +55,9 @@
         rpy="0 0 0" />
       <mass
         value="0.0127468700670499" />
-      <inertia
-        ixx="1.79344391432726E-06"
-        ixy="-2.0975806235736E-19"
-        ixz="-6.00252605549835E-20"
-        iyy="4.1896342976115E-06"
-        iyz="3.39828602459364E-07"
-        izz="4.30251924868049E-06" />
+      <inertia ixx="0.00000397" ixy="0.0" ixz="-0.00000031"
+             iyy="0.00000165" iyz="0.0"
+             izz="0.00000387" />
     </inertial>
     <visual>
       <origin
@@ -107,10 +99,9 @@
       lower="0"
       upper="0"
       effort="50"
-      velocity="0" />
+      velocity="0.1" />
   </joint>
   <insert_transmission name="head_pan"/>
-
 
   <link
     name="head_tilt">
@@ -120,13 +111,9 @@
         rpy="0 0 0" />
       <mass
         value="0.12573924511903" />
-      <inertia
-        ixx="4.42942214862057E-05"
-        ixy="1.33185070586968E-08"
-        ixz="-1.54689849752873E-08"
-        iyy="5.02585908476386E-05"
-        iyz="-4.89972787819791E-08"
-        izz="4.4092437431138E-05" />
+      <inertia ixx="0.00010612" ixy="0.00000011" ixz="-0.00000910"
+             iyy="0.00008721" iyz="0.00000084"
+             izz="0.00004529" />
     </inertial>
     <visual>
       <origin
@@ -168,7 +155,7 @@
       lower="0"
       upper="0"
       effort="50"
-      velocity="0" />
+      velocity="0.1" />
   </joint>
 
   <insert_transmission name="head_tilt"/>
@@ -182,13 +169,9 @@
         rpy="0 0 0" />
       <mass
         value="0.016476449424892" />
-      <inertia
-        ixx="4.47813381956679E-06"
-        ixy="3.39828602459356E-07"
-        ixz="1.79079949513068E-19"
-        iyy="4.47784883764015E-06"
-        iyz="6.04884335805419E-20"
-        izz="1.96877350328692E-06" />
+      <inertia ixx="0.00000165" ixy="0.0" ixz="0.0"
+             iyy="0.00000387" iyz="0.00000031"
+             izz="0.00000397" />
     </inertial>
     <visual>
       <origin
@@ -230,7 +213,7 @@
       lower="0"
       upper="0"
       effort="100"
-      velocity="1000" />
+      velocity="0.1" />
   </joint>
   <insert_transmission name="l_sho_pitch"/>
 
@@ -242,13 +225,9 @@
         rpy="0 0 0" />
       <mass
         value="0.0884003305596694" />
-      <inertia
-        ixx="1.54544096501495E-05"
-        ixy="2.90930703710243E-07"
-        ixz="-3.1936718627683E-07"
-        iyy="1.80602730144738E-05"
-        iyz="3.0377515300486E-13"
-        izz="1.77147455885611E-05" />
+      <inertia ixx="0.00022804" ixy="-0.00000001" ixz="0.00000003"
+             iyy="0.00003042" iyz="0.00000059"
+             izz="0.00023474" />
     </inertial>
     <visual>
       <origin
@@ -290,7 +269,7 @@
       lower="0"
       upper="0"
       effort="1000"
-      velocity="0" />
+      velocity="0.1" />
   </joint>
   <insert_transmission name="l_sho_roll"/>
 
@@ -302,13 +281,9 @@
         rpy="0 0 0" />
       <mass
         value="0.0561826372694756" />
-      <inertia
-        ixx="2.9049589881886E-05"
-        ixy="2.03830392463693E-08"
-        ixz="3.79159526035902E-07"
-        iyy="3.38921458240999E-05"
-        iyz="1.12947145945233E-14"
-        izz="1.34693310072719E-05" />
+      <inertia ixx="0.00006196" ixy="0.0" ixz="0.0"
+             iyy="0.00001231" iyz="-0.00000372"
+             izz="0.00006854" />
     </inertial>
     <visual>
       <origin
@@ -350,7 +325,7 @@
       lower="0"
       upper="0"
       effort="1000"
-      velocity="0" />
+      velocity="0.1" />
   </joint>
   <insert_transmission name="l_el"/>
 
@@ -364,13 +339,9 @@
         rpy="0 0 0" />
       <mass
         value="0.0164764494248921" />
-      <inertia
-        ixx="4.4781338195668E-06"
-        ixy="-3.39828602459362E-07"
-        ixz="2.01210430228637E-19"
-        iyy="4.47784883764016E-06"
-        iyz="-5.87818990239026E-20"
-        izz="1.96877350328693E-06" />
+      <inertia ixx="0.00000165" ixy="0.0" ixz="0.0"
+             iyy="0.00000387" iyz="-0.00000031"
+             izz="0.00000397" />
     </inertial>
     <visual>
       <origin
@@ -412,7 +383,7 @@
       lower="0"
       upper="0"
       effort="1000"
-      velocity="0" />
+      velocity="0.1" />
   </joint>
   <insert_transmission name="r_sho_pitch"/>
 
@@ -424,13 +395,9 @@
         rpy="0 0 0" />
       <mass
         value="0.0884003307974895" />
-      <inertia
-        ixx="1.54544096503321E-05"
-        ixy="-2.90930609797706E-07"
-        ixz="3.19523950275379E-07"
-        iyy="1.8060273013059E-05"
-        iyz="-3.03961651424894E-13"
-        izz="1.7714745586952E-05" />
+      <inertia ixx="0.00022804" ixy="0.00000001" ixz="0.00000003"
+             iyy="0.00003042" iyz="-0.00000059"
+             izz="0.00023474" />
     </inertial>
     <visual>
       <origin
@@ -472,7 +439,7 @@
       lower="0"
       upper="0"
       effort="1000"
-      velocity="0" />
+      velocity="0.1" />
   </joint>
   <insert_transmission name="r_sho_roll"/>
 
@@ -484,13 +451,9 @@
         rpy="0 0 0" />
       <mass
         value="0.0561826372694755" />
-      <inertia
-        ixx="2.90495898818859E-05"
-        ixy="-2.03830290064609E-08"
-        ixz="-3.79159620555639E-07"
-        iyy="3.38921458240998E-05"
-        iyz="-1.12946351407492E-14"
-        izz="1.34693310072719E-05" />
+      <inertia ixx="0.00006196" ixy="0.0" ixz="0.0"
+             iyy="0.00001231" iyz="0.00000372"
+             izz="0.00006854" />
     </inertial>
     <visual>
       <origin
@@ -532,7 +495,7 @@
       lower="0"
       upper="0"
       effort="1000"
-      velocity="0" />
+      velocity="0.1" />
   </joint>
   <insert_transmission name="r_el"/>
 
@@ -547,13 +510,9 @@
         rpy="0 0 0" />
       <mass
         value="0.0229829364852389" />
-      <inertia
-        ixx="1.43427059428117E-05"
-        ixy="8.27728850430916E-11"
-        ixz="1.78618118574046E-10"
-        iyy="1.40196878929158E-05"
-        iyz="3.77243123517952E-08"
-        izz="5.34102862853241E-06" />
+      <inertia ixx="0.00000151" ixy="0.0" ixz="0.00000001"
+             iyy="0.00000430" iyz="0.0"
+             izz="0.00000412" />
     </inertial>
     <visual>
       <origin
@@ -595,7 +554,7 @@
       lower="0"
       upper="0"
       effort="1000"
-      velocity="0" />
+      velocity="0.1" />
   </joint>
   <insert_transmission name="l_hip_yaw"/>
 
@@ -607,13 +566,9 @@
         rpy="0 0 0" />
       <mass
         value="0.151586182496668" />
-      <inertia
-        ixx="5.5028175022932E-05"
-        ixy="-8.98410976515644E-07"
-        ixz="1.16956229470377E-12"
-        iyy="3.44253544650063E-05"
-        iyz="-9.07683611385409E-07"
-        izz="5.54170402685468E-05" />
+      <inertia ixx="0.00004661" ixy="-0.00000101" ixz="-0.00000131"
+             iyy="0.00012523" iyz="-0.00000006"
+             izz="0.00010857" />
     </inertial>
     <visual>
       <origin
@@ -655,7 +610,7 @@
       lower="0"
       upper="0"
       effort="1000"
-      velocity="0" />
+      velocity="0.1" />
   </joint>
   <insert_transmission name="l_hip_roll"/>
 
@@ -667,13 +622,9 @@
         rpy="0 0 0" />
       <mass
         value="0.100631639038866" />
-      <inertia
-        ixx="4.17310749465033E-05"
-        ixy="8.88098878734448E-07"
-        ixz="5.42245635048738E-09"
-        iyy="3.2141171755086E-05"
-        iyz="6.05524366448529E-07"
-        izz="5.70627485423253E-05" />
+      <inertia ixx="0.00010499" ixy="-0.00000001" ixz="-0.00000071"
+             iyy="0.00009613" iyz="0.00000353"
+             izz="0.00002493" />
     </inertial>
     <visual>
       <origin
@@ -715,7 +666,7 @@
       lower="0"
       upper="0"
       effort="1000"
-      velocity="0" />
+      velocity="0.1" />
   </joint>
   <insert_transmission name="l_hip_pitch"/>
 
@@ -727,13 +678,9 @@
         rpy="0 0 0" />
       <mass
         value="0.0624359207391482" />
-      <inertia
-        ixx="0.000103909612579584"
-        ixy="2.24696234615877E-10"
-        ixz="1.61509844645296E-10"
-        iyy="4.75106496264908E-05"
-        iyz="-1.78798066876229E-05"
-        izz="0.000119654238933631" />
+      <inertia ixx="0.00003715" ixy="0.0" ixz="0.0"
+             iyy="0.00002751" iyz="0.0"
+             izz="0.00001511" />
     </inertial>
     <visual>
       <origin
@@ -775,7 +722,7 @@
       lower="0"
       upper="0"
       effort="1000"
-      velocity="0" />
+      velocity="0.1" />
   </joint>
   <insert_transmission name="l_knee"/>
 
@@ -787,13 +734,9 @@
         rpy="0 0 0" />
       <mass
         value="0.151586182496668" />
-      <inertia
-        ixx="5.50281750229324E-05"
-        ixy="8.98440761834264E-07"
-        ixz="1.16956223612234E-12"
-        iyy="3.44253544650064E-05"
-        iyz="-9.07656515072525E-07"
-        izz="5.54170402685473E-05" />
+      <inertia ixx="0.00004661" ixy="-0.00000101" ixz="0.00000131"
+             iyy="0.00012523" iyz="0.00000006"
+             izz="0.00010857" />
     </inertial>
     <visual>
       <origin
@@ -835,7 +778,7 @@
       lower="0"
       upper="0"
       effort="1000"
-      velocity="0" />
+      velocity="0.1" />
   </joint>
   <insert_transmission name="l_ank_pitch"/>
 
@@ -847,13 +790,9 @@
         rpy="0 0 0" />
       <mass
         value="0.0443088669743472" />
-      <inertia
-        ixx="3.98750519227104E-05"
-        ixy="8.27728807804659E-11"
-        ixz="3.17919598040036E-09"
-        iyy="5.39463274407849E-05"
-        iyz="-3.77243123537462E-08"
-        izz="1.97495395193279E-05" />
+      <inertia ixx="0.00004034" ixy="-0.00000019" ixz="0.00000012"
+             iyy="0.00007874" iyz="0.00000101"
+             izz="0.00011579" />
     </inertial>
     <visual>
       <origin
@@ -895,7 +834,7 @@
       lower="0"
       upper="0"
       effort="1000"
-      velocity="0" />
+      velocity="0.1" />
   </joint>
   <insert_transmission name="l_ank_roll"/>
 <!-- =====================================================leg right -->
@@ -907,13 +846,9 @@
         rpy="0 0 0" />
       <mass
         value="0.0229829364852389" />
-      <inertia
-        ixx="1.43427059428118E-05"
-        ixy="8.27728850397696E-11"
-        ixz="1.78618118586269E-10"
-        iyy="1.40196878929159E-05"
-        iyz="3.77243123518229E-08"
-        izz="5.34102862853243E-06" />
+      <inertia ixx="0.00000151" ixy="0.0" ixz="0.00000001"
+             iyy="0.00000430" iyz="0.0"
+             izz="0.00000412" />
     </inertial>
     <visual>
       <origin
@@ -955,7 +890,7 @@
       lower="0"
       upper="0"
       effort="1000"
-      velocity="0" />
+      velocity="0.1" />
   </joint>
   <insert_transmission name="r_hip_yaw"/>
 
@@ -967,13 +902,9 @@
         rpy="0 0 0" />
       <mass
         value="0.151586182496668" />
-      <inertia
-        ixx="5.50281750229322E-05"
-        ixy="8.98440761834266E-07"
-        ixz="1.16956224699704E-12"
-        iyy="3.44253544650064E-05"
-        iyz="-9.07656515072372E-07"
-        izz="5.54170402685471E-05" />
+      <inertia ixx="0.00004661" ixy="0.00000101" ixz="-0.00000131"
+             iyy="0.00012523" iyz="0.00000006"
+             izz="0.00010857" />
     </inertial>
     <visual>
       <origin
@@ -1015,7 +946,7 @@
       lower="0"
       upper="0"
       effort="1000"
-      velocity="0" />
+      velocity="0.1" />
   </joint>
   <insert_transmission name="r_hip_roll"/>
 
@@ -1027,13 +958,9 @@
         rpy="0 0 0" />
       <mass
         value="0.100631639038866" />
-      <inertia
-        ixx="4.17310749465033E-05"
-        ixy="-9.08752859615629E-07"
-        ixz="5.42245635045147E-09"
-        iyy="3.21411717550871E-05"
-        iyz="6.05551462761427E-07"
-        izz="5.70627485423264E-05" />
+      <inertia ixx="0.00010499" ixy="0.00000001" ixz="-0.00000071"
+             iyy="0.00009613" iyz="-0.00000353"
+             izz="0.00002493" />
     </inertial>
     <visual>
       <origin
@@ -1075,7 +1002,7 @@
       lower="0"
       upper="0"
       effort="1000"
-      velocity="0" />
+      velocity="0.1" />
   </joint>
   <insert_transmission name="r_hip_pitch"/>
 
@@ -1087,13 +1014,9 @@
         rpy="0 0 0" />
       <mass
         value="0.0624359207391501" />
-      <inertia
-        ixx="0.000103909612579586"
-        ixy="2.24696234577128E-10"
-        ixz="1.61509844866009E-10"
-        iyy="4.75106496264916E-05"
-        iyz="-1.78798066876231E-05"
-        izz="0.000119654238933633" />
+      <inertia ixx="0.00003715" ixy="0.0" ixz="0.0"
+             iyy="0.00002751" iyz="0.0"
+             izz="0.00001511" />
     </inertial>
     <visual>
       <origin
@@ -1135,7 +1058,7 @@
       lower="0"
       upper="0"
       effort="1000"
-      velocity="0" />
+      velocity="0.1" />
   </joint>
   <insert_transmission name="r_knee"/>
 
@@ -1147,13 +1070,9 @@
         rpy="0 0 0" />
       <mass
         value="0.151586182496669" />
-      <inertia
-        ixx="5.50281750229329E-05"
-        ixy="-8.98410976515744E-07"
-        ixz="1.16956237258369E-12"
-        iyy="3.44253544650069E-05"
-        iyz="-9.07683611384809E-07"
-        izz="5.54170402685478E-05" />
+      <inertia ixx="0.00004661" ixy="0.00000101" ixz="0.00000131"
+             iyy="0.00012523" iyz="-0.00000006"
+             izz="0.00010857" />
     </inertial>
     <visual>
       <origin
@@ -1195,7 +1114,7 @@
       lower="0"
       upper="0"
       effort="1000"
-      velocity="0" />
+      velocity="0.1" />
   </joint>
   <insert_transmission name="r_ank_pitch"/>
 
@@ -1207,13 +1126,10 @@
         rpy="0 0 0" />
       <mass
         value="0.0443088669743472" />
-      <inertia
-        ixx="3.98750519227104E-05"
-        ixy="8.27728806761196E-11"
-        ixz="-3.5364322178513E-09"
-        iyy="5.3946327440785E-05"
-        iyz="-3.77243123497183E-08"
-        izz="1.97495395193279E-05" />
+      
+      <inertia ixx="0.00004034" ixy="0.00000019" ixz="0.00000012"
+             iyy="0.00007874" iyz="-0.00000101"
+             izz="0.00011579" />
     </inertial>
     <visual>
       <origin
@@ -1255,7 +1171,7 @@
       lower="0"
       upper="0"
       effort="1000"
-      velocity="0" />
+      velocity="0.1" />
   </joint>
   <insert_transmission name="r_ank_roll"/>
 </robot>

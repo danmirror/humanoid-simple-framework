@@ -89,7 +89,7 @@ approach darwin op3 inertia
   </link>
   <joint
     name="head_pan"
-    type="continuous">
+    type="revolute">
     <origin
       xyz="0.035958 -0.1394 0.14298"
       rpy="-1.5708 0 -3.1416" />
@@ -99,11 +99,7 @@ approach darwin op3 inertia
       link="head_pan" />
     <axis
       xyz="0 1 0" />
-    <limit
-      lower="0"
-      upper="0"
-      effort="50"
-      velocity="0.1" />
+     <limit effort="1000" velocity="10" lower="${-pi*0.9}" upper="${pi*0.9}" />
   </joint>
   <insert_transmission name="head_pan"/>
 
@@ -145,7 +141,7 @@ approach darwin op3 inertia
   </link>
   <joint
     name="head_tilt"
-    type="continuous">
+    type="revolute">
     <origin
       xyz="0 -0.0285 0.01"
       rpy="0 0 3.1416" />
@@ -155,11 +151,7 @@ approach darwin op3 inertia
       link="head_tilt" />
     <axis
       xyz="-1 0 0" />
-    <limit
-      lower="0"
-      upper="0"
-      effort="50"
-      velocity="0.1" />
+     <limit effort="1000" velocity="10" lower="${-pi*0.9}" upper="${pi*0.9}" />
   </joint>
 
   <insert_transmission name="head_tilt"/>
@@ -203,7 +195,7 @@ approach darwin op3 inertia
   </link>
   <joint
     name="l_sho_pitch"
-    type="continuous">
+    type="revolute">
     <origin
       xyz="0.10096 -0.1394 0.12423"
       rpy="1.5708 0 0" />
@@ -213,11 +205,7 @@ approach darwin op3 inertia
       link="l_sho_pitch" />
     <axis
       xyz="-1 0 0" />
-    <limit
-      lower="0"
-      upper="0"
-      effort="100"
-      velocity="0.1" />
+     <limit effort="1000" velocity="10" lower="${-pi*0.9}" upper="${pi*0.9}" />
   </joint>
   <insert_transmission name="l_sho_pitch"/>
 
@@ -259,7 +247,7 @@ approach darwin op3 inertia
   </link>
   <joint
     name="l_sho_roll"
-    type="continuous">
+    type="revolute">
     <origin
       xyz="0.0385 -0.01 0"
       rpy="0 0 0" />
@@ -269,11 +257,7 @@ approach darwin op3 inertia
       link="l_sho_roll" />
     <axis
       xyz="0 0 -1" />
-    <limit
-      lower="0"
-      upper="0"
-      effort="1000"
-      velocity="0.1" />
+    <limit effort="1000" velocity="10" lower="${-pi*0.9}" upper="${pi*0.9}" />
   </joint>
   <insert_transmission name="l_sho_roll"/>
 
@@ -315,7 +299,7 @@ approach darwin op3 inertia
   </link>
   <joint
     name="l_el"
-    type="continuous">
+    type="revolute">
     <origin
       xyz="0.0874466726391421 0 0.0100000000000002"
       rpy="0 0 0" />
@@ -325,11 +309,7 @@ approach darwin op3 inertia
       link="l_el" />
     <axis
       xyz="0 -1 0" />
-    <limit
-      lower="0"
-      upper="0"
-      effort="1000"
-      velocity="0.1" />
+     <limit effort="1000" velocity="10" lower="${-pi*0.9}" upper="${pi*0.9}" />
   </joint>
   <insert_transmission name="l_el"/>
 
@@ -373,7 +353,7 @@ approach darwin op3 inertia
   </link>
   <joint
     name="r_sho_pitch"
-    type="continuous">
+    type="revolute">
     <origin
       xyz="-0.0290205030447131 -0.139400454049433 0.124229542783902"
       rpy="1.5707963267949 0 0" />
@@ -383,11 +363,7 @@ approach darwin op3 inertia
       link="r_sho_pitch" />
     <axis
       xyz="-1 0 0" />
-    <limit
-      lower="0"
-      upper="0"
-      effort="1000"
-      velocity="0.1" />
+     <limit effort="1000" velocity="10" lower="${-pi*0.9}" upper="${pi*0.9}" />
   </joint>
   <insert_transmission name="r_sho_pitch"/>
 
@@ -429,7 +405,7 @@ approach darwin op3 inertia
   </link>
   <joint
     name="r_sho_roll"
-    type="continuous">
+    type="revolute">
     <origin
       xyz="-0.0384999999999999 -0.00999999999999629 0"
       rpy="0 0 0" />
@@ -439,11 +415,7 @@ approach darwin op3 inertia
       link="r_sho_roll" />
     <axis
       xyz="0 0 -1" />
-    <limit
-      lower="0"
-      upper="0"
-      effort="1000"
-      velocity="0.1" />
+     <limit effort="1000" velocity="10" lower="${-pi*0.9}" upper="${pi*0.9}" />
   </joint>
   <insert_transmission name="r_sho_roll"/>
 
@@ -485,7 +457,7 @@ approach darwin op3 inertia
   </link>
   <joint
     name="r_el"
-    type="continuous">
+    type="revolute">
     <origin
       xyz="-0.0936500000000009 0 0.0099999999999961"
       rpy="0 0 0" />
@@ -495,11 +467,7 @@ approach darwin op3 inertia
       link="r_el" />
     <axis
       xyz="0 -1 0" />
-    <limit
-      lower="0"
-      upper="0"
-      effort="1000"
-      velocity="0.1" />
+     <limit effort="1000" velocity="10" lower="${-pi*0.9}" upper="${pi*0.9}" />
   </joint>
   <insert_transmission name="r_el"/>
 
@@ -544,7 +512,7 @@ approach darwin op3 inertia
   </link>
   <joint
     name="l_hip_yaw"
-    type="continuous">
+    type="revolute">
     <origin
       xyz="0.0809483118859766 -0.13794445404943 0.00675246433967373"
       rpy="1.5707963267949 0.00102499964103206 0" />
@@ -554,11 +522,7 @@ approach darwin op3 inertia
       link="l_hip_yaw" />
     <axis
       xyz="0 -1 0" />
-    <limit
-      lower="0"
-      upper="0"
-      effort="1000"
-      velocity="0.1" />
+     <limit effort="1000" velocity="10" lower="${-pi*0.9}" upper="${pi*0.9}" />
   </joint>
   <insert_transmission name="l_hip_yaw"/>
 
@@ -600,7 +564,7 @@ approach darwin op3 inertia
   </link>
   <joint
     name="l_hip_roll"
-    type="continuous">
+    type="revolute">
     <origin
       xyz="0 -0.0360348499633859 0"
       rpy="0 0 0.00102499964103206" />
@@ -610,11 +574,7 @@ approach darwin op3 inertia
       link="l_hip_roll" />
     <axis
       xyz="0 0 -1" />
-    <limit
-      lower="0"
-      upper="0"
-      effort="1000"
-      velocity="0.1" />
+     <limit effort="1000" velocity="10" lower="${-pi*0.9}" upper="${pi*0.9}" />
   </joint>
   <insert_transmission name="l_hip_roll"/>
 
@@ -656,21 +616,17 @@ approach darwin op3 inertia
   </link>
   <joint
     name="l_hip_pitch"
-    type="continuous">
+    type="revolute">
     <origin
       xyz="0 0 -0.000599999999901152"
-      rpy="0 0 0" />
+      rpy="-0.3 0 0" />
     <parent
       link="l_hip_roll" />
     <child
       link="l_hip_pitch" />
     <axis
       xyz="-1 0 0" />
-    <limit
-      lower="0"
-      upper="0"
-      effort="1000"
-      velocity="0.1" />
+     <limit effort="1000" velocity="10" lower="${-pi*0.9}" upper="${pi*0.9}" />
   </joint>
   <insert_transmission name="l_hip_pitch"/>
 
@@ -712,21 +668,17 @@ approach darwin op3 inertia
   </link>
   <joint
     name="l_knee"
-    type="continuous">
+    type="revolute">
     <origin
       xyz="0 -0.121999999999998 -3.60787874466861E-05"
-      rpy="0 0 0" />
+      rpy="0.5 0 0" />
     <parent
       link="l_hip_pitch" />
     <child
       link="l_knee" />
     <axis
       xyz="-1 0 0" />
-    <limit
-      lower="0"
-      upper="0"
-      effort="1000"
-      velocity="0.1" />
+     <limit effort="1000" velocity="10" lower="${-pi*0.9}" upper="${pi*0.9}" />
   </joint>
   <insert_transmission name="l_knee"/>
 
@@ -768,21 +720,17 @@ approach darwin op3 inertia
   </link>
   <joint
     name="l_ank_pitch"
-    type="continuous">
+    type="revolute">
     <origin
       xyz="0 -0.12200007459305 0.000539974593052855"
-      rpy="0 0 -3.14159265358979" />
+      rpy="0.5 0 -3.14159265358979" />
     <parent
       link="l_knee" />
     <child
       link="l_ank_pitch" />
     <axis
       xyz="1 0 0" />
-    <limit
-      lower="0"
-      upper="0"
-      effort="1000"
-      velocity="0.1" />
+     <limit effort="1000" velocity="10" lower="${-pi*0.9}" upper="${pi*0.9}" />
   </joint>
   <insert_transmission name="l_ank_pitch"/>
 
@@ -824,7 +772,7 @@ approach darwin op3 inertia
   </link>
   <joint
     name="l_ank_roll"
-    type="continuous">
+    type="revolute">
     <origin
       xyz="0 0 0"
       rpy="0 0 3.14159265358979" />
@@ -834,11 +782,7 @@ approach darwin op3 inertia
       link="l_ank_roll" />
     <axis
       xyz="0 0 -1" />
-    <limit
-      lower="0"
-      upper="0"
-      effort="1000"
-      velocity="0.1" />
+     <limit effort="1000" velocity="10" lower="${-pi*0.9}" upper="${pi*0.9}" />
   </joint>
   <insert_transmission name="l_ank_roll"/>
 <!-- =====================================================leg right -->
@@ -880,7 +824,7 @@ approach darwin op3 inertia
   </link>
   <joint
     name="r_hip_yaw"
-    type="continuous">
+    type="revolute">
     <origin
       xyz="-0.00903979651901684 -0.13794425404943 0.00679279956234802"
       rpy="1.5707963267949 0.00102499964103848 0" />
@@ -890,11 +834,7 @@ approach darwin op3 inertia
       link="r_hip_yaw" />
     <axis
       xyz="0 -1 0" />
-    <limit
-      lower="0"
-      upper="0"
-      effort="1000"
-      velocity="0.1" />
+     <limit effort="1000" velocity="10" lower="${-pi*0.9}" upper="${pi*0.9}" />
   </joint>
   <insert_transmission name="r_hip_yaw"/>
 
@@ -936,7 +876,7 @@ approach darwin op3 inertia
   </link>
   <joint
     name="r_hip_roll"
-    type="continuous">
+    type="revolute">
     <origin
       xyz="0 -0.0360348499633864 0"
       rpy="0 0 0.00102499964103848" />
@@ -946,11 +886,7 @@ approach darwin op3 inertia
       link="r_hip_roll" />
     <axis
       xyz="0 0 -1" />
-    <limit
-      lower="0"
-      upper="0"
-      effort="1000"
-      velocity="0.1" />
+     <limit effort="1000" velocity="10" lower="${-pi*0.9}" upper="${pi*0.9}" />
   </joint>
   <insert_transmission name="r_hip_roll"/>
 
@@ -992,21 +928,17 @@ approach darwin op3 inertia
   </link>
   <joint
     name="r_hip_pitch"
-    type="continuous">
+    type="revolute">
     <origin
       xyz="0 0 -0.000599999999901429"
-      rpy="0 0 0" />
+      rpy="-0.3 0 0" />
     <parent
       link="r_hip_roll" />
     <child
       link="r_hip_pitch" />
     <axis
       xyz="-1 0 0" />
-    <limit
-      lower="0"
-      upper="0"
-      effort="1000"
-      velocity="0.1" />
+     <limit effort="1000" velocity="10" lower="${-pi*0.9}" upper="${pi*0.9}" />
   </joint>
   <insert_transmission name="r_hip_pitch"/>
 
@@ -1048,21 +980,17 @@ approach darwin op3 inertia
   </link>
   <joint
     name="r_knee"
-    type="continuous">
+    type="revolute">
     <origin
       xyz="0 -0.121999999999998 -3.60787874468527E-05"
-      rpy="0 0 0" />
+      rpy="0.5 0 0" />
     <parent
       link="r_hip_pitch" />
     <child
       link="r_knee" />
     <axis
       xyz="-1 0 0" />
-    <limit
-      lower="0"
-      upper="0"
-      effort="1000"
-      velocity="0.1" />
+     <limit effort="1000" velocity="10" lower="${-pi*0.9}" upper="${pi*0.9}" />
   </joint>
   <insert_transmission name="r_knee"/>
 
@@ -1104,21 +1032,17 @@ approach darwin op3 inertia
   </link>
   <joint
     name="r_ank_pitch"
-    type="continuous">
+    type="revolute">
     <origin
       xyz="0 -0.122 0.00053997"
-      rpy="0 0 -3.1416" />
+      rpy="0.5 0 -3.1416" />
     <parent
       link="r_knee" />
     <child
       link="r_ank_pitch" />
     <axis
       xyz="1 0 0" />
-    <limit
-      lower="0"
-      upper="0"
-      effort="1000"
-      velocity="0.1" />
+     <limit effort="1000" velocity="10" lower="${-pi*0.9}" upper="${pi*0.9}" />
   </joint>
   <insert_transmission name="r_ank_pitch"/>
 
@@ -1161,7 +1085,7 @@ approach darwin op3 inertia
   </link>
   <joint
     name="r_ank_roll"
-    type="continuous">
+    type="revolute">
     <origin
       xyz="0 0 0"
       rpy="0 0 3.1416" />
@@ -1171,11 +1095,7 @@ approach darwin op3 inertia
       link="r_ank_roll" />
     <axis
       xyz="0 0 -1" />
-    <limit
-      lower="0"
-      upper="0"
-      effort="1000"
-      velocity="0.1" />
+     <limit effort="1000" velocity="10" lower="${-pi*0.9}" upper="${pi*0.9}" />
   </joint>
   <insert_transmission name="r_ank_roll"/>
 </robot>

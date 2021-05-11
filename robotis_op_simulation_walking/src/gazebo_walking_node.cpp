@@ -100,7 +100,7 @@ void SimulationWalkingNode::Process()
     j_shoulder_l_msg.data = outValue[13];
 
     ROS_WARN("Proses ...");
-    ROS_WARN("%s",j_pelvis_r_msg);
+    ROS_WARN("%d", j_ankle1_r_msg.data);
 
     j_pelvis_l_publisher_.publish(j_pelvis_l_msg);
     j_thigh1_l_publisher_.publish(j_thigh1_l_msg);
@@ -122,7 +122,7 @@ void SimulationWalkingNode::Process()
 
 void SimulationWalkingNode::cmdVelCb(const geometry_msgs::Twist::ConstPtr& msg)
 {
-    ROS_WARN("cmdval start");
+    ROS_ERROR("cmdval start");
     double period = walking_.PERIOD_TIME;
     walking_.X_MOVE_AMPLITUDE=(msg->linear.x/period*1000.0*10000.0);
     walking_.Y_MOVE_AMPLITUDE=(msg->linear.y/period*1000.0*10000.0);

@@ -474,7 +474,7 @@ void GazeboWalking::Process(double *outValue)
     }
     else
     {
-        // return; // Do not use angle;
+        return; // Do not use angle;
     }
     ROS_WARN("init walking gazebo 4");
 

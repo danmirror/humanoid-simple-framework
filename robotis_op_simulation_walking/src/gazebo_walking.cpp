@@ -31,7 +31,7 @@ GazeboWalking::GazeboWalking(ros::NodeHandle nh)
     P_OFFSET = 0;
     A_OFFSET = 0;
     HIP_PITCH_OFFSET = 13.0;
-    PERIOD_TIME = 1000; //600
+    PERIOD_TIME =600; //600
     DSP_RATIO = 0.1;
     STEP_FB_RATIO = 0.28;
     Z_MOVE_AMPLITUDE = 60; //40
@@ -54,21 +54,21 @@ GazeboWalking::GazeboWalking(ros::NodeHandle nh)
     A_MOVE_AIM_ON = false;
     BALANCE_ENABLE = false;
 
-    j_pelvis_l_publisher_ = nh_.advertise<std_msgs::Float64>("/rscuad/l_hip_yaw_position/command",1);
-    j_thigh1_l_publisher_ = nh_.advertise<std_msgs::Float64>("/rscuad/l_hip_roll_position/command",1);
-    j_thigh2_l_publisher_ = nh_.advertise<std_msgs::Float64>("/rscuad/l_hip_pitch_position/command",1);
-    j_tibia_l_publisher_ = nh_.advertise<std_msgs::Float64>("/rscuad/l_knee_position/command",1);
-    j_ankle1_l_publisher_ = nh_.advertise<std_msgs::Float64>("/rscuad/l_ank_roll_position/command",1);
-    j_ankle2_l_publisher_ = nh_.advertise<std_msgs::Float64>("/rscuad/l_ank_pitch_position/command",1);
-    // j_shoulder_l_publisher_ = nh_.advertise<std_msgs::Float64>("/rscuad/l_sho_pitch_position/command",1);
+    // j_pelvis_l_publisher_ = nh_.advertise<std_msgs::Float64>("/rscuad/l_hip_yaw_position/command",1);
+    // j_thigh1_l_publisher_ = nh_.advertise<std_msgs::Float64>("/rscuad/l_hip_roll_position/command",1);
+    // j_thigh2_l_publisher_ = nh_.advertise<std_msgs::Float64>("/rscuad/l_hip_pitch_position/command",1);
+    // j_tibia_l_publisher_ = nh_.advertise<std_msgs::Float64>("/rscuad/l_knee_position/command",1);
+    // j_ankle1_l_publisher_ = nh_.advertise<std_msgs::Float64>("/rscuad/l_ank_roll_position/command",1);
+    // j_ankle2_l_publisher_ = nh_.advertise<std_msgs::Float64>("/rscuad/l_ank_pitch_position/command",1);
+    // // j_shoulder_l_publisher_ = nh_.advertise<std_msgs::Float64>("/rscuad/l_sho_pitch_position/command",1);
 
-    j_pelvis_r_publisher_ = nh_.advertise<std_msgs::Float64>("/rscuad/r_hip_yaw_position/command",1);
-    j_thigh1_r_publisher_ = nh_.advertise<std_msgs::Float64>("/rscuad/r_hip_roll_position/command",1);
-    j_thigh2_r_publisher_ = nh_.advertise<std_msgs::Float64>("/rscuad/r_hip_pitch_position/command",1);
-    j_tibia_r_publisher_ = nh_.advertise<std_msgs::Float64>("/rscuad/r_knee_position/command",1);
-    j_ankle1_r_publisher_ = nh_.advertise<std_msgs::Float64>("/rscuad/r_ank_roll_position/command",1);
-    j_ankle2_r_publisher_ = nh_.advertise<std_msgs::Float64>("/rscuad/r_ank_pitch_position/command",1);
-    // j_shoulder_r_publisher_ = nh_.advertise<std_msgs::Float64>("/rscuad/r_sho_pitch_position/command",1);
+    // j_pelvis_r_publisher_ = nh_.advertise<std_msgs::Float64>("/rscuad/r_hip_yaw_position/command",1);
+    // j_thigh1_r_publisher_ = nh_.advertise<std_msgs::Float64>("/rscuad/r_hip_roll_position/command",1);
+    // j_thigh2_r_publisher_ = nh_.advertise<std_msgs::Float64>("/rscuad/r_hip_pitch_position/command",1);
+    // j_tibia_r_publisher_ = nh_.advertise<std_msgs::Float64>("/rscuad/r_knee_position/command",1);
+    // j_ankle1_r_publisher_ = nh_.advertise<std_msgs::Float64>("/rscuad/r_ank_roll_position/command",1);
+    // j_ankle2_r_publisher_ = nh_.advertise<std_msgs::Float64>("/rscuad/r_ank_pitch_position/command",1);
+    // // j_shoulder_r_publisher_ = nh_.advertise<std_msgs::Float64>("/rscuad/r_sho_pitch_position/command",1);
 
 }
 
@@ -250,6 +250,7 @@ void GazeboWalking::update_param_balance()
 
 void GazeboWalking::Start()
 {
+    // ROS_INFO("walking starting by main");
     m_Ctrl_Running = true;
     m_Real_Running = true;
 }
@@ -288,10 +289,12 @@ void GazeboWalking::Process(double *outValue)
         {
             if(m_X_Move_Amplitude == 0 && m_Y_Move_Amplitude == 0 && m_A_Move_Amplitude == 0)
             {
+                ROS_ERROR(" ->>>> mreal false");
                 m_Real_Running = false;
             }
             else
             {
+                ROS_ERROR(" ->>>> mreal true");
                 X_MOVE_AMPLITUDE = 0;
                 Y_MOVE_AMPLITUDE = 0;
                 A_MOVE_AMPLITUDE = 0;
@@ -457,13 +460,14 @@ void GazeboWalking::Process(double *outValue)
 
     if(m_Real_Running == true)
     {
-        ROS_INFO("update");
+        ROS_INFO("update m_Time");
         std::cout<<TIME_UNIT<<m_Time<<"-"<< m_PeriodTime<<std::endl;
 
         m_Time += TIME_UNIT;
         if(m_Time >= m_PeriodTime)
             m_Time = 0;
     }
+    
     ROS_WARN("init walking gazebo 3");
     // Compute angles
     if((computeIK(&angle[0], ep[0], ep[1], ep[2], ep[3], ep[4], ep[5]) == 1)
@@ -489,7 +493,7 @@ void GazeboWalking::Process(double *outValue)
         else if(i == 2 || i == 8) // R_HIP_PITCH or L_HIP_PITCH
             offset -= (double)dir[i] * HIP_PITCH_OFFSET * 3.413;
 
-        outValue[i] = (offset*0.293)/(180.0/M_PI);//initAngle[i] + (int)offset; //todo check MX28::Angle2Value(initAngle[i]) + (int)offset;
+        outValue[i] = (offset*0.293)/(180.0/M_PI); //initAngle[i] + (int)offset; //todo check MX28::Angle2Value(initAngle[i]) + (int)offset;
         
         // std::cout<<outValue[i]<<std::endl;
     }
@@ -511,7 +515,7 @@ void GazeboWalking::Process(double *outValue)
 
         outValue[5] -= (dir[5] * rlGyroErr * BALANCE_ANKLE_ROLL_GAIN); // R_ANKLE_ROLL
         outValue[11] -= (dir[11] * rlGyroErr * BALANCE_ANKLE_ROLL_GAIN); // L_ANKLE_ROLL
-        std::cout<<outValue[1]<<std::endl<<std::endl;
+        // std::cout<<outValue[1]<<std::endl<<std::endl;
     }
 
 }

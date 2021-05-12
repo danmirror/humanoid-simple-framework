@@ -989,7 +989,8 @@ approach darwin op3 inertia
     <child
       link="r_knee" />
     <axis
-      xyz="-1 0 0" />
+      xyz="1 0 0" />
+    <!-- <limit effort="1000" velocity="100" lower="${-pi*0.9}" upper="${pi*0.9}" /> -->
      <limit effort="1000" velocity="10" lower="${-pi*0.9}" upper="${pi*0.9}" />
   </joint>
   <insert_transmission name="r_knee"/>

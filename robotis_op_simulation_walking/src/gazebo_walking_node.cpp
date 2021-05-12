@@ -38,16 +38,16 @@ SimulationWalkingNode::SimulationWalkingNode(ros::NodeHandle nh)
     j_thigh1_l_publisher_ = nh_.advertise<std_msgs::Float64>("/rscuad/l_hip_roll_position/command",1);
     j_thigh2_l_publisher_ = nh_.advertise<std_msgs::Float64>("/rscuad/l_hip_pitch_position/command",1);
     j_tibia_l_publisher_ = nh_.advertise<std_msgs::Float64>("/rscuad/l_knee_position/command",1);
-    j_ankle1_l_publisher_ = nh_.advertise<std_msgs::Float64>("/rscuad/l_ank_roll_position/command",1);
-    j_ankle2_l_publisher_ = nh_.advertise<std_msgs::Float64>("/rscuad/l_ank_pitch_position/command",1);
+    j_ankle1_l_publisher_ = nh_.advertise<std_msgs::Float64>("/rscuad/l_ank_pitch_position/command",1);
+    j_ankle2_l_publisher_ = nh_.advertise<std_msgs::Float64>("/rscuad/l_ank_roll_position/command",1);
     j_shoulder_l_publisher_ = nh_.advertise<std_msgs::Float64>("/rscuad/l_sho_pitch_position/command",1);
 
     j_pelvis_r_publisher_ = nh_.advertise<std_msgs::Float64>("/rscuad/r_hip_yaw_position/command",1);
     j_thigh1_r_publisher_ = nh_.advertise<std_msgs::Float64>("/rscuad/r_hip_roll_position/command",1);
     j_thigh2_r_publisher_ = nh_.advertise<std_msgs::Float64>("/rscuad/r_hip_pitch_position/command",1);
     j_tibia_r_publisher_ = nh_.advertise<std_msgs::Float64>("/rscuad/r_knee_position/command",1);
-    j_ankle1_r_publisher_ = nh_.advertise<std_msgs::Float64>("/rscuad/r_ank_roll_position/command",1);
-    j_ankle2_r_publisher_ = nh_.advertise<std_msgs::Float64>("/rscuad/r_ank_pitch_position/command",1);
+    j_ankle1_r_publisher_ = nh_.advertise<std_msgs::Float64>("/rscuad/r_ank_pitch_position/command",1);
+    j_ankle2_r_publisher_ = nh_.advertise<std_msgs::Float64>("/rscuad/r_ank_roll_position/command",1);
     j_shoulder_r_publisher_ = nh_.advertise<std_msgs::Float64>("/rscuad/r_sho_pitch_position/command",1);
 
     cmd_vel_subscriber_ = nh_.subscribe("/rscuad/cmd_vel", 100, &SimulationWalkingNode::cmdVelCb, this);
@@ -99,7 +99,7 @@ void SimulationWalkingNode::Process()
     j_shoulder_r_msg.data = outValue[12];
     j_shoulder_l_msg.data = outValue[13];
 
-    ROS_WARN("Proses ...");
+    ROS_WARN("Proses in node ...");
     ROS_WARN("%d", j_ankle1_r_msg.data);
 
     j_pelvis_l_publisher_.publish(j_pelvis_l_msg);
@@ -203,7 +203,7 @@ int main(int argc, char **argv)
     ros::Time last_time = ros::Time::now();
     ros::Rate rate(control_rate);
     ROS_INFO("Starting walking");
-    //gazebo_walking.Start();
+    gazebo_walking_node.walking_.Start();
 
 
     dynamic_reconfigure::Server<robotis_op_simulation_walking::robotis_op_walkingConfig> srv;

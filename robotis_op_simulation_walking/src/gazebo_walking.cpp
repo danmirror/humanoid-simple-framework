@@ -17,7 +17,7 @@ using namespace Robot;
 GazeboWalking::GazeboWalking(ros::NodeHandle nh)
     : nh_(nh)
 {
-
+    ROS_WARN("Constructor");
     m_Ctrl_Running = false;
     m_Real_Running = false;
     m_Time = 0.0;
@@ -25,16 +25,16 @@ GazeboWalking::GazeboWalking(ros::NodeHandle nh)
     fbGyroErr = 0.0;
 
     X_OFFSET = -10;
-    Y_OFFSET = 5;
-    Z_OFFSET = 40;
-    R_OFFSET = 0;
+    Y_OFFSET = -10;
+    Z_OFFSET =5;
+    R_OFFSET = 20;
     P_OFFSET = 0;
     A_OFFSET = 0;
-    HIP_PITCH_OFFSET = 40.0;
+    HIP_PITCH_OFFSET = 20.0;
     PERIOD_TIME =600; //600
     DSP_RATIO = 0.1;
     STEP_FB_RATIO = 0.28;
-    Z_MOVE_AMPLITUDE = 20; //40
+    Z_MOVE_AMPLITUDE = 60; //40
     Y_SWAP_AMPLITUDE = 20.0;
     Z_SWAP_AMPLITUDE = 5;
     PELVIS_OFFSET = 3.0;
@@ -267,6 +267,7 @@ bool GazeboWalking::IsRunning()
 
 void GazeboWalking::Process(double *outValue)
 {
+    ROS_ERROR("HIP_PITCH_OFFSET = %f", HIP_PITCH_OFFSET);
     ROS_WARN("init walking gazebo 1");
     double x_swap, y_swap, z_swap, a_swap, b_swap, c_swap;
     double x_move_r, y_move_r, z_move_r, a_move_r, b_move_r, c_move_r;
@@ -414,9 +415,9 @@ void GazeboWalking::Process(double *outValue)
     a_move_r = 0;
     b_move_r = 0;
 
-    // std ::cout<<"x "<<x_swap<<std::endl;
-    // std ::cout<<"y "<<y_swap<<std::endl;
-    // std ::cout<<"z "<<z_swap<<std::endl;
+    std ::cout<<"x "<<x_swap<<std::endl;
+    std ::cout<<"y "<<y_swap<<std::endl;
+    std ::cout<<"z "<<z_swap<<std::endl;
     
 
     ep[0] = x_swap + x_move_r + m_X_Offset;
@@ -504,7 +505,7 @@ void GazeboWalking::Process(double *outValue)
     }
     // }
     // trigg ++;
-    ROS_ERROR("trig = %f", outValue[1]);
+    ROS_ERROR("HIP_PITCH_OFFSET = %f", HIP_PITCH_OFFSET);
     // std::cout<<outValue[1]<<std::endl;
 
 

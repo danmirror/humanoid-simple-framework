@@ -179,6 +179,26 @@ void SimulationWalkingNode::imuCb(sensor_msgs::ImuConstPtr msg)
 
 void SimulationWalkingNode::dynamicReconfigureCb(robotis_op_simulation_walking::robotis_op_walkingConfig &config, uint32_t level)
 {
+    // ROS_INFO("%f", config.X_OFFSET);
+    // ROS_INFO("%f", config.X_OFFSET);
+    // ROS_INFO("%f", config.Y_OFFSET);
+    // ROS_INFO("%f", config.Z_OFFSET);
+    // ROS_INFO("%f", config.R_OFFSET);
+    // ROS_INFO("%f", config.P_OFFSET);
+    // ROS_INFO("%f", config.A_OFFSET);
+    // ROS_INFO("%f", config.PERIOD_TIME);
+    // ROS_INFO("%f", config.DSP_RATIO);
+    // ROS_INFO("%f", config.STEP_FB_RATIO);
+    // ROS_INFO("%f", config.Z_MOVE_AMPLITUDE);
+    // ROS_INFO("%f", config.Y_SWAP_AMPLITUDE);
+    // ROS_INFO("%f", config.PELVIS_OFFSET);
+    // ROS_INFO("%f", config.ARM_SWING_GAIN);
+    // ROS_INFO("%f", config.BALANCE_KNEE_GAIN);
+    // ROS_INFO("%f", config.BALANCE_ANKLE_PITCH_GAIN);
+    // ROS_INFO("%f", config.BALANCE_HIP_ROLL_GAIN);
+    // ROS_INFO("%f", config.BALANCE_ANKLE_ROLL_GAIN);
+    // ROS_INFO("%f", config.HIP_PITCH_OFFSET);
+
     walking_.X_OFFSET=config.X_OFFSET;
     walking_.Y_OFFSET=config.Y_OFFSET;
     walking_.Z_OFFSET=config.Z_OFFSET;
@@ -221,7 +241,6 @@ int main(int argc, char **argv)
     ros::Time last_time = ros::Time::now();
     ros::Rate rate(control_rate);
     ROS_INFO("Starting walking");
-    gazebo_walking_node.walking_.Start();
 
 
     dynamic_reconfigure::Server<robotis_op_simulation_walking::robotis_op_walkingConfig> srv;
@@ -229,6 +248,7 @@ int main(int argc, char **argv)
     cb = boost::bind(&SimulationWalkingNode::dynamicReconfigureCb, &gazebo_walking_node, _1, _2);
     srv.setCallback(cb);
 
+    gazebo_walking_node.walking_.Start();
 
     ROS_INFO("Started walking");
 

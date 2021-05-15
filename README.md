@@ -14,14 +14,14 @@
 - [x] Gazebo running
 > roslaunch rscuad_gazebo rscuad_world.launch
 
-- [] walking
+- walking
 > rosrun robotis_op_simulation_walking robotis_op_simulation_walking_node
 
 ##### optional
-- [] demo velocity [under construction]
+- demo velocity [under construction]
 > rosrun robotis_op_simulation_walking walker_demo.py
 
-- [] see value walking
+- see value walking
 > rosrun robotis_op_simulation_walking walker.py
 
 

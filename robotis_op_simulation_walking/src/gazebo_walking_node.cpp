@@ -85,22 +85,40 @@ void SimulationWalkingNode::Process()
 
 
     j_pelvis_r_msg.data = outValue[0];
-    j_pelvis_l_msg.data = outValue[6];
     j_thigh1_r_msg.data = outValue[1];
-    j_thigh1_l_msg.data = outValue[7];
     j_thigh2_r_msg.data = outValue[2];
-    j_thigh2_l_msg.data = outValue[8];
     j_tibia_r_msg.data = outValue[3];
-    j_tibia_l_msg.data = outValue[9];
     j_ankle1_r_msg.data = outValue[4];
-    j_ankle1_l_msg.data = outValue[10];
     j_ankle2_r_msg.data = outValue[5];
+
+    j_pelvis_l_msg.data = outValue[6];
+    j_thigh1_l_msg.data = outValue[7];
+    j_thigh2_l_msg.data = outValue[8];
+    j_tibia_l_msg.data = outValue[9];
+    j_ankle1_l_msg.data = outValue[10];
     j_ankle2_l_msg.data = outValue[11];
     j_shoulder_r_msg.data = outValue[12];
     j_shoulder_l_msg.data = outValue[13];
+    
+    ROS_INFO("calc R0 = %f", outValue[0]);
+    ROS_INFO("calc R1 = %f", outValue[1]);
+    ROS_INFO("calc R2 = %f", outValue[2]);
+    ROS_INFO("calc R3 = %f", outValue[3]);
+    ROS_INFO("calc R4 = %f", outValue[4]);
+    ROS_INFO("calc R5 = %f", outValue[5]);
+    
+    ROS_INFO("calc L0 = %f", outValue[6]);
+    ROS_INFO("calc L1 = %f", outValue[7]);
+    ROS_INFO("calc L2 = %f", outValue[8]);
+    ROS_INFO("calc L3 = %f", outValue[9]);
+    ROS_INFO("calc L4 = %f", outValue[10]);
+    ROS_INFO("calc L5 = %f", outValue[11]);
+
+    ROS_INFO("calc L12 = %f", outValue[12]);
+    ROS_INFO("calc R13 = %f", outValue[13]);
 
     ROS_WARN("Proses in node ...");
-    ROS_WARN("%d", j_ankle1_r_msg.data);
+    ROS_WARN("%f", j_ankle1_r_msg.data);
 
     j_pelvis_l_publisher_.publish(j_pelvis_l_msg);
     j_thigh1_l_publisher_.publish(j_thigh1_l_msg);

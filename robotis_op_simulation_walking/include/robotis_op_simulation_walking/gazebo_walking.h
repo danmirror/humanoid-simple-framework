@@ -63,7 +63,7 @@ public:
     int    P_GAIN;
     int    I_GAIN;
     int    D_GAIN;
-
+    int trigg=0;
 
     double rlGyroErr;
     double fbGyroErr;

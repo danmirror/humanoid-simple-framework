@@ -26,15 +26,15 @@ GazeboWalking::GazeboWalking(ros::NodeHandle nh)
 
     X_OFFSET = -10;
     Y_OFFSET = 5;
-    Z_OFFSET = 20;
+    Z_OFFSET = 40;
     R_OFFSET = 0;
     P_OFFSET = 0;
     A_OFFSET = 0;
-    HIP_PITCH_OFFSET = 13.0;
+    HIP_PITCH_OFFSET = 40.0;
     PERIOD_TIME =600; //600
     DSP_RATIO = 0.1;
     STEP_FB_RATIO = 0.28;
-    Z_MOVE_AMPLITUDE = 60; //40
+    Z_MOVE_AMPLITUDE = 20; //40
     Y_SWAP_AMPLITUDE = 20.0;
     Z_SWAP_AMPLITUDE = 5;
     PELVIS_OFFSET = 3.0;
@@ -276,13 +276,13 @@ void GazeboWalking::Process(double *outValue)
     double offset;
     double TIME_UNIT = 8; //[ms] todo check
     //                     R_HIP_YAW, R_HIP_ROLL, R_HIP_PITCH, R_KNEE, R_ANKLE_PITCH, R_ANKLE_ROLL, L_HIP_YAW, L_HIP_ROLL, L_HIP_PITCH, L_KNEE, L_ANKLE_PITCH, L_ANKLE_ROLL, R_ARM_SWING, L_ARM_SWING
-    int dir[14]          = {   -1,        -1,          1,         1,         -1,            1,          -1,        -1,         -1,         -1,         1,            1,           1,           -1      };
+    int dir[14]          = {   -1,        -1,          -1,         1,         1,            1,          -1,        -1,         -1,         -1,         1,            1,           1,           -1      };
     double initAngle[14] = {   0.0,       0.0,        0.0,       0.0,        0.0,          0.0,         0.0,       0.0,        0.0,        0.0,       0.0,          0.0,       -48.345,       41.313    };
 
     // Update walk parameters
     if(m_Time == 0)
     {
-        ROS_WARN("Update walk parameters 1");
+        ROS_ERROR("Update walk parameters 1");
         update_param_time();
         m_Phase = PHASE0;
         if(m_Ctrl_Running == false)
@@ -303,13 +303,13 @@ void GazeboWalking::Process(double *outValue)
     }
     else if(m_Time >= (m_Phase_Time1 - TIME_UNIT/2) && m_Time < (m_Phase_Time1 + TIME_UNIT/2))
     {
-        ROS_WARN("Update walk parameters 2");
+        ROS_ERROR("Update walk parameters 2");
         update_param_move();
         m_Phase = PHASE1;
     }
     else if(m_Time >= (m_Phase_Time2 - TIME_UNIT/2) && m_Time < (m_Phase_Time2 + TIME_UNIT/2))
     {
-        ROS_WARN("Update walk parameters 3");
+        ROS_ERROR("Update walk parameters 3");
         update_param_time();
         m_Time = m_Phase_Time2;
         m_Phase = PHASE2;
@@ -329,7 +329,7 @@ void GazeboWalking::Process(double *outValue)
     }
     else if(m_Time >= (m_Phase_Time3 - TIME_UNIT/2) && m_Time < (m_Phase_Time3 + TIME_UNIT/2))
     {
-        ROS_WARN("Update walk parameters 4");
+        ROS_ERROR("Update walk parameters 4");
         update_param_move();
         m_Phase = PHASE3;
     }
@@ -414,9 +414,9 @@ void GazeboWalking::Process(double *outValue)
     a_move_r = 0;
     b_move_r = 0;
 
-    std ::cout<<"x "<<x_swap<<std::endl;
-    std ::cout<<"y "<<y_swap<<std::endl;
-    std ::cout<<"z "<<z_swap<<std::endl;
+    // std ::cout<<"x "<<x_swap<<std::endl;
+    // std ::cout<<"y "<<y_swap<<std::endl;
+    // std ::cout<<"z "<<z_swap<<std::endl;
     
 
     ep[0] = x_swap + x_move_r + m_X_Offset;
@@ -460,7 +460,9 @@ void GazeboWalking::Process(double *outValue)
 
     if(m_Real_Running == true)
     {
-        ROS_INFO("update m_Time");
+        ROS_INFO("update m_Time %d",m_Time);
+        ROS_INFO("update periode %d",m_PeriodTime);
+        
         std::cout<<TIME_UNIT<<m_Time<<"-"<< m_PeriodTime<<std::endl;
 
         m_Time += TIME_UNIT;
@@ -483,6 +485,7 @@ void GazeboWalking::Process(double *outValue)
     ROS_WARN("init walking gazebo 4");
 
     // Compute motor value
+    // if(trigg < 500){ //check sampai 500
     for(int i=0; i<14; i++)
     {
         offset = (double)dir[i] * angle[i] * 3.413;
@@ -491,13 +494,18 @@ void GazeboWalking::Process(double *outValue)
         else if(i == 7) // L_HIP_ROLL
             offset += (double)dir[i] * pelvis_offset_l;
         else if(i == 2 || i == 8) // R_HIP_PITCH or L_HIP_PITCH
+        {
             offset -= (double)dir[i] * HIP_PITCH_OFFSET * 3.413;
-
+        }
+        
         outValue[i] = (offset*0.293)/(180.0/M_PI); //initAngle[i] + (int)offset; //todo check MX28::Angle2Value(initAngle[i]) + (int)offset;
         
-        // std::cout<<outValue[i]<<std::endl;
+        std::cout<<outValue[i]<<std::endl;
     }
-    ROS_ERROR("calc = %d", outValue[1]);
+    // }
+    // trigg ++;
+    ROS_ERROR("trig = %f", outValue[1]);
+    // std::cout<<outValue[1]<<std::endl;
 
 
     // adjust balance offset

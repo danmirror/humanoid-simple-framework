@@ -619,7 +619,7 @@ approach darwin op3 inertia
     type="revolute">
     <origin
       xyz="0 0 -0.000599999999901152"
-      rpy="-0.3 0 0" />
+      rpy="0 0 0" />
     <parent
       link="l_hip_roll" />
     <child
@@ -671,7 +671,7 @@ approach darwin op3 inertia
     type="revolute">
     <origin
       xyz="0 -0.121999999999998 -3.60787874466861E-05"
-      rpy="0.5 0 0" />
+      rpy="0 0 0" />
     <parent
       link="l_hip_pitch" />
     <child
@@ -723,7 +723,7 @@ approach darwin op3 inertia
     type="revolute">
     <origin
       xyz="0 -0.12200007459305 0.000539974593052855"
-      rpy="0.5 0 -3.14159265358979" />
+      rpy="0 0 -3.14159265358979" />
     <parent
       link="l_knee" />
     <child
@@ -931,7 +931,7 @@ approach darwin op3 inertia
     type="revolute">
     <origin
       xyz="0 0 -0.000599999999901429"
-      rpy="-0.3 0 0" />
+      rpy="0 0 0" />
     <parent
       link="r_hip_roll" />
     <child
@@ -983,7 +983,7 @@ approach darwin op3 inertia
     type="revolute">
     <origin
       xyz="0 -0.121999999999998 -3.60787874468527E-05"
-      rpy="0.5 0 0" />
+      rpy="0 0 0" />
     <parent
       link="r_hip_pitch" />
     <child
@@ -1036,7 +1036,7 @@ approach darwin op3 inertia
     type="revolute">
     <origin
       xyz="0 -0.122 0.00053997"
-      rpy="0.5 0 -3.1416" />
+      rpy="0 0 -3.1416" />
     <parent
       link="r_knee" />
     <child

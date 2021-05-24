@@ -39,7 +39,7 @@
 
   <!-- rscuad model -->
   <node name="spawn_model" pkg="gazebo_ros" type="spawn_model"
-    args="-param robot_description -urdf -model rscuad_a -z 0.34 -R 0.255 -Y 1.5"
+    args="-param robot_description -urdf -model rscuad_a -z 0.30 -R 0 -Y 1.5"
     output="screen" />
      <!-- args="-param robot_description -urdf -model rscuad_a -z 0.315 -R 0.2 -Y 1.5" -->
   

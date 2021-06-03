@@ -88,7 +88,7 @@ double GazeboWalking::wsin(double time, double period, double period_shift, doub
 
 bool GazeboWalking::computeIK(double *out, double x, double y, double z, double a, double b, double c)
 {
-    ROS_WARN("IK activate");
+    // ROS_WARN("IK activate");
     Matrix3D Tad, Tda, Tcd, Tdc, Tac;
     Vector3D vec;
     double _Rac, _Acos, _Atan, _k, _l, _m, _n, _s, _c, _theta;
@@ -267,8 +267,8 @@ bool GazeboWalking::IsRunning()
 
 void GazeboWalking::Process(double *outValue)
 {
-    ROS_ERROR("HIP_PITCH_OFFSET = %f", HIP_PITCH_OFFSET);
-    ROS_WARN("init walking gazebo 1");
+    // ROS_ERROR("HIP_PITCH_OFFSET = %f", HIP_PITCH_OFFSET);
+    // ROS_WARN("init walking gazebo 1");
     double x_swap, y_swap, z_swap, a_swap, b_swap, c_swap;
     double x_move_r, y_move_r, z_move_r, a_move_r, b_move_r, c_move_r;
     double x_move_l, y_move_l, z_move_l, a_move_l, b_move_l, c_move_l;
@@ -276,14 +276,18 @@ void GazeboWalking::Process(double *outValue)
     double angle[14], ep[12];
     double offset;
     double TIME_UNIT = 8; //[ms] todo check
+
     //                     R_HIP_YAW, R_HIP_ROLL, R_HIP_PITCH, R_KNEE, R_ANKLE_PITCH, R_ANKLE_ROLL, L_HIP_YAW, L_HIP_ROLL, L_HIP_PITCH, L_KNEE, L_ANKLE_PITCH, L_ANKLE_ROLL, R_ARM_SWING, L_ARM_SWING
-    int dir[14]          = {   -1,        -1,          -1,         1,         1,            1,          -1,        -1,         -1,         -1,         1,            1,           1,           -1      };
+    int dir[14]          = {   -1,        -1,          -1,         1,         -1,            1,          -1,        -1,         -1,         -1,         -1,            1,           1,           -1      };
+    // int dir[14]          = {   -1,        -1,          -1,         1,         -1,            1,          -1,        -1,         -1,         -1,         -1,            1,           1,           -1      };
+
     double initAngle[14] = {   0.0,       0.0,        0.0,       0.0,        0.0,          0.0,         0.0,       0.0,        0.0,        0.0,       0.0,          0.0,       -48.345,       41.313    };
+    // double initAngle[14] = {   0.0,       5.0,        -10.0,       12.0,        4.0,          0.0,         -3.0,       -5.0,        8.0,        -12.0,       -4.0,          0.0,       -3,	3 };
 
     // Update walk parameters
     if(m_Time == 0)
     {
-        ROS_ERROR("Update walk parameters 1");
+        // ROS_ERROR("Update walk parameters 1");
         update_param_time();
         m_Phase = PHASE0;
         if(m_Ctrl_Running == false)
@@ -304,13 +308,13 @@ void GazeboWalking::Process(double *outValue)
     }
     else if(m_Time >= (m_Phase_Time1 - TIME_UNIT/2) && m_Time < (m_Phase_Time1 + TIME_UNIT/2))
     {
-        ROS_ERROR("Update walk parameters 2");
+        // ROS_ERROR("Update walk parameters 2");
         update_param_move();
         m_Phase = PHASE1;
     }
     else if(m_Time >= (m_Phase_Time2 - TIME_UNIT/2) && m_Time < (m_Phase_Time2 + TIME_UNIT/2))
     {
-        ROS_ERROR("Update walk parameters 3");
+        // ROS_ERROR("Update walk parameters 3");
         update_param_time();
         m_Time = m_Phase_Time2;
         m_Phase = PHASE2;
@@ -330,7 +334,7 @@ void GazeboWalking::Process(double *outValue)
     }
     else if(m_Time >= (m_Phase_Time3 - TIME_UNIT/2) && m_Time < (m_Phase_Time3 + TIME_UNIT/2))
     {
-        ROS_ERROR("Update walk parameters 4");
+        // ROS_ERROR("Update walk parameters 4");
         update_param_move();
         m_Phase = PHASE3;
     }
@@ -415,9 +419,9 @@ void GazeboWalking::Process(double *outValue)
     a_move_r = 0;
     b_move_r = 0;
 
-    std ::cout<<"x "<<x_swap<<std::endl;
-    std ::cout<<"y "<<y_swap<<std::endl;
-    std ::cout<<"z "<<z_swap<<std::endl;
+    // std ::cout<<"x "<<x_swap<<std::endl;
+    // std ::cout<<"y "<<y_swap<<std::endl;
+    // std ::cout<<"z "<<z_swap<<std::endl;
     
 
     ep[0] = x_swap + x_move_r + m_X_Offset;
@@ -433,7 +437,7 @@ void GazeboWalking::Process(double *outValue)
     ep[10] = b_swap + b_move_l + m_P_Offset;
     ep[11] = c_swap + c_move_l + m_A_Offset / 2;
 
-    ROS_WARN("init walking gazebo 2");
+    // ROS_WARN("init walking gazebo 2");
     // Compute body swing
     if(m_Time <= m_SSP_Time_End_L)
     {
@@ -461,17 +465,17 @@ void GazeboWalking::Process(double *outValue)
 
     if(m_Real_Running == true)
     {
-        ROS_INFO("update m_Time %d",m_Time);
-        ROS_INFO("update periode %d",m_PeriodTime);
+    //     ROS_INFO("update m_Time %d",m_Time);
+    //     ROS_INFO("update periode %d",m_PeriodTime);
         
-        std::cout<<TIME_UNIT<<m_Time<<"-"<< m_PeriodTime<<std::endl;
+        // std::cout<<TIME_UNIT<<m_Time<<"-"<< m_PeriodTime<<std::endl;
 
         m_Time += TIME_UNIT;
         if(m_Time >= m_PeriodTime)
             m_Time = 0;
     }
     
-    ROS_WARN("init walking gazebo 3");
+    // ROS_WARN("init walking gazebo 3");
     // Compute angles
     if((computeIK(&angle[0], ep[0], ep[1], ep[2], ep[3], ep[4], ep[5]) == 1)
         && (computeIK(&angle[6], ep[6], ep[7], ep[8], ep[9], ep[10], ep[11]) == 1))
@@ -483,7 +487,7 @@ void GazeboWalking::Process(double *outValue)
     {
         return; // Do not use angle;
     }
-    ROS_WARN("init walking gazebo 4");
+    // ROS_WARN("init walking gazebo 4");
 
     // Compute motor value
     // if(trigg < 500){ //check sampai 500
@@ -501,11 +505,11 @@ void GazeboWalking::Process(double *outValue)
         
         outValue[i] = (offset*0.293)/(180.0/M_PI); //initAngle[i] + (int)offset; //todo check MX28::Angle2Value(initAngle[i]) + (int)offset;
         
-        std::cout<<outValue[i]<<std::endl;
+        // std::cout<<outValue[i]<<std::endl;
     }
     // }
     // trigg ++;
-    ROS_ERROR("HIP_PITCH_OFFSET = %f", HIP_PITCH_OFFSET);
+    // ROS_ERROR("HIP_PITCH_OFFSET = %f", HIP_PITCH_OFFSET);
     // std::cout<<outValue[1]<<std::endl;
 
 

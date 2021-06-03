@@ -18,11 +18,12 @@
 > rosrun robotis_op_simulation_walking robotis_op_simulation_walking_node
 
 ##### optional
+- see value walking and initial
+> rosrun robotis_op_simulation_walking walker.py
+
 - demo velocity [under construction]
 > rosrun robotis_op_simulation_walking walker_demo.py
 
-- see value walking
-> rosrun robotis_op_simulation_walking walker.py
 
 
 #### checker flow urdf

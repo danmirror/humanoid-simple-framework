@@ -65,6 +65,8 @@ class WFunc:
         Build CPG functions for walk-on-spot (no translation or rotation, only legs up/down)
         """        
         # f1=THIGH1=ANKLE1=L=R in phase
+        # f1= hip  = ankle
+
         self.pfn={} # phase joint functions    
         self.afn={} # anti phase joint functions
 
@@ -72,45 +74,45 @@ class WFunc:
         f1=WJFunc()
         f1.in_scale=math.pi
         f1.scale=-self.parameters["swing_scale"]
-        self.pfn["j_ankle2_l"]=f1
-        self.pfn["j_thigh1_l"]=f1
+        self.pfn["l_ank_roll"]=f1
+        self.pfn["l_hip_roll"]=f1
         
         # f2=mirror f1 in antiphase
         f2=f1.mirror()
         #~ f2=WJFunc()
-        self.afn["j_ankle2_l"]=f2
-        self.afn["j_thigh1_l"]=f2
+        self.afn["l_ank_roll"]=f2
+        self.afn["l_hip_roll"]=f2
 
         f3=WJFunc()
         f3.in_scale=math.pi
         f3.scale=self.parameters["step_scale"]
         f3.offset=self.parameters["step_offset"]
-        self.pfn["j_thigh2_l"]=f3
+        self.pfn["l_hip_pitch"]=f3
         f33=f3.mirror()
         f33.offset+=self.parameters["ankle_offset"]
-        self.pfn["j_ankle1_l"]=f33
+        self.pfn["l_ank_pitch"]=f33
         
         f4=f3.mirror()
         f4.offset*=2
         f4.scale*=2
-        self.pfn["j_tibia_l"]=f4
+        self.pfn["l_knee"]=f4
         
         s2=0
         f5=f3.clone()
         f5.in_scale*=2
         f5.scale=s2
-        self.afn["j_thigh2_l"]=f5
+        self.afn["l_hip_pitch"]=f5
         
         
         f6=f3.mirror()
         f6.in_scale*=2
         f6.scale=f5.scale
         f6.offset+=self.parameters["ankle_offset"]
-        self.afn["j_ankle1_l"]=f6
+        self.afn["l_ank_pitch"]=f6
         
         f7=f4.clone()
         f7.scale=0
-        self.afn["j_tibia_l"]=f7
+        self.afn["l_knee"]=f7
 
         
         self.forward=[f5,f6]
@@ -124,10 +126,10 @@ class WFunc:
         """
         Mirror CPG functions from left to right and antiphase right
         """
-        l=[ v[:-2] for v in self.pfn.keys()]
+        l=[ v[2:] for v in self.pfn.keys()]
         for j in l:
-            self.pfn[j+"_r"]=self.afn[j+"_l"].mirror()
-            self.afn[j+"_r"]=self.pfn[j+"_l"].mirror()
+            self.pfn["r_"+j]=self.afn["l_"+j].mirror()
+            self.afn["r_"+j]=self.pfn["l_"+j].mirror()
         
     def get(self,phase,x,velocity):
         """ Obtain the joint angles for a given phase, position in cycle (x 0,1)) and velocity parameters """
@@ -159,15 +161,15 @@ class WFunc:
         v=velocity[0]*self.parameters["vx_scale"]
         d=(x*2-1)*v
         if phase:
-            angles["j_thigh2_l"]+=d
-            angles["j_ankle1_l"]+=d
-            angles["j_thigh2_r"]+=d
-            angles["j_ankle1_r"]+=d
+            angles["l_hip_pitch"]+=d
+            angles["l_ank_pitch"]+=d
+            angles["r_hip_pitch"]+=d
+            angles["r_ank_pitch"]+=d
         else:
-            angles["j_thigh2_l"]-=d
-            angles["j_ankle1_l"]-=d
-            angles["j_thigh2_r"]-=d
-            angles["j_ankle1_r"]-=d
+            angles["l_hip_pitch"]-=d
+            angles["l_ank_pitch"]-=d
+            angles["r_hip_pitch"]-=d
+            angles["r_ank_pitch"]-=d
 
         # VY
         v=velocity[1]*self.parameters["vy_scale"]
@@ -175,26 +177,26 @@ class WFunc:
         d2=(1-x)*v
         if v>=0:
             if phase:
-                angles["j_thigh1_l"]-=d
-                angles["j_ankle2_l"]-=d
-                angles["j_thigh1_r"]+=d
-                angles["j_ankle2_r"]+=d
+                angles["l_hip_roll"]-=d
+                angles["l_ank_roll"]-=d
+                angles["r_hip_roll"]+=d
+                angles["r_ank_roll"]+=d
             else:
-                angles["j_thigh1_l"]-=d2
-                angles["j_ankle2_l"]-=d2
-                angles["j_thigh1_r"]+=d2
-                angles["j_ankle2_r"]+=d2
+                angles["l_hip_roll"]-=d2
+                angles["l_ank_roll"]-=d2
+                angles["r_hip_roll"]+=d2
+                angles["r_ank_roll"]+=d2
         else:
             if phase:
-                angles["j_thigh1_l"]+=d2
-                angles["j_ankle2_l"]+=d2
-                angles["j_thigh1_r"]-=d2
-                angles["j_ankle2_r"]-=d2
+                angles["l_hip_roll"]+=d2
+                angles["l_ank_roll"]+=d2
+                angles["r_hip_roll"]-=d2
+                angles["r_ank_roll"]-=d2
             else:
-                angles["j_thigh1_l"]+=d
-                angles["j_ankle2_l"]+=d
-                angles["j_thigh1_r"]-=d
-                angles["j_ankle2_r"]-=d
+                angles["l_hip_roll"]+=d
+                angles["l_ank_roll"]+=d
+                angles["r_hip_roll"]-=d
+                angles["r_ank_roll"]-=d
                 
         # VT
         v=velocity[2]*self.parameters["vt_scale"]
@@ -202,18 +204,18 @@ class WFunc:
         d2=(1-x)*v
         if v>=0:
             if phase:
-                angles["j_pelvis_l"]=-d
-                angles["j_pelvis_r"]=d
+                angles["l_hip_yaw"]=-d
+                angles["r_hip_yaw"]=d
             else:
-                angles["j_pelvis_l"]=-d2
-                angles["j_pelvis_r"]=d2
+                angles["l_hip_yaw"]=-d2
+                angles["r_hip_yaw"]=d2
         else:
             if phase:
-                angles["j_pelvis_l"]=d2
-                angles["j_pelvis_r"]=-d2
+                angles["l_hip_yaw"]=d2
+                angles["r_hip_yaw"]=-d2
             else:
-                angles["j_pelvis_l"]=d
-                angles["j_pelvis_r"]=-d
+                angles["l_hip_yaw"]=d
+                angles["r_hip_yaw"]=-d
 
 
 

@@ -29,8 +29,12 @@ class Darwin:
         
         rospy.loginfo("Creating joint command publishers")
         self._pub_joints={}
+
         for j in self.joints:
-            p=rospy.Publisher(self.ns+j+"_position_controller/command",Float64)
+            #show all joint
+            rospy.loginfo(self.ns+j)
+
+            p=rospy.Publisher(self.ns+j+"_position/command",Float64)
             self._pub_joints[j]=p
         
         rospy.sleep(1)
@@ -64,7 +68,10 @@ class Darwin:
                 rospy.logerror("Invalid joint name "+j)
                 continue
             self._pub_joints[j].publish(v)
+            rospy.loginfo(v)
 
+            pub =rospy.Publisher("/rscuad/r_ank_pitch_position/command",Float64)
+            pub.publish(v)
     def set_angles_slow(self,stop_angles,delay=2):
         start_angles=self.get_angles()
         start=time.time()

@@ -52,7 +52,7 @@ GazeboWalking::GazeboWalking(ros::NodeHandle nh)
     Y_MOVE_AMPLITUDE = 0;
     A_MOVE_AMPLITUDE = 0;
     A_MOVE_AIM_ON = false;
-    BALANCE_ENABLE = false;
+    BALANCE_ENABLE = true;
 
     // j_pelvis_l_publisher_ = nh_.advertise<std_msgs::Float64>("/rscuad/l_hip_yaw_position/command",1);
     // j_thigh1_l_publisher_ = nh_.advertise<std_msgs::Float64>("/rscuad/l_hip_roll_position/command",1);
@@ -509,7 +509,7 @@ void GazeboWalking::Process(double *outValue)
     }
     // }
     // trigg ++;
-    // ROS_ERROR("HIP_PITCH_OFFSET = %f", HIP_PITCH_OFFSET);
+    ROS_ERROR("HIP_PITCH_OFFSET = %f", HIP_PITCH_OFFSET);
     // std::cout<<outValue[1]<<std::endl;
 
 

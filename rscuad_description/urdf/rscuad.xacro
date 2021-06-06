@@ -9,6 +9,9 @@ approach darwin op3 inertia
 update 3 june 
 value reduction op3
 
+
+update 6 june 
+value reduction mess rscuad
 -->
 
 <robot name="rscuad" xmlns:xacro="http://www.ros.org/wiki/xacro">
@@ -25,7 +28,7 @@ value reduction op3
         xyz="0.0357056190627579 0.0719364874349917 0.124774491029847"
         rpy="0 0 0" />
       <mass
-        value="0.845681147773924" />
+        value="0.0045681147773924" />
       <inertia ixx="0.00340499" ixy="0.00000572" ixz="-0.00004256"
              iyy="0.00296939" iyz="-0.00000059"
              izz="0.00317331" />
@@ -61,7 +64,7 @@ value reduction op3
         xyz="5.68989300120393E-16 -0.00822795113008323 0.0023274800004647"
         rpy="0 0 0" />
       <mass
-        value="0.0127468700670499" />
+        value="0.00127468700670499" />
       <inertia ixx="0.00000397" ixy="0.0" ixz="-0.00000031"
              iyy="0.00000165" iyz="0.0"
              izz="0.00000387" />
@@ -102,7 +105,7 @@ value reduction op3
       link="head_pan" />
     <axis
       xyz="0 1 0" />
-     <limit effort="100" velocity="1" lower="${-pi*0.9}" upper="${pi*0.9}" />
+     <limit effort="1000" velocity="1" lower="${-pi*0.9}" upper="${pi*0.9}" />
   </joint>
   <insert_transmission name="head_pan"/>
 
@@ -113,7 +116,7 @@ value reduction op3
         xyz="0.000104621828214489 0.0371739829464326 0.000780731992570616"
         rpy="0 0 0" />
       <mass
-        value="0.12573924511903" />
+        value="0.0012573924511903" />
       <inertia ixx="0.00010612" ixy="0.00000011" ixz="-0.00000910"
              iyy="0.00008721" iyz="0.00000084"
              izz="0.00004529" />
@@ -154,7 +157,7 @@ value reduction op3
       link="head_tilt" />
     <axis
       xyz="-1 0 0" />
-     <limit effort="100" velocity="1" lower="${-pi*0.9}" upper="${pi*0.9}" />
+     <limit effort="1000" velocity="1" lower="${-pi*0.9}" upper="${pi*0.9}" />
   </joint>
 
   <insert_transmission name="head_tilt"/>
@@ -208,7 +211,7 @@ value reduction op3
       link="l_sho_pitch" />
     <axis
       xyz="-1 0 0" />
-     <limit effort="100" velocity="1" lower="${-pi*0.9}" upper="${pi*0.9}" />
+     <limit effort="1000" velocity="1" lower="${-pi*0.9}" upper="${pi*0.9}" />
   </joint>
   <insert_transmission name="l_sho_pitch"/>
 
@@ -219,7 +222,7 @@ value reduction op3
         xyz="0.0315938109781102 0.000680134592121545 0.000553421997326997"
         rpy="0 0 0" />
       <mass
-        value="0.0884003305596694" />
+        value="0.0284003305596694" />
       <inertia ixx="0.00022804" ixy="-0.00000001" ixz="0.00000003"
              iyy="0.00003042" iyz="0.00000059"
              izz="0.00023474" />
@@ -260,7 +263,7 @@ value reduction op3
       link="l_sho_roll" />
     <axis
       xyz="0 0 -1" />
-    <limit effort="100" velocity="1" lower="${-pi*0.9}" upper="${pi*0.9}" />
+    <limit effort="1000" velocity="1" lower="${-pi*0.9}" upper="${pi*0.9}" />
   </joint>
   <insert_transmission name="l_sho_roll"/>
 
@@ -312,7 +315,7 @@ value reduction op3
       link="l_el" />
     <axis
       xyz="0 -1 0" />
-     <limit effort="100" velocity="1" lower="${-pi*0.9}" upper="${pi*0.9}" />
+     <limit effort="1000" velocity="1" lower="${-pi*0.9}" upper="${pi*0.9}" />
   </joint>
   <insert_transmission name="l_el"/>
 
@@ -366,7 +369,7 @@ value reduction op3
       link="r_sho_pitch" />
     <axis
       xyz="-1 0 0" />
-     <limit effort="100" velocity="1" lower="${-pi*0.9}" upper="${pi*0.9}" />
+     <limit effort="1000" velocity="1" lower="${-pi*0.9}" upper="${pi*0.9}" />
   </joint>
   <insert_transmission name="r_sho_pitch"/>
 
@@ -377,7 +380,7 @@ value reduction op3
         xyz="-0.0346452133269944 0.000680134426259818 0.000553937880485106"
         rpy="0 0 0" />
       <mass
-        value="0.0884003307974895" />
+        value="0.0284003307974895" />
       <inertia ixx="0.00022804" ixy="0.00000001" ixz="0.00000003"
              iyy="0.00003042" iyz="-0.00000059"
              izz="0.00023474" />
@@ -418,7 +421,7 @@ value reduction op3
       link="r_sho_roll" />
     <axis
       xyz="0 0 -1" />
-     <limit effort="100" velocity="1" lower="${-pi*0.9}" upper="${pi*0.9}" />
+     <limit effort="1000" velocity="1" lower="${-pi*0.9}" upper="${pi*0.9}" />
   </joint>
   <insert_transmission name="r_sho_roll"/>
 
@@ -470,7 +473,7 @@ value reduction op3
       link="r_el" />
     <axis
       xyz="0 -1 0" />
-     <limit effort="100" velocity="1" lower="${-pi*0.9}" upper="${pi*0.9}" />
+     <limit effort="1000" velocity="1" lower="${-pi*0.9}" upper="${pi*0.9}" />
   </joint>
   <insert_transmission name="r_el"/>
 
@@ -525,7 +528,7 @@ value reduction op3
       link="l_hip_yaw" />
     <axis
       xyz="0 -1 0" />
-     <limit effort="100" velocity="1" lower="${-pi*0.9}" upper="${pi*0.9}" />
+     <limit effort="1000" velocity="1" lower="${-pi*0.9}" upper="${pi*0.9}" />
   </joint>
   <insert_transmission name="l_hip_yaw"/>
 
@@ -536,7 +539,7 @@ value reduction op3
         xyz="-0.000117953958974196 -0.0149128586946627 -0.0249453119100794"
         rpy="0 0 0" />
       <mass
-        value="0.151586182496668" />
+        value="0.0151586182496668" />
       <inertia ixx="0.00004661" ixy="-0.00000101" ixz="-0.00000131"
              iyy="0.00012523" iyz="-0.00000006"
              izz="0.00010857" />
@@ -577,7 +580,7 @@ value reduction op3
       link="l_hip_roll" />
     <axis
       xyz="0 0 -1" />
-     <limit effort="100" velocity="1" lower="${-pi*0.9}" upper="${pi*0.9}" />
+     <limit effort="1000" velocity="1" lower="${-pi*0.9}" upper="${pi*0.9}" />
   </joint>
   <insert_transmission name="l_hip_roll"/>
 
@@ -588,7 +591,7 @@ value reduction op3
         xyz="0.000243254808011836 -0.0898667305909595 0.000209659949259006"
         rpy="0 0 0" />
       <mass
-        value="0.100631639038866" />
+        value="0.0100631639038866" />
       <inertia ixx="0.00010499" ixy="-0.00000001" ixz="-0.00000071"
              iyy="0.00009613" iyz="0.00000353"
              izz="0.00002493" />
@@ -629,7 +632,7 @@ value reduction op3
       link="l_hip_pitch" />
     <axis
       xyz="-1 0 0" />
-     <limit effort="100" velocity="1" lower="${-pi*0.9}" upper="${pi*0.9}" />
+     <limit effort="1000" velocity="1" lower="${-pi*0.9}" upper="${pi*0.9}" />
   </joint>
   <insert_transmission name="l_hip_pitch"/>
 
@@ -681,7 +684,7 @@ value reduction op3
       link="l_knee" />
     <axis
       xyz="-1 0 0" />
-     <limit effort="100" velocity="1" lower="${-pi*0.9}" upper="${pi*0.9}" />
+     <limit effort="1000" velocity="1" lower="${-pi*0.9}" upper="${pi*0.9}" />
   </joint>
   <insert_transmission name="l_knee"/>
 
@@ -692,7 +695,7 @@ value reduction op3
         xyz="0.000117962348445882 -0.0149128586946611 -0.0243453045375506"
         rpy="0 0 0" />
       <mass
-        value="0.151586182496668" />
+        value="0.0151586182496668" />
       <inertia ixx="0.00004661" ixy="-0.00000101" ixz="0.00000131"
              iyy="0.00012523" iyz="0.00000006"
              izz="0.00010857" />
@@ -733,7 +736,7 @@ value reduction op3
       link="l_ank_pitch" />
     <axis
       xyz="1 0 0" />
-     <limit effort="100" velocity="1" lower="${-pi*0.9}" upper="${pi*0.9}" />
+     <limit effort="1000" velocity="1" lower="${-pi*0.9}" upper="${pi*0.9}" />
   </joint>
   <insert_transmission name="l_ank_pitch"/>
 
@@ -785,7 +788,7 @@ value reduction op3
       link="l_ank_roll" />
     <axis
       xyz="0 0 -1" />
-     <limit effort="100" velocity="1" lower="${-pi*0.9}" upper="${pi*0.9}" />
+     <limit effort="1000" velocity="1" lower="${-pi*0.9}" upper="${pi*0.9}" />
   </joint>
   <insert_transmission name="l_ank_roll"/>
 <!-- =====================================================leg right -->
@@ -837,7 +840,7 @@ value reduction op3
       link="r_hip_yaw" />
     <axis
       xyz="0 -1 0" />
-     <limit effort="100" velocity="1" lower="${-pi*0.9}" upper="${pi*0.9}" />
+     <limit effort="1000" velocity="1" lower="${-pi*0.9}" upper="${pi*0.9}" />
   </joint>
   <insert_transmission name="r_hip_yaw"/>
 
@@ -848,7 +851,7 @@ value reduction op3
         xyz="0.000117962348444769 -0.0149128586946632 -0.0249453045374453"
         rpy="0 0 0" />
       <mass
-        value="0.151586182496668" />
+        value="0.0151586182496668" />
       <inertia ixx="0.00004661" ixy="0.00000101" ixz="-0.00000131"
              iyy="0.00012523" iyz="0.00000006"
              izz="0.00010857" />
@@ -889,7 +892,7 @@ value reduction op3
       link="r_hip_roll" />
     <axis
       xyz="0 0 -1" />
-     <limit effort="100" velocity="1" lower="${-pi*0.9}" upper="${pi*0.9}" />
+     <limit effort="1000" velocity="1" lower="${-pi*0.9}" upper="${pi*0.9}" />
   </joint>
   <insert_transmission name="r_hip_roll"/>
 
@@ -900,7 +903,7 @@ value reduction op3
         xyz="-0.00023617866960057 -0.0898667305909591 0.0002096488435121"
         rpy="0 0 0" />
       <mass
-        value="0.100631639038866" />
+        value="0.0100631639038866" />
       <inertia ixx="0.00010499" ixy="0.00000001" ixz="-0.00000071"
              iyy="0.00009613" iyz="-0.00000353"
              izz="0.00002493" />
@@ -941,7 +944,7 @@ value reduction op3
       link="r_hip_pitch" />
     <axis
       xyz="-1 0 0" />
-     <limit effort="100" velocity="1" lower="${-pi*0.9}" upper="${pi*0.9}" />
+     <limit effort="1000" velocity="1" lower="${-pi*0.9}" upper="${pi*0.9}" />
   </joint>
   <insert_transmission name="r_hip_pitch"/>
 
@@ -993,8 +996,8 @@ value reduction op3
       link="r_knee" />
     <axis
       xyz="1 0 0" />
-    <!-- <limit effort="100" velocity="10" lower="${-pi*0.9}" upper="${pi*0.9}" /> -->
-     <limit effort="100" velocity="1" lower="${-pi*0.9}" upper="${pi*0.9}" />
+    <!-- <limit effort="1000" velocity="10" lower="${-pi*0.9}" upper="${pi*0.9}" /> -->
+     <limit effort="1000" velocity="1" lower="${-pi*0.9}" upper="${pi*0.9}" />
   </joint>
   <insert_transmission name="r_knee"/>
 
@@ -1005,7 +1008,7 @@ value reduction op3
         xyz="-0.000117953958976062 -0.0149128586946587 -0.0243453119101897"
         rpy="0 0 0" />
       <mass
-        value="0.151586182496669" />
+        value="0.0151586182496669" />
       <inertia ixx="0.00004661" ixy="0.00000101" ixz="0.00000131"
              iyy="0.00012523" iyz="-0.00000006"
              izz="0.00010857" />
@@ -1046,7 +1049,7 @@ value reduction op3
       link="r_ank_pitch" />
     <axis
       xyz="1 0 0" />
-     <limit effort="100" velocity="1" lower="${-pi*0.9}" upper="${pi*0.9}" />
+     <limit effort="1000" velocity="1" lower="${-pi*0.9}" upper="${pi*0.9}" />
   </joint>
   <insert_transmission name="r_ank_pitch"/>
 
@@ -1099,7 +1102,7 @@ value reduction op3
       link="r_ank_roll" />
     <axis
       xyz="0 0 -1" />
-     <limit effort="100" velocity="1" lower="${-pi*0.9}" upper="${pi*0.9}" />
+     <limit effort="1000" velocity="1" lower="${-pi*0.9}" upper="${pi*0.9}" />
   </joint>
   <insert_transmission name="r_ank_roll"/>
 </robot>

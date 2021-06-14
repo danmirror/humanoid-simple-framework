@@ -8,6 +8,7 @@
 
 #include <robotis_op_simulation_walking/math/Matrix.h>
 #define MX28_1024
+int iter = 0;
 
 namespace robotis_op {
 using namespace Robot;
@@ -92,10 +93,10 @@ bool GazeboWalking::computeIK(double *out, double x, double y, double z, double 
     Matrix3D Tad, Tda, Tcd, Tdc, Tac;
     Vector3D vec;
     double _Rac, _Acos, _Atan, _k, _l, _m, _n, _s, _c, _theta;
-    double LEG_LENGTH = 219.5;
-    double THIGH_LENGTH = 93.0;
-    double CALF_LENGTH = 93.0;
-    double ANKLE_LENGTH = 33.5;
+    double LEG_LENGTH = 292.0;
+    double THIGH_LENGTH = 125.0;
+    double CALF_LENGTH = 122.0;
+    double ANKLE_LENGTH = 42.0;
 
 
     Tad.SetTransform(Point3D(x, y, z - LEG_LENGTH), Vector3D(a * 180.0 / M_PI, b * 180.0 / M_PI, c * 180.0 / M_PI));
@@ -294,12 +295,12 @@ void GazeboWalking::Process(double *outValue)
         {
             if(m_X_Move_Amplitude == 0 && m_Y_Move_Amplitude == 0 && m_A_Move_Amplitude == 0)
             {
-                ROS_ERROR(" ->>>> mreal false");
+                // ROS_ERROR(" ->>>> mreal false");
                 m_Real_Running = false;
             }
             else
             {
-                ROS_ERROR(" ->>>> mreal true");
+                // ROS_ERROR(" ->>>> mreal true");
                 X_MOVE_AMPLITUDE = 0;
                 Y_MOVE_AMPLITUDE = 0;
                 A_MOVE_AMPLITUDE = 0;
@@ -474,17 +475,38 @@ void GazeboWalking::Process(double *outValue)
         if(m_Time >= m_PeriodTime)
             m_Time = 0;
     }
+
+    iter ++; // make iteration global
+
     
     // ROS_WARN("init walking gazebo 3");
     // Compute angles
     if((computeIK(&angle[0], ep[0], ep[1], ep[2], ep[3], ep[4], ep[5]) == 1)
         && (computeIK(&angle[6], ep[6], ep[7], ep[8], ep[9], ep[10], ep[11]) == 1))
     {
-        for(int i=0; i<12; i++)
-            angle[i] *= 180.0 / M_PI;
+        // if(iter < 30){
+
+            for(int i=0; i<12; i++){
+                // if(i <3){  //if(fmod(i , 2) == 0){
+                    angle[i] *= 180.0 / M_PI;
+                    // ROS_WARN("genap");
+                // }
+                // else
+                    // ROS_WARN("tidak");
+            }
+            ROS_WARN("angle found");
+        // }
+        
+        // return; // Do not use angle;
     }
     else
     {
+
+        //make zero berfore running
+        for(int i=0; i<12; i++)
+            outValue[i] =0;
+
+        ROS_ERROR("angle NOT found");
         return; // Do not use angle;
     }
     // ROS_WARN("init walking gazebo 4");
@@ -507,9 +529,10 @@ void GazeboWalking::Process(double *outValue)
         
         // std::cout<<outValue[i]<<std::endl;
     }
+    ROS_ERROR("check----------------------------");
     // }
     // trigg ++;
-    ROS_ERROR("HIP_PITCH_OFFSET = %f", HIP_PITCH_OFFSET);
+    // ROS_ERROR("HIP_PITCH_OFFSET = %f", HIP_PITCH_OFFSET);
     // std::cout<<outValue[1]<<std::endl;
 
 

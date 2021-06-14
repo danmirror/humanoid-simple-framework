@@ -7,27 +7,118 @@
       </plugin>
     </gazebo>
 
+    <!-- try not using gravity -->
 
-      <!-- try not using gravity -->
+    <gazebo reference="l_hip_yaw">
+      <material>Gazebo/Grey</material>
+      <!-- <static>true</static> -->
+      <!-- <turnGravityOff>true</turnGravityOff> -->
+    </gazebo>
+    <gazebo reference="l_hip_roll">
+      <material>Gazebo/Grey</material>
+      <!-- <static>true</static> -->
+      <!-- <turnGravityOff>true</turnGravityOff> -->
+    </gazebo>
+    <gazebo reference="l_hip_pitch">
+      <material>Gazebo/Grey</material>
+      <!-- <static>true</static> -->
+      <!-- <turnGravityOff>true</turnGravityOff> -->
+    </gazebo>
+    <gazebo reference="l_knee">
+      <material>Gazebo/Grey</material>
+      <!-- <static>true</static> -->
+      <!-- <turnGravityOff>true</turnGravityOff> -->
+    </gazebo>
+    
     <gazebo reference="l_ank_roll">
       <material>Gazebo/Yellow</material>
-      <static>true</static>
+      <!-- <static>true</static> -->
       <!-- <turnGravityOff>true</turnGravityOff> -->
     </gazebo>
-     <gazebo reference="l_ank_pitch">
+    <gazebo reference="l_ank_pitch">
       <material>Gazebo/Yellow</material>
-      <static>true</static>
-      <!-- <turnGravityOff>true</turnGravityOff> -->
-    </gazebo>
-     <gazebo reference="r_ank_roll">
-      <material>Gazebo/Yellow</material>
-      <static>true</static>
-      <!-- <turnGravityOff>true</turnGravityOff> -->
-    </gazebo>
-     <gazebo reference="r_ank_pitch">
-      <material>Gazebo/Yellow</material>
-      <static>true</static>
+      <!-- <static>true</static> -->
       <!-- <turnGravityOff>true</turnGravityOff> -->
     </gazebo>
 
+    <gazebo reference="r_hip_yaw">
+      <material>Gazebo/Grey</material>
+      <!-- <static>true</static> -->
+      <!-- <turnGravityOff>true</turnGravityOff> -->
+    </gazebo>
+    <gazebo reference="r_hip_roll">
+      <material>Gazebo/Grey</material>
+      <!-- <static>true</static> -->
+      <!-- <turnGravityOff>true</turnGravityOff> -->
+    </gazebo>
+    <gazebo reference="r_hip_pitch">
+      <material>Gazebo/Grey</material>
+      <!-- <static>true</static> -->
+      <!-- <turnGravityOff>true</turnGravityOff> -->
+    </gazebo>
+    <gazebo reference="r_knee">
+      <material>Gazebo/Grey</material>
+      <!-- <static>true</static> -->
+      <!-- <turnGravityOff>true</turnGravityOff> -->
+    </gazebo>
+    <gazebo reference="r_ank_roll">
+      <material>Gazebo/Yellow</material>
+      <!-- <static>true</static> -->
+      <!-- <turnGravityOff>true</turnGravityOff> -->
+    </gazebo>
+    <gazebo reference="r_ank_pitch">
+      <material>Gazebo/Yellow</material>
+      <!-- <static>true</static> -->
+      <!-- <turnGravityOff>true</turnGravityOff> -->
+    </gazebo>
+
+    <gazebo reference="l_sho_pitch">
+      <material>Gazebo/Grey</material>
+      <!-- <static>true</static> -->
+      <!-- <turnGravityOff>true</turnGravityOff> -->
+    </gazebo>
+    <gazebo reference="l_sho_roll">
+      <material>Gazebo/Grey</material>
+      <!-- <static>true</static> -->
+      <!-- <turnGravityOff>true</turnGravityOff> -->
+    </gazebo>
+    <gazebo reference="l_el">
+      <material>Gazebo/Grey</material>
+      <!-- <static>true</static> -->
+      <!-- <turnGravityOff>true</turnGravityOff> -->
+    </gazebo>
+
+    <gazebo reference="r_sho_pitch">
+      <material>Gazebo/Grey</material>
+      <!-- <static>true</static> -->
+      <!-- <turnGravityOff>true</turnGravityOff> -->
+    </gazebo>
+    <gazebo reference="r_sho_roll">
+      <material>Gazebo/Grey</material>
+      <!-- <static>true</static> -->
+      <!-- <turnGravityOff>true</turnGravityOff> -->
+    </gazebo>
+    <gazebo reference="r_el">
+      <material>Gazebo/Grey</material>
+      <!-- <static>true</static> -->
+      <!-- <turnGravityOff>true</turnGravityOff> -->
+    </gazebo>
+
+    <gazebo reference="head_pan">
+      <material>Gazebo/Grey</material>
+      <!-- <static>true</static> -->
+      <!-- <turnGravityOff>true</turnGravityOff> -->
+    </gazebo>
+    <gazebo reference="head_tilt">
+      <material>Gazebo/Grey</material>
+      <!-- <static>true</static> -->
+      <!-- <turnGravityOff>true</turnGravityOff> -->
+    </gazebo>
+
+    
+
+    
+    
+    
+     
   </robot>  

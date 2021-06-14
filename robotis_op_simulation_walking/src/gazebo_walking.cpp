@@ -98,6 +98,11 @@ bool GazeboWalking::computeIK(double *out, double x, double y, double z, double 
     double CALF_LENGTH = 122.0;
     double ANKLE_LENGTH = 42.0;
 
+    // double LEG_LENGTH = 219.5;
+    // double THIGH_LENGTH = 93.0;
+    // double CALF_LENGTH = 93.0;
+    // double ANKLE_LENGTH = 33.5;
+
 
     Tad.SetTransform(Point3D(x, y, z - LEG_LENGTH), Vector3D(a * 180.0 / M_PI, b * 180.0 / M_PI, c * 180.0 / M_PI));
 

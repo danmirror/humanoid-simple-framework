@@ -22,7 +22,7 @@ value reduction mess rscuad
 
   <xacro:include filename="$(find rscuad_description)/urdf/gazebo_harness.xacro" />
   
-  <xacro:add_sim_harness harnessed_link="body"/>
+  <!-- <xacro:add_sim_harness harnessed_link="body"/> -->
 
   <!-- <link name="world">
   </link> -->
@@ -46,7 +46,7 @@ value reduction mess rscuad
         xyz="0.0357056190627579 0.0719364874349917 0.124774491029847"
         rpy="0 0 0" />
       <mass
-        value="0.0045681147773924" />
+        value="0.0125681147773924" />
       <inertia ixx="0.00340499" ixy="0.00000572" ixz="-0.00004256"
              iyy="0.00296939" iyz="-0.00000059"
              izz="0.00317331" />
@@ -274,7 +274,7 @@ value reduction mess rscuad
     type="revolute">
     <origin
       xyz="0.0385 -0.01 0"
-      rpy="0 0 0" />
+      rpy="0 0 -1" />
     <parent
       link="l_sho_pitch" />
     <child
@@ -432,7 +432,7 @@ value reduction mess rscuad
     type="revolute">
     <origin
       xyz="-0.0384999999999999 -0.00999999999999629 0"
-      rpy="0 0 0" />
+      rpy="0 0 1" />
     <parent
       link="r_sho_pitch" />
     <child

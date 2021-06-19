@@ -16,6 +16,7 @@ public:
 
 
     void Initialize();
+    void walk_ready();
     void Start();
     void Stop();
     void Process(double *outValue);
@@ -67,6 +68,7 @@ public:
 
     double rlGyroErr;
     double fbGyroErr;
+    
 
 protected:
 
@@ -157,6 +159,10 @@ private:
     int    m_Phase;
     double m_Body_Swing_Y;
     double m_Body_Swing_Z;
+
+    bool init_pos;
+    float LIMIT;
+    
 
 
 

@@ -9,6 +9,7 @@
 #include <robotis_op_simulation_walking/math/Matrix.h>
 #define MX28_1024
 int iter = 0;
+double LIMIT_Z = 0;
 
 namespace robotis_op {
 using namespace Robot;
@@ -19,6 +20,10 @@ GazeboWalking::GazeboWalking(ros::NodeHandle nh)
     : nh_(nh)
 {
     ROS_WARN("Constructor");
+
+    init_pos = true;
+    LIMIT = 1;
+
     m_Ctrl_Running = false;
     m_Real_Running = false;
     m_Time = 0.0;
@@ -77,6 +82,81 @@ GazeboWalking::~GazeboWalking()
 {
 }
 
+void GazeboWalking::Initialize(){
+    init_pos=true;
+}
+
+void GazeboWalking::walk_ready(){
+
+    if(iter >=30){
+        if(LIMIT_Z <10){
+            LIMIT_Z += 0.02;
+
+             // increment
+            m_Z_Move_Amplitude = -10 + LIMIT_Z;
+            m_Z_Move_Amplitude_Shift = -10 + LIMIT_Z;
+            m_Z_Swap_Amplitude = -10 + LIMIT_Z;
+            m_Z_Swap_Amplitude_Shift = -10 + LIMIT_Z;
+            HIP_PITCH_OFFSET =0 +LIMIT_Z ;
+
+        }
+        else{
+            if(LIMIT>0)
+                LIMIT -= 0.01;
+        
+
+            ROS_ERROR("done init----------------------------");
+            m_Z_Move_Amplitude = Z_MOVE_AMPLITUDE / 2 - ((Z_MOVE_AMPLITUDE / 2) *LIMIT) ;
+            m_Z_Move_Amplitude_Shift = m_Z_Move_Amplitude / 2-(( m_Z_Move_Amplitude / 2)*LIMIT);
+            m_Z_Swap_Amplitude = Z_SWAP_AMPLITUDE - (Z_SWAP_AMPLITUDE*LIMIT);
+            m_Z_Swap_Amplitude_Shift = m_Z_Swap_Amplitude - (m_Z_Swap_Amplitude*LIMIT);
+
+        }
+    }
+    else{
+
+        m_Z_Move_Amplitude = -10 + LIMIT_Z;
+        m_Z_Move_Amplitude_Shift = -10 + LIMIT_Z;
+        m_Z_Swap_Amplitude = -10 + LIMIT_Z;
+        m_Z_Swap_Amplitude_Shift = -10 + LIMIT_Z;
+        HIP_PITCH_OFFSET =0;
+
+    }
+
+    ROS_INFO("limit %f",LIMIT);
+    // Forward/Back
+    m_X_Move_Amplitude = X_MOVE_AMPLITUDE - (X_MOVE_AMPLITUDE*LIMIT);
+    m_X_Swap_Amplitude = X_MOVE_AMPLITUDE * STEP_FB_RATIO - ((X_MOVE_AMPLITUDE * STEP_FB_RATIO) * LIMIT);
+    // m_X_Move_Amplitude =0;
+    
+    // m_X_Swap_Amplitude = 0;
+
+
+    // Right/Left
+    m_Y_Move_Amplitude = Y_MOVE_AMPLITUDE / 2;
+    if(m_Y_Move_Amplitude > 0)
+        m_Y_Move_Amplitude_Shift = m_Y_Move_Amplitude - (m_Y_Move_Amplitude*LIMIT) ;
+    else
+        m_Y_Move_Amplitude_Shift = -m_Y_Move_Amplitude + (m_Y_Move_Amplitude *LIMIT);
+    m_Y_Swap_Amplitude = Y_SWAP_AMPLITUDE + m_Y_Move_Amplitude_Shift * 0.04 - ((Y_SWAP_AMPLITUDE + m_Y_Move_Amplitude_Shift * 0.04) *LIMIT);
+
+
+    
+
+    // Z_MOVE_AMPLITUDE = -5;
+    // Z_SWAP_AMPLITUDE = -5;
+
+
+    // ROS_WARN("m_Z_Move_Amplitude %f",m_Z_Move_Amplitude);
+    // ROS_WARN("m_Z_Move_Amplitude ORI %f",Z_MOVE_AMPLITUDE / 2);
+    // ROS_WARN("m_Z_Move_Amplitude_Shift %f",m_Z_Move_Amplitude_Shift);
+    ROS_WARN("m_X_Move_Amplitude %f",m_X_Move_Amplitude);
+    ROS_WARN("X_MOVE_AMPLITUDE %f",X_MOVE_AMPLITUDE);
+    ROS_WARN("Z_MOVE_AMPLITUDE %f",Z_MOVE_AMPLITUDE);
+    ROS_WARN("Z_SWAP_AMPLITUDE %f",Z_SWAP_AMPLITUDE);
+
+
+}
 
 void GazeboWalking::update(ros::Time time, ros::Duration period)
 {
@@ -204,6 +284,7 @@ void GazeboWalking::update_param_time()
 
 void GazeboWalking::update_param_move()
 {
+    X_MOVE_AMPLITUDE = 10; //manuals
     // Forward/Back
     m_X_Move_Amplitude = X_MOVE_AMPLITUDE;
     m_X_Swap_Amplitude = X_MOVE_AMPLITUDE * STEP_FB_RATIO;
@@ -275,6 +356,8 @@ void GazeboWalking::Process(double *outValue)
 {
     // ROS_ERROR("HIP_PITCH_OFFSET = %f", HIP_PITCH_OFFSET);
     // ROS_WARN("init walking gazebo 1");
+    
+
     double x_swap, y_swap, z_swap, a_swap, b_swap, c_swap;
     double x_move_r, y_move_r, z_move_r, a_move_r, b_move_r, c_move_r;
     double x_move_l, y_move_l, z_move_l, a_move_l, b_move_l, c_move_l;
@@ -314,13 +397,13 @@ void GazeboWalking::Process(double *outValue)
     }
     else if(m_Time >= (m_Phase_Time1 - TIME_UNIT/2) && m_Time < (m_Phase_Time1 + TIME_UNIT/2))
     {
-        // ROS_ERROR("Update walk parameters 2");
+        ROS_ERROR("Update walk parameters 2");
         update_param_move();
         m_Phase = PHASE1;
     }
     else if(m_Time >= (m_Phase_Time2 - TIME_UNIT/2) && m_Time < (m_Phase_Time2 + TIME_UNIT/2))
     {
-        // ROS_ERROR("Update walk parameters 3");
+        ROS_ERROR("Update walk parameters 3");
         update_param_time();
         m_Time = m_Phase_Time2;
         m_Phase = PHASE2;
@@ -340,7 +423,7 @@ void GazeboWalking::Process(double *outValue)
     }
     else if(m_Time >= (m_Phase_Time3 - TIME_UNIT/2) && m_Time < (m_Phase_Time3 + TIME_UNIT/2))
     {
-        // ROS_ERROR("Update walk parameters 4");
+        ROS_ERROR("Update walk parameters 4");
         update_param_move();
         m_Phase = PHASE3;
     }
@@ -480,10 +563,17 @@ void GazeboWalking::Process(double *outValue)
         if(m_Time >= m_PeriodTime)
             m_Time = 0;
     }
+     // init
+    if(init_pos == true && m_Real_Running == false) {
+        // m_Time += 1;
+        // if(m_Time >= m_PeriodTime/4)
+        //     m_Time = m_PeriodTime/4;
+        walk_ready();
+    }
+
 
     iter ++; // make iteration global
 
-    
     // ROS_WARN("init walking gazebo 3");
     // Compute angles
     if((computeIK(&angle[0], ep[0], ep[1], ep[2], ep[3], ep[4], ep[5]) == 1)
@@ -526,15 +616,31 @@ void GazeboWalking::Process(double *outValue)
         else if(i == 7) // L_HIP_ROLL
             offset += (double)dir[i] * pelvis_offset_l;
         else if(i == 2 || i == 8) // R_HIP_PITCH or L_HIP_PITCH
-        {
             offset -= (double)dir[i] * HIP_PITCH_OFFSET * 3.413;
+
+        // initial approach
+        if(init_pos == true && m_Real_Running == false) {
+            if(i == 1) // R_HIP_ROLL
+                offset = 0;
+            else if(i == 7) // L_HIP_ROLL
+                offset = 0;
+          
+
+            if(i == 5)
+                offset = 0;
+            if(i == 11)
+                offset = 0;
+
+            // _shoulder_
+            if(i == 12)
+                offset = 0;
+            if(i == 13)
+                offset = 0;
         }
-        
-        outValue[i] = (offset*0.293)/(180.0/M_PI); //initAngle[i] + (int)offset; //todo check MX28::Angle2Value(initAngle[i]) + (int)offset;
-        
-        // std::cout<<outValue[i]<<std::endl;
+
+        outValue[i] = (offset*0.293)/(180.0/M_PI);//initAngle[i] + (int)offset; //todo check MX28::Angle2Value(initAngle[i]) + (int)offset;
     }
-    ROS_ERROR("check----------------------------");
+    // ROS_ERROR("check----------------------------");
     // }
     // trigg ++;
     // ROS_ERROR("HIP_PITCH_OFFSET = %f", HIP_PITCH_OFFSET);

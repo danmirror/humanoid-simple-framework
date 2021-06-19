@@ -225,6 +225,7 @@ void SimulationWalkingNode::dynamicReconfigureCb(robotis_op_simulation_walking::
 
 int main(int argc, char **argv)
 {
+    int i = 0;
 
     ros::init(argc, argv, ROS_PACKAGE_NAME);
 
@@ -241,6 +242,8 @@ int main(int argc, char **argv)
     ros::Time last_time = ros::Time::now();
     ros::Rate rate(control_rate);
     ROS_INFO("Starting walking");
+    //gazebo_walking.Start();
+    gazebo_walking_node.walking_.Initialize();
 
 
     dynamic_reconfigure::Server<robotis_op_simulation_walking::robotis_op_walkingConfig> srv;
@@ -248,12 +251,15 @@ int main(int argc, char **argv)
     cb = boost::bind(&SimulationWalkingNode::dynamicReconfigureCb, &gazebo_walking_node, _1, _2);
     srv.setCallback(cb);
 
-    gazebo_walking_node.walking_.Start();
 
     ROS_INFO("Started walking");
 
     while (ros::ok())
     {
+        i++;
+        ROS_INFO("iteration %d", i);
+        if(i > 1500)
+             gazebo_walking_node.walking_.Start();
         rate.sleep();
         ros::Time current_time = ros::Time::now();
         ros::Duration elapsed_time = current_time - last_time;

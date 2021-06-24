@@ -284,7 +284,7 @@ void GazeboWalking::update_param_time()
 
 void GazeboWalking::update_param_move()
 {
-    X_MOVE_AMPLITUDE = 10; //manuals
+    X_MOVE_AMPLITUDE = 15; //manuals
     // Forward/Back
     m_X_Move_Amplitude = X_MOVE_AMPLITUDE;
     m_X_Swap_Amplitude = X_MOVE_AMPLITUDE * STEP_FB_RATIO;
@@ -631,12 +631,12 @@ void GazeboWalking::Process(double *outValue)
             if(i == 11)
                 offset = 0;
 
-            // _shoulder_
-            if(i == 12)
-                offset = 0;
-            if(i == 13)
-                offset = 0;
         }
+        // _shoulder_
+        if(i == 12)
+            offset = 0;
+        if(i == 13)
+            offset = 0;
 
         outValue[i] = (offset*0.293)/(180.0/M_PI);//initAngle[i] + (int)offset; //todo check MX28::Angle2Value(initAngle[i]) + (int)offset;
     }

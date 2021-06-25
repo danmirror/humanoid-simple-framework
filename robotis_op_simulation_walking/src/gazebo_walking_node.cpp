@@ -219,6 +219,15 @@ void SimulationWalkingNode::dynamicReconfigureCb(robotis_op_simulation_walking::
     walking_.HIP_PITCH_OFFSET=config.HIP_PITCH_OFFSET;
 }
 
+void SimulationWalkingNode::Mission()
+{
+
+    walking_.X_MOVE_AMPLITUDE = 10;
+    walking_.HIP_PITCH_OFFSET = 4;
+    ROS_INFO("mission mode");
+
+
+}
 }
 
 
@@ -256,14 +265,17 @@ int main(int argc, char **argv)
 
     while (ros::ok())
     {
-        i++;
+        // i++;
         ROS_INFO("iteration %d", i);
-        if(i > 1500)
-             gazebo_walking_node.walking_.Start();
+        // if(i > 1500)
+        gazebo_walking_node.walking_.Start();
         rate.sleep();
         ros::Time current_time = ros::Time::now();
         ros::Duration elapsed_time = current_time - last_time;
         gazebo_walking_node.Process();
+
+        // make mission
+        gazebo_walking_node.Mission();
         last_time = current_time;
 
     }

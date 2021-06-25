@@ -20,6 +20,7 @@ public:
     SimulationWalkingNode(ros::NodeHandle nh);
     ~SimulationWalkingNode();
 
+    void Mission();
     void Process();
     void enableWalkCb(std_msgs::BoolConstPtr enable);
     void cmdVelCb(const geometry_msgs::Twist::ConstPtr& msg);

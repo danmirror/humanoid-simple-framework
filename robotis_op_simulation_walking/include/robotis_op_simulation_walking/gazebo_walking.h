@@ -64,7 +64,7 @@ public:
     int    P_GAIN;
     int    I_GAIN;
     int    D_GAIN;
-    int trigg=0;
+    
 
     double rlGyroErr;
     double fbGyroErr;
@@ -160,9 +160,12 @@ private:
     double m_Body_Swing_Y;
     double m_Body_Swing_Z;
 
+    /*new parameter 
+    * Danu andrean
+    */
     bool init_pos;
     float LIMIT;
-    
+  
 
 
 

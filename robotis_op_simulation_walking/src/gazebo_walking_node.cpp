@@ -227,12 +227,12 @@ void SimulationWalkingNode::Mission()
     walking_.Start();
 
     walking_.X_MOVE_AMPLITUDE = 10;
-    walking_.HIP_PITCH_OFFSET = 4;
+    walking_.HIP_PITCH_OFFSET = 5;
 
     if(periode > 10 ){
         walking_.A_MOVE_AMPLITUDE = 18;
         walking_.X_MOVE_AMPLITUDE = 5;
-        walking_.HIP_PITCH_OFFSET = 4;
+        walking_.HIP_PITCH_OFFSET = 6;
         
         ROS_INFO("righ");
     }

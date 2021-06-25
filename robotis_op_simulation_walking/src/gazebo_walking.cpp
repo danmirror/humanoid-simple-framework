@@ -15,6 +15,7 @@
 int iter = 0;
 double LIMIT_Z = 0;
 bool INIT_MODE;
+int periode_counter = 0;
     
 
 namespace robotis_op {
@@ -64,7 +65,7 @@ GazeboWalking::GazeboWalking(ros::NodeHandle nh)
     X_MOVE_AMPLITUDE = 0;
     Y_MOVE_AMPLITUDE = 0;
     A_MOVE_AMPLITUDE = 0;
-    A_MOVE_AIM_ON = false;
+    A_MOVE_AIM_ON = true;
     BALANCE_ENABLE = true;
 
     // j_pelvis_l_publisher_ = nh_.advertise<std_msgs::Float64>("/rscuad/l_hip_yaw_position/command",1);
@@ -92,7 +93,9 @@ GazeboWalking::~GazeboWalking()
 void GazeboWalking::Initialize(){
     init_pos=true;
 }
-
+int GazeboWalking::periode_calc(){
+    return periode_counter;
+}
 void GazeboWalking::walk_ready(){
 
     /*
@@ -586,8 +589,10 @@ void GazeboWalking::Process(double *outValue)
         // std::cout<<TIME_UNIT<<m_Time<<"-"<< m_PeriodTime<<std::endl;
 
         m_Time += TIME_UNIT;
-        if(m_Time >= m_PeriodTime)
+        if(m_Time >= m_PeriodTime){
             m_Time = 0;
+            periode_counter +=1;
+        }
     }
      /* init position*/
     if(init_pos == true && m_Real_Running == false) {
@@ -626,8 +631,9 @@ void GazeboWalking::Process(double *outValue)
     {
         
         //make zero berfore running
-        for(int i=0; i<12; i++)
-            outValue[i] =0;
+        for(int i=0; i<12; i++){
+            angle[i] =0;
+        }
 
         ROS_ERROR("angle NOT found");
         // return; // Do not use angle;

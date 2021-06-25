@@ -11,6 +11,8 @@ using namespace robotis_op;
 #include <robotis_op_simulation_walking/math/Matrix.h>
 #define MX28_1024
 
+
+
 namespace robotis_op {
 using namespace Robot;
 
@@ -221,11 +223,21 @@ void SimulationWalkingNode::dynamicReconfigureCb(robotis_op_simulation_walking::
 
 void SimulationWalkingNode::Mission()
 {
+    int periode = walking_.periode_calc();
+    walking_.Start();
 
     walking_.X_MOVE_AMPLITUDE = 10;
     walking_.HIP_PITCH_OFFSET = 4;
-    ROS_INFO("mission mode");
 
+    if(periode > 10 ){
+        walking_.A_MOVE_AMPLITUDE = 18;
+        walking_.X_MOVE_AMPLITUDE = 5;
+        walking_.HIP_PITCH_OFFSET = 4;
+        
+        ROS_INFO("righ");
+    }
+    ROS_INFO("periode %d",periode);
+    ROS_INFO("mission mode");
 
 }
 }
@@ -265,17 +277,15 @@ int main(int argc, char **argv)
 
     while (ros::ok())
     {
-        // i++;
-        ROS_INFO("iteration %d", i);
-        // if(i > 1500)
-        gazebo_walking_node.walking_.Start();
+        
+        // make mission
+        gazebo_walking_node.Mission();
+
         rate.sleep();
         ros::Time current_time = ros::Time::now();
         ros::Duration elapsed_time = current_time - last_time;
         gazebo_walking_node.Process();
 
-        // make mission
-        gazebo_walking_node.Mission();
         last_time = current_time;
 
     }

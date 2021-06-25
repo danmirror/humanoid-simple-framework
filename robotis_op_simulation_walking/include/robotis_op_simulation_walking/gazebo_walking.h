@@ -16,6 +16,7 @@ public:
 
 
     void Initialize();
+    int periode_calc();
     void walk_ready();
     void Start();
     void Stop();

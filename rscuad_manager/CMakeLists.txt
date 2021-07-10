@@ -12,6 +12,7 @@ find_package(catkin REQUIRED COMPONENTS
   rospy
   std_msgs
   genmsg
+  dynamixel_sdk
 )
 
 ## System dependencies are found with CMake's conventions
@@ -139,6 +140,7 @@ target_link_libraries(${PROJECT_NAME}
 
 
 #############
+
 ## Install ##
 #############
 

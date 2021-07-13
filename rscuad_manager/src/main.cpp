@@ -130,6 +130,19 @@ int kbhit(void) {
 #include "std_msgs/String.h"
 #include "rscuad_manager/rscuad_manager.h"
 
+/* ROBOTIS Controller Header */
+#include "robotis_controller/robotis_controller.h"
+
+/* Sensor Module Header */
+#include "open_cr_module/open_cr_module.h"
+using namespace robotis_framework;
+using namespace robotis_op;
+
+const int SUB_CONTROLLER_ID = 200;
+const int POWER_CTRL_TABLE = 24;
+const int RGB_LED_CTRL_TABLE = 26;
+const int TORQUE_ON_CTRL_TABLE = 64;
+
 
 
 void Callback(const std_msgs::String::ConstPtr& msg){
@@ -269,9 +282,49 @@ int main(int argc, char **argv)
     //not use
     rscuad->manager_init();
 
-    // move servo
-    dxl_process();
+   
+    RobotisController *controller =  RobotisController::getInstance();
 
+    dynamixel::PortHandler *portHandler = dynamixel::PortHandler::getPortHandler(DEVICENAME);
+
+    if (portHandler->setBaudRate(BAUDRATE)) {
+    printf("Succeeded to change the baudrate!\n");
+    }
+   
+    dynamixel::PacketHandler *packetHandler = dynamixel::PacketHandler::getPacketHandler(PROTOCOL_VERSION);
+    // controller->addSensorModule((SensorModule*) OpenCRModule::getInstance());
+
+     // power on dxls
+    int torque_on_count = 0;
+
+    while (torque_on_count < 5)
+    {
+      int _return = packetHandler->write1ByteTxRx(portHandler, SUB_CONTROLLER_ID, POWER_CTRL_TABLE, 1);
+
+      if(_return != 0)
+        ROS_ERROR("Torque on DXLs! [%s]", packetHandler->getRxPacketError(_return));
+      else
+        ROS_INFO("Torque on DXLs!");
+
+      if (_return == 0)
+        break;
+      else
+        torque_on_count++;
+    }
+
+    usleep(100 * 1000);
+
+    // set RGB-LED to GREEN
+    int led_full_unit = 0x1F;
+    int led_range = 5;
+    int led_value = led_full_unit << led_range;
+    int _return = packetHandler->write2ByteTxRx(portHandler, SUB_CONTROLLER_ID, RGB_LED_CTRL_TABLE, led_value);
+
+    if(_return != 0)
+      ROS_ERROR("Fail to control LED [%s]", packetHandler->getRxPacketError(_return));
+
+  //  move servo
+    dxl_process();
 
     ros::init(argc, argv, "rscuad_manager");
     ros::NodeHandle nh;

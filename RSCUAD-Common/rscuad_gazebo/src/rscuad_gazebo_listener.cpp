@@ -14,7 +14,7 @@ void chatterCallback(const std_msgs::String::ConstPtr& msg)
 {
   ros::Rate loop_rate(10);
   ros::NodeHandle nh; 
-  ros::Publisher pub = nh.advertise<std_msgs::String>("rscuad_manager", 1000);
+  ros::Publisher pub = nh.advertise<std_msgs::String>("/rscuad/manager", 1000);
 
   while(ros::ok)
   {

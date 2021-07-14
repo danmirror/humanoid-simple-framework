@@ -1,3 +1,14 @@
+/*
+ des  : rscuad walking node 
+ year : 2021
+ 
+*/
+
+// dev : danu andrean
+
+
+
+
 #include <robotis_op_simulation_walking/gazebo_walking_node.h>
 
 using namespace robotis_op;
@@ -20,21 +31,9 @@ SimulationWalkingNode::SimulationWalkingNode(ros::NodeHandle nh)
     : nh_(nh)
     , walking_(nh)
 {
-    // rscuad_joint.l_hip_yaw_position= "/rscuad/l_hip_yaw_position/command";
-    // rscuad_joint.l_hip_roll_position= "/rscuad/l_hip_roll_position/command";
-    // rscuad_joint.l_hip_pitch_position= "/rscuad/l_hip_pitch_position/command";
-    // rscuad_joint.l_knee_position= "/rscuad/l_knee_position/command";
-    // rscuad_joint.l_ank_roll_position= "/rscuad/l_ank_roll_position/command";
-    // rscuad_joint.l_ank_pitch_position= "/rscuad/l_ank_pitch_position/command";
 
-    // rscuad_joint.r_hip_yaw_position= "/rscuad/r_hip_yaw_position/command";
-    // rscuad_joint.r_hip_roll_position= "/rscuad/r_hip_roll_position/command";
-    // rscuad_joint.r_hip_pitch_position= "/rscuad/r_hip_pitch_position/command";
-    // rscuad_joint.r_knee_position= "/rscuad/r_knee_position/command";
-    // rscuad_joint.r_ank_roll_position= "/rscuad/r_ank_roll_position/command";
-    // rscuad_joint.r_ank_pitch_position= "/rscuad/r_ank_pitch_position/command";
-    // rscuad_joint.l_sho_pitch_position= "/rscuad/l_sho_pitch_position/command";
-    // rscuad_joint.l_sho_roll_position= "/rscuad/l_sho_roll_position/command";
+    rscuad_robot_publisher = nh_.advertise<std_msgs::String>("rscuad_manager/robot",1);
+
     ROS_WARN("SimulationWalkingNode ...");
     j_pelvis_l_publisher_ = nh_.advertise<std_msgs::Float64>("/rscuad/l_hip_yaw_position/command",1);
     j_thigh1_l_publisher_ = nh_.advertise<std_msgs::Float64>("/rscuad/l_hip_roll_position/command",1);
@@ -82,6 +81,8 @@ void SimulationWalkingNode::Process()
     std_msgs::Float64 j_ankle2_r_msg;
     std_msgs::Float64 j_shoulder_r_msg;
 
+    
+
     double outValue[14];
     walking_.Process(&outValue[0]);
 
@@ -122,6 +123,45 @@ void SimulationWalkingNode::Process()
     // ROS_WARN("Proses in node ...");
     // ROS_WARN("%f", j_ankle1_r_msg.data);
 
+    //====================send to robot======================
+    //send to robot
+    std_msgs::String rscuad_robot;
+    std::stringstream  str_0,str_1,str_2,str_3,str_4,str_5,str_6,str_7,str_8,str_9,str_10,str_11,str_12,str_13;
+    str_0 << outValue[0];
+    str_1 << outValue[1];
+    str_2 << outValue[2];
+    str_3 << outValue[3];
+    str_4 << outValue[4];
+    str_5 << outValue[5];
+    str_6<< outValue[6];
+    str_7 << outValue[7];
+    str_8 << outValue[8];
+    str_9 << outValue[9];
+    str_10 << outValue[10];
+    str_11 << outValue[11];
+    str_12 << outValue[12];
+    str_13 << outValue[13];
+
+    rscuad_robot.data = str_0.str()+","+
+                        str_1.str()+","+
+                        str_2.str()+","+
+                        str_3.str()+","+
+                        str_4.str()+","+
+                        str_5.str()+","+
+                        str_6.str()+","+
+                        str_7.str()+","+
+                        str_8.str()+","+
+                        str_9.str()+","+
+                        str_10.str()+","+
+                        str_11.str()+","+
+                        str_12.str()+","+
+                        str_13.str();
+                    
+     rscuad_robot_publisher.publish(rscuad_robot);
+   
+    
+
+    //====================send to Gazebo======================
     j_pelvis_l_publisher_.publish(j_pelvis_l_msg);
     j_thigh1_l_publisher_.publish(j_thigh1_l_msg);
     j_thigh2_l_publisher_.publish(j_thigh2_l_msg);

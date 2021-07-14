@@ -1,8 +1,18 @@
+/*
+ des  : rscuad walking node 
+ year : 2021
+ 
+*/
+
+// dev : danu andrean
+
 #ifndef GAZEBO_WALKING_NODE_H
 #define GAZEBO_WALKING_NODE_H
 
 #include <ros/ros.h>
+#include "std_msgs/String.h"
 
+#include <sstream>
 #include <robotis_op_simulation_walking/gazebo_walking.h>
 
 #include <std_msgs/Bool.h>
@@ -55,6 +65,7 @@ private:
     ros::Publisher j_ankle1_r_publisher_;
     ros::Publisher j_ankle2_r_publisher_;
     ros::Publisher j_shoulder_r_publisher_;
+    ros::Publisher rscuad_robot_publisher;
 
 
 

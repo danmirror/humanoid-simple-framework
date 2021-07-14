@@ -9,7 +9,11 @@
 #ifndef RSCUAD_MANAGER_H_
 #define RSCUAD_MANAGER_H_
 
-#include <ros/ros.h>
+
+
+#include "ros/ros.h"
+#include <std_msgs/Float64.h>
+#include "std_msgs/String.h"
 #include <stdio.h>
 #include <string.h>
 
@@ -65,6 +69,8 @@ namespace rscuad{
         public:
             void manager_init(); 
             void move_joint(char *str); 
+            void move_robot(char *str); 
+            int dxl_process();
     };
 }
 #endif

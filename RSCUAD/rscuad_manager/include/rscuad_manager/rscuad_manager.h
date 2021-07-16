@@ -1,5 +1,5 @@
 /*
- des  : rscuad control gazebo
+ desc : rscuad manager header
  year :2021
  
 */
@@ -16,6 +16,9 @@
 #include "std_msgs/String.h"
 #include <stdio.h>
 #include <string.h>
+#include <stdlib.h>
+
+#include <sstream>
 
 
 namespace rscuad{
@@ -67,10 +70,10 @@ namespace rscuad{
 
     class rscuad_manager{
         public:
-            void manager_init(); 
+            int dxl_process();
+            int manager_init(); 
             void move_joint(char *str); 
             void move_robot(char *str); 
-            int dxl_process();
     };
 }
 #endif

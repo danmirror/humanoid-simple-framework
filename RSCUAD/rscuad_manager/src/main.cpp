@@ -1,5 +1,5 @@
 /*
- des  : rscuad manager 
+ desc : rscuad manager 
  year : 2021
  
 */
@@ -7,26 +7,7 @@
 // author : danu andrean
 
 
-
-
-#include "ros/ros.h"
-#include <std_msgs/Float64.h>
-#include "std_msgs/String.h"
 #include "rscuad_manager/rscuad_manager.h"
-
-/* ROBOTIS Controller Header */
-#include "robotis_controller/robotis_controller.h"
-
-/* Sensor Module Header */
-#include "open_cr_module/open_cr_module.h"
-using namespace robotis_framework;
-using namespace robotis_op;
-
-const int SUB_CONTROLLER_ID = 200;
-const int POWER_CTRL_TABLE = 24;
-const int RGB_LED_CTRL_TABLE = 26;
-const int TORQUE_ON_CTRL_TABLE = 64;
-
 
 
 void Callback(const std_msgs::String::ConstPtr& msg){
@@ -52,10 +33,8 @@ int main(int argc, char **argv)
     // alocation memory
     rscuad::rscuad_manager *rscuad = new rscuad::rscuad_manager;
 
-    //initial power
+    //initial robot
     rscuad->manager_init();
-
-   
    
 
   // //  move servo
@@ -63,7 +42,6 @@ int main(int argc, char **argv)
 
     ros::init(argc, argv, "rscuad_manager");
     ros::NodeHandle nh;
-    ROS_INFO("main manager init");
     
     ros::Subscriber joint = nh.subscribe("rscuad_manager", 100, Callback);
     ros::Subscriber robot = nh.subscribe("rscuad_manager/robot", 100, Manager_Robot_Callback);

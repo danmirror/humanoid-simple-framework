@@ -23,9 +23,11 @@ using namespace robotis_op;
 #define MX28_1024
 
 
-
 namespace robotis_op {
 using namespace Robot;
+
+
+ros::Publisher rscuad_robot_publisher ;
 
 SimulationWalkingNode::SimulationWalkingNode(ros::NodeHandle nh)
     : nh_(nh)
@@ -103,6 +105,61 @@ void SimulationWalkingNode::Process()
     j_shoulder_r_msg.data = outValue[12];
     j_shoulder_l_msg.data = outValue[13];
     
+    // ROS_INFO("calc R0 = %f", outValue[0]);
+    // ROS_INFO("calc R1 = %f", outValue[1]);
+    // ROS_INFO("calc R2 = %f", outValue[2]);
+    // ROS_INFO("calc R3 = %f", outValue[3]);
+    // ROS_INFO("calc R4 = %f", outValue[4]);
+    // ROS_INFO("calc R5 = %f", outValue[5]);
+    
+    // ROS_INFO("calc L0 = %f", outValue[6]);
+    // ROS_INFO("calc L1 = %f", outValue[7]);
+    // ROS_INFO("calc L2 = %f", outValue[8]);
+    // ROS_INFO("calc L3 = %f", outValue[9]);
+    // ROS_INFO("calc L4 = %f", outValue[10]);
+    // ROS_INFO("calc L5 = %f", outValue[11]);
+
+    // ROS_INFO("calc L12 = %f", outValue[12]);
+    // ROS_INFO("calc R13 = %f", outValue[13]);
+
+    // ROS_WARN("Proses in node ...");
+    // ROS_WARN("%f", j_ankle1_r_msg.data);
+
+    //====================send to robot======================
+    //send to robot
+    std_msgs::String rscuad_robot;
+    std::stringstream  str_0,str_1,str_2,str_3,str_4,str_5,str_6,str_7,str_8,str_9,str_10,str_11,str_12,str_13;
+    float float_0,float_1,float_2,float_3,float_4,float_5,float_6,float_7,float_8,float_9,float_10,float_11,float_12,float_13;
+
+    float_0 = outValue[0];
+    float_1 = outValue[1];
+    float_2 = outValue[2];
+    float_3 = outValue[3];
+    float_4 = outValue[4];
+    float_5 = outValue[5];
+    float_6 = outValue[6];
+    float_7 = outValue[7];
+    float_8 = outValue[8];
+    float_9 = outValue[9];
+    float_10 = outValue[10];
+    float_11 = outValue[11];
+    float_12 = outValue[12];
+    float_13 = outValue[13];
+
+    str_0 << float_0;
+    str_1 << float_1;
+    str_2 << float_2;
+    str_3 << float_3;
+    str_4 << float_4;
+    str_5 << float_5;
+    str_6 << float_6;
+    str_7 << float_7;
+    str_8 << float_8;
+    str_9 << float_9;
+    str_10 << float_10;
+    str_11 << float_11;
+    str_12 << float_12;
+    str_13 << float_13;
     ROS_INFO("calc R0 = %f", outValue[0]);
     ROS_INFO("calc R1 = %f", outValue[1]);
     ROS_INFO("calc R2 = %f", outValue[2]);
@@ -119,28 +176,7 @@ void SimulationWalkingNode::Process()
 
     ROS_INFO("calc L12 = %f", outValue[12]);
     ROS_INFO("calc R13 = %f", outValue[13]);
-
-    // ROS_WARN("Proses in node ...");
-    // ROS_WARN("%f", j_ankle1_r_msg.data);
-
-    //====================send to robot======================
-    //send to robot
-    std_msgs::String rscuad_robot;
-    std::stringstream  str_0,str_1,str_2,str_3,str_4,str_5,str_6,str_7,str_8,str_9,str_10,str_11,str_12,str_13;
-    str_0 << outValue[0];
-    str_1 << outValue[1];
-    str_2 << outValue[2];
-    str_3 << outValue[3];
-    str_4 << outValue[4];
-    str_5 << outValue[5];
-    str_6<< outValue[6];
-    str_7 << outValue[7];
-    str_8 << outValue[8];
-    str_9 << outValue[9];
-    str_10 << outValue[10];
-    str_11 << outValue[11];
-    str_12 << outValue[12];
-    str_13 << outValue[13];
+    // ROS_WARN(str_0.str());
 
     rscuad_robot.data = str_0.str()+","+
                         str_1.str()+","+

@@ -1,16 +1,5 @@
-// =========================dxl==============================
-/* ROBOTIS Controller Header */
-#include "robotis_controller/robotis_controller.h"
+// dxl==================================================
 
-/* Sensor Module Header */
-#include "open_cr_module/open_cr_module.h"
-using namespace robotis_framework;
-using namespace robotis_op;
-
-const int SUB_CONTROLLER_ID = 200;
-const int POWER_CTRL_TABLE = 24;
-const int RGB_LED_CTRL_TABLE = 26;
-const int TORQUE_ON_CTRL_TABLE = 64;
 
 
 #if defined(__linux__) || defined(__APPLE__)
@@ -83,4 +72,4 @@ const int TORQUE_ON_CTRL_TABLE = 64;
 #define ESC_ASCII_VALUE                 0x1b
 
 
-// =======================end dxl==============================
+// end dxl======================================================

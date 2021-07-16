@@ -23,11 +23,9 @@ using namespace robotis_op;
 #define MX28_1024
 
 
+
 namespace robotis_op {
 using namespace Robot;
-
-
-
 
 SimulationWalkingNode::SimulationWalkingNode(ros::NodeHandle nh)
     : nh_(nh)
@@ -105,22 +103,22 @@ void SimulationWalkingNode::Process()
     j_shoulder_r_msg.data = outValue[12];
     j_shoulder_l_msg.data = outValue[13];
     
-    // ROS_INFO("calc R0 = %f", outValue[0]);
-    // ROS_INFO("calc R1 = %f", outValue[1]);
-    // ROS_INFO("calc R2 = %f", outValue[2]);
-    // ROS_INFO("calc R3 = %f", outValue[3]);
-    // ROS_INFO("calc R4 = %f", outValue[4]);
-    // ROS_INFO("calc R5 = %f", outValue[5]);
+    ROS_INFO("calc R0 = %f", outValue[0]);
+    ROS_INFO("calc R1 = %f", outValue[1]);
+    ROS_INFO("calc R2 = %f", outValue[2]);
+    ROS_INFO("calc R3 = %f", outValue[3]);
+    ROS_INFO("calc R4 = %f", outValue[4]);
+    ROS_INFO("calc R5 = %f", outValue[5]);
     
-    // ROS_INFO("calc L0 = %f", outValue[6]);
-    // ROS_INFO("calc L1 = %f", outValue[7]);
-    // ROS_INFO("calc L2 = %f", outValue[8]);
-    // ROS_INFO("calc L3 = %f", outValue[9]);
-    // ROS_INFO("calc L4 = %f", outValue[10]);
-    // ROS_INFO("calc L5 = %f", outValue[11]);
+    ROS_INFO("calc L0 = %f", outValue[6]);
+    ROS_INFO("calc L1 = %f", outValue[7]);
+    ROS_INFO("calc L2 = %f", outValue[8]);
+    ROS_INFO("calc L3 = %f", outValue[9]);
+    ROS_INFO("calc L4 = %f", outValue[10]);
+    ROS_INFO("calc L5 = %f", outValue[11]);
 
-    // ROS_INFO("calc L12 = %f", outValue[12]);
-    // ROS_INFO("calc R13 = %f", outValue[13]);
+    ROS_INFO("calc L12 = %f", outValue[12]);
+    ROS_INFO("calc R13 = %f", outValue[13]);
 
     // ROS_WARN("Proses in node ...");
     // ROS_WARN("%f", j_ankle1_r_msg.data);
@@ -160,23 +158,6 @@ void SimulationWalkingNode::Process()
     str_11 << float_11;
     str_12 << float_12;
     str_13 << float_13;
-    ROS_INFO("calc R0 = %f", outValue[0]);
-    ROS_INFO("calc R1 = %f", outValue[1]);
-    ROS_INFO("calc R2 = %f", outValue[2]);
-    ROS_INFO("calc R3 = %f", outValue[3]);
-    ROS_INFO("calc R4 = %f", outValue[4]);
-    ROS_INFO("calc R5 = %f", outValue[5]);
-    
-    ROS_INFO("calc L0 = %f", outValue[6]);
-    ROS_INFO("calc L1 = %f", outValue[7]);
-    ROS_INFO("calc L2 = %f", outValue[8]);
-    ROS_INFO("calc L3 = %f", outValue[9]);
-    ROS_INFO("calc L4 = %f", outValue[10]);
-    ROS_INFO("calc L5 = %f", outValue[11]);
-
-    ROS_INFO("calc L12 = %f", outValue[12]);
-    ROS_INFO("calc R13 = %f", outValue[13]);
-    // ROS_WARN(str_0.str());
 
     rscuad_robot.data = str_0.str()+","+
                         str_1.str()+","+

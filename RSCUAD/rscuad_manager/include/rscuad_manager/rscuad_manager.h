@@ -1,5 +1,5 @@
 /*
- desc : rscuad manager header
+ des  : rscuad control gazebo
  year :2021
  
 */
@@ -9,8 +9,6 @@
 #ifndef RSCUAD_MANAGER_H_
 #define RSCUAD_MANAGER_H_
 
-
-
 #include "ros/ros.h"
 #include <std_msgs/Float64.h>
 #include "std_msgs/String.h"
@@ -19,6 +17,18 @@
 #include <stdlib.h>
 
 #include <sstream>
+/* ROBOTIS Controller Header */
+#include "robotis_controller/robotis_controller.h"
+
+/* Sensor Module Header */
+#include "open_cr_module/open_cr_module.h"
+using namespace robotis_framework;
+using namespace robotis_op;
+
+const int SUB_CONTROLLER_ID = 200;
+const int POWER_CTRL_TABLE = 24;
+const int RGB_LED_CTRL_TABLE = 26;
+const int TORQUE_ON_CTRL_TABLE = 64;
 
 
 namespace rscuad{
@@ -70,10 +80,10 @@ namespace rscuad{
 
     class rscuad_manager{
         public:
-            int dxl_process();
             int manager_init(); 
             void move_joint(char *str); 
             int move_robot(char *str); 
+            int dxl_process();
     };
 }
 #endif

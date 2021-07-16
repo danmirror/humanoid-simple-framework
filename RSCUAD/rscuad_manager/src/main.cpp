@@ -1,5 +1,5 @@
 /*
- desc : rscuad manager 
+ des  : rscuad manager 
  year : 2021
  
 */
@@ -7,7 +7,11 @@
 // author : danu andrean
 
 
+
+
 #include "rscuad_manager/rscuad_manager.h"
+
+
 
 
 void Callback(const std_msgs::String::ConstPtr& msg){
@@ -33,8 +37,10 @@ int main(int argc, char **argv)
     // alocation memory
     rscuad::rscuad_manager *rscuad = new rscuad::rscuad_manager;
 
-    //initial robot
+    //initial power
     rscuad->manager_init();
+
+   
    
 
   // //  move servo
@@ -42,6 +48,7 @@ int main(int argc, char **argv)
 
     ros::init(argc, argv, "rscuad_manager");
     ros::NodeHandle nh;
+    ROS_INFO("main manager init");
     
     ros::Subscriber joint = nh.subscribe("rscuad_manager", 100, Callback);
     ros::Subscriber robot = nh.subscribe("rscuad_manager/robot", 100, Manager_Robot_Callback);

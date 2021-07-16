@@ -37,14 +37,14 @@ public:
     void imuCb(const sensor_msgs::ImuConstPtr msg);
     void dynamicReconfigureCb(robotis_op_simulation_walking::robotis_op_walkingConfig &config, uint32_t level);
 
-    ros::Publisher rscuad_robot_publisher ;
 
     GazeboWalking walking_;
 protected:
 
 
 private:
-    
+
+
     ros::NodeHandle nh_;
     ros::Subscriber cmd_vel_subscriber_;
     ros::Subscriber enable_walking_subscriber_;
@@ -65,7 +65,9 @@ private:
     ros::Publisher j_ankle1_r_publisher_;
     ros::Publisher j_ankle2_r_publisher_;
     ros::Publisher j_shoulder_r_publisher_;
-    
+    ros::Publisher rscuad_robot_publisher;
+
+
 
 };
 

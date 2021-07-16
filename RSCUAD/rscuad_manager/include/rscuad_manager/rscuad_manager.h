@@ -73,7 +73,7 @@ namespace rscuad{
             int dxl_process();
             int manager_init(); 
             void move_joint(char *str); 
-            void move_robot(char *str); 
+            int move_robot(char *str); 
     };
 }
 #endif

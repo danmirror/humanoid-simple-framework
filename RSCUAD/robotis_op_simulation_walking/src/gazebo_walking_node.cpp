@@ -27,7 +27,7 @@ namespace robotis_op {
 using namespace Robot;
 
 
-ros::Publisher rscuad_robot_publisher ;
+
 
 SimulationWalkingNode::SimulationWalkingNode(ros::NodeHandle nh)
     : nh_(nh)

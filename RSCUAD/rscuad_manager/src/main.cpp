@@ -44,11 +44,10 @@ int main(int argc, char **argv)
    
 
   // //  move servo
-    rscuad->dxl_process();
+    // rscuad->dxl_process();
 
     ros::init(argc, argv, "rscuad_manager");
     ros::NodeHandle nh;
-    ROS_INFO("main manager init");
     
     ros::Subscriber joint = nh.subscribe("rscuad_manager", 100, Callback);
     ros::Subscriber robot = nh.subscribe("rscuad_manager/robot", 100, Manager_Robot_Callback);

@@ -10,6 +10,17 @@
 #include "rscuad_manager/rscuad_manager.h"
 #include "rscuad_manager/dxl_header.h"
 
+int index_ = 0;
+int dxl_comm_result = COMM_TX_FAIL;             // Communication result
+int dxl_goal_position[2] = {MINIMUM_POSITION_LIMIT, MAXIMUM_POSITION_LIMIT};         // Goal position
+
+uint8_t dxl_error = 0;                          // DYNAMIXEL error
+#if defined(XL320)
+int16_t dxl_present_position = 0;  // XL-320 uses 2 byte Position data
+#else
+int32_t dxl_present_position = 0;  // Read 4 byte Position data
+#endif
+
 
 int rscuad::rscuad_manager::manager_init()
 {
@@ -53,28 +64,6 @@ int rscuad::rscuad_manager::manager_init()
 
     if(_return != 0)
       ROS_ERROR("Fail to control LED [%s]", packetHandler->getRxPacketError(_return));
-    // joint rscuad_joint;
-
-    // rscuad_joint.l_hip_yaw_position= "/rscuad/l_hip_yaw_position/command";
-    // rscuad_joint.l_hip_roll_position= "/rscuad/l_hip_roll_position/command";
-    // rscuad_joint.l_hip_pitch_position= "/rscuad/l_hip_pitch_position/command";
-    // rscuad_joint.l_knee_position= "/rscuad/l_knee_position/command";
-    // rscuad_joint.l_ank_roll_position= "/rscuad/l_ank_roll_position/command";
-    // rscuad_joint.l_ank_pitch_position= "/rscuad/l_ank_pitch_position/command";
-    // rscuad_joint.r_hip_yaw_position= "/rscuad/r_hip_yaw_position/command";
-    // rscuad_joint.r_hip_roll_position= "/rscuad/r_hip_roll_position/command";
-    // rscuad_joint.r_hip_pitch_position= "/rscuad/r_hip_pitch_position/command";
-    // rscuad_joint.r_knee_position= "/rscuad/r_knee_position/command";
-    // rscuad_joint.r_ank_roll_position= "/rscuad/r_ank_roll_position/command";
-    // rscuad_joint.r_ank_pitch_position= "/rscuad/r_ank_pitch_position/command";
-    // rscuad_joint.l_sho_pitch_position= "/rscuad/l_sho_pitch_position/command";
-    // rscuad_joint.l_sho_roll_position= "/rscuad/l_sho_roll_position/command";
-    // rscuad_joint.l_el_position= "/rscuad/l_el_position/command";
-    // rscuad_joint.r_sho_pitch_position= "/rscuad/r_sho_pitch_position/command";
-    // rscuad_joint.r_sho_roll_position= "/rscuad/r_sho_roll_position/command";
-    // rscuad_joint.r_el_position= "/rscuad/r_el_position/command";
-    // rscuad_joint.head_pan_position= "/rscuad/head_pan_position/command";
-    // rscuad_joint.head_tilt_position= "/rscuad/head_tilt_position/command";
 
 }
 
@@ -91,16 +80,7 @@ int rscuad::rscuad_manager::dxl_process(){
   // Get methods and members of Protocol1PacketHandler or Protocol2PacketHandler
   dynamixel::PacketHandler *packetHandler = dynamixel::PacketHandler::getPacketHandler(PROTOCOL_VERSION);
 
-  int index = 0;
-  int dxl_comm_result = COMM_TX_FAIL;             // Communication result
-  int dxl_goal_position[2] = {MINIMUM_POSITION_LIMIT, MAXIMUM_POSITION_LIMIT};         // Goal position
-
-  uint8_t dxl_error = 0;                          // DYNAMIXEL error
-  #if defined(XL320)
-  int16_t dxl_present_position = 0;  // XL-320 uses 2 byte Position data
-  #else
-  int32_t dxl_present_position = 0;  // Read 4 byte Position data
-  #endif
+  
 
   // Open port
   if (portHandler->openPort()) {
@@ -134,9 +114,9 @@ int rscuad::rscuad_manager::dxl_process(){
 
         // Write goal position
         #if defined(XL320)  // XL-320 uses 2 byte Position data
-        dxl_comm_result = packetHandler->write2ByteTxRx(portHandler, DXL_ID, ADDR_GOAL_POSITION, dxl_goal_position[index], &dxl_error);
+        dxl_comm_result = packetHandler->write2ByteTxRx(portHandler, DXL_ID, ADDR_GOAL_POSITION, dxl_goal_position[index_], &dxl_error);
         #else
-        dxl_comm_result = packetHandler->write4ByteTxRx(portHandler, DXL_ID, ADDR_GOAL_POSITION, dxl_goal_position[index], &dxl_error);
+        dxl_comm_result = packetHandler->write4ByteTxRx(portHandler, DXL_ID, ADDR_GOAL_POSITION, dxl_goal_position[index_], &dxl_error);
         #endif
         if (dxl_comm_result != COMM_SUCCESS) {
             printf("%s\n", packetHandler->getTxRxResult(dxl_comm_result));
@@ -159,16 +139,16 @@ int rscuad::rscuad_manager::dxl_process(){
             printf("%s\n", packetHandler->getRxPacketError(dxl_error));
             }
 
-            printf("[ID:%03d] Goal Position:%03d  Present Position:%03d\n", DXL_ID, dxl_goal_position[index], dxl_present_position);
+            printf("[ID:%03d] Goal Position:%03d  Present Position:%03d\n", DXL_ID, dxl_goal_position[index_], dxl_present_position);
 
-        } while((abs(dxl_goal_position[index] - dxl_present_position) > DXL_MOVING_STATUS_THRESHOLD));
+        } while((abs(dxl_goal_position[index_] - dxl_present_position) > DXL_MOVING_STATUS_THRESHOLD));
 
         // Switch the Goal Position
-        if (index == 0) {
-            index = 1;
+        if (index_ == 0) {
+            index_ = 1;
         }
         else {
-            index = 0;
+            index_ = 0;
         }
     }
 
@@ -250,20 +230,57 @@ int rscuad::rscuad_manager::move_robot(char *str){
                
     //data result
     ROS_INFO("data masuk: %s", str);
-    ROS_ERROR("0 : %.4f",atof(joint_0));
-    ROS_ERROR("1 : %.4f",atof(joint_1));
-    ROS_ERROR("2 : %.4f",atof(joint_2));
-    ROS_ERROR("3 : %.4f",atof(joint_3));
-    ROS_ERROR("4 : %.4f",atof(joint_4));
-    ROS_ERROR("5 : %.4f",atof(joint_5));
-    ROS_ERROR("6 : %.4f",atof(joint_6));
-    ROS_ERROR("7 : %.4f",atof(joint_7));
-    ROS_ERROR("8 : %.4f",atof(joint_8));
-    ROS_ERROR("9 : %.4f",atof(joint_9));
-    ROS_ERROR("10 : %.4f",atof(joint_10));
-    ROS_ERROR("11 : %.4f",atof(joint_11));
-    ROS_ERROR("12 : %.4f",atof(joint_12));
-    ROS_ERROR("13 : %.4f",atof(joint_13));
+    ROS_WARN("0 : %.4f",atof(joint_0));
+    ROS_WARN("1 : %.4f",atof(joint_1));
+    ROS_WARN("2 : %.4f",atof(joint_2));
+    ROS_WARN("3 : %.4f",atof(joint_3));
+    ROS_WARN("4 : %.4f",atof(joint_4));
+    ROS_WARN("5 : %.4f",atof(joint_5));
+    ROS_WARN("6 : %.4f",atof(joint_6));
+    ROS_WARN("7 : %.4f",atof(joint_7));
+    ROS_WARN("8 : %.4f",atof(joint_8));
+    ROS_WARN("9 : %.4f",atof(joint_9));
+    ROS_WARN("10 : %.4f",atof(joint_10));
+    ROS_WARN("11 : %.4f",atof(joint_11));
+    ROS_WARN("12 : %.4f",atof(joint_12));
+    ROS_WARN("13 : %.4f",atof(joint_13));
+
+
+    //=============================== dxl execute===============================
+
+    dynamixel::PortHandler *portHandler = dynamixel::PortHandler::getPortHandler(DEVICENAME);
+    dynamixel::PacketHandler *packetHandler = dynamixel::PacketHandler::getPacketHandler(PROTOCOL_VERSION);
+     // Open port
+    if (portHandler->openPort()) {
+        printf("Succeeded to open the port!\n");
+    }
+    else {
+        return 0;
+    }
+
+    // Set port baudrate
+    if (portHandler->setBaudRate(BAUDRATE)) {
+        printf("Succeeded to change the baudrate!\n");
+    }
+    else {
+        return 0;
+    }
+
+    // Enable DYNAMIXEL Torque
+    dxl_comm_result = packetHandler->write1ByteTxRx(portHandler, DXL_ID, ADDR_TORQUE_ENABLE, TORQUE_ENABLE, &dxl_error);
+    if (dxl_comm_result != COMM_SUCCESS) {
+        printf("%s\n", packetHandler->getTxRxResult(dxl_comm_result));
+    }
+    else if (dxl_error != 0) {
+        printf("%s\n", packetHandler->getRxPacketError(dxl_error));
+    }
+    else {
+        printf("Succeeded enabling DYNAMIXEL Torque.\n");
+    }
+
+    dxl_comm_result = packetHandler->write4ByteTxRx(portHandler, DXL_ID, ADDR_GOAL_POSITION, 2500, &dxl_error);
+    dxl_comm_result = packetHandler->read4ByteTxRx(portHandler, DXL_ID, ADDR_PRESENT_POSITION, (uint32_t*)&dxl_present_position, &dxl_error);
+    ROS_INFO("join position %d", dxl_present_position);
 
 }
 

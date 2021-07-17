@@ -667,6 +667,7 @@ void GazeboWalking::Process(double *outValue)
             offset = 0;
 
         outValue[i] = (offset*0.293)/(180.0/M_PI);//initAngle[i] + (int)offset; //todo check MX28::Angle2Value(initAngle[i]) + (int)offset;
+        
     }
     // ROS_ERROR("check----------------------------");
     // }

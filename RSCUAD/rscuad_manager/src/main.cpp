@@ -1,17 +1,17 @@
-/*
- des  : rscuad manager 
- year : 2021
+// /*
+//  des  : rscuad manager | if using it activate execute in makefiles
+//  year : 2021
  
-*/
+// */
 
-// author : danu andrean
-
+// // author : danu andrean
 
 
 
 #include "rscuad_manager/rscuad_manager.h"
+int dxl_comm_results = COMM_TX_FAIL;             // Communication result
 
-
+uint8_t dxl_errors = 0;                          // DYNAMIXEL error
 
 
 void Callback(const std_msgs::String::ConstPtr& msg){
@@ -40,18 +40,14 @@ int main(int argc, char **argv)
     //initial power
     rscuad->manager_init();
 
-   
-   
-
-  // //  move servo
-    // rscuad->dxl_process();
 
     ros::init(argc, argv, "rscuad_manager");
     ros::NodeHandle nh;
-    
+
     ros::Subscriber joint = nh.subscribe("rscuad_manager", 100, Callback);
     ros::Subscriber robot = nh.subscribe("rscuad_manager/robot", 100, Manager_Robot_Callback);
     ros::spin();
+    
 }
 
 

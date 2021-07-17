@@ -110,7 +110,7 @@ find_package(catkin REQUIRED COMPONENTS
 catkin_package(
  INCLUDE_DIRS include
  LIBRARIES rscuad_manager
- CATKIN_DEPENDS roscpp rospy std_msgs robotis_controller open_cr_module
+ CATKIN_DEPENDS roscpp rospy std_msgs robotis_controller open_cr_module 
  
 #  DEPENDS system_lib
 )
@@ -128,12 +128,13 @@ include
 
 ########### make global
 ## Declare a C++ library
-# add_library(${PROJECT_NAME}
-#   src/rscuad_manager.cpp
-# )
+add_library(${PROJECT_NAME}
+  src/rscuad_manager.cpp
+)
 
 
-add_executable(${PROJECT_NAME} src/main.cpp src/rscuad_manager.cpp)
+
+# add_executable(${PROJECT_NAME} src/main.cpp src/rscuad_manager.cpp)
 
 add_dependencies(${PROJECT_NAME} ${${PROJECT_NAME}_EXPORTED_TARGETS} ${catkin_EXPORTED_TARGETS})
 ## Specify libraries to link a library or executable target against
@@ -209,3 +210,12 @@ install(DIRECTORY config
 
 ## Add folders to be run by python nosetests
 # catkin_add_nosetests(test)
+################################################################################
+# Build
+################################################################################
+
+
+
+################################################################################
+# Install
+################################################################################

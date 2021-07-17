@@ -11,6 +11,7 @@
 
 #include <ros/ros.h>
 #include "std_msgs/String.h"
+#include "rscuad_manager/rscuad_manager.h"
 
 #include <sstream>
 #include <robotis_op_simulation_walking/gazebo_walking.h>
@@ -37,7 +38,7 @@ public:
     void imuCb(const sensor_msgs::ImuConstPtr msg);
     void dynamicReconfigureCb(robotis_op_simulation_walking::robotis_op_walkingConfig &config, uint32_t level);
 
-
+    int counter = 0;
     GazeboWalking walking_;
 protected:
 

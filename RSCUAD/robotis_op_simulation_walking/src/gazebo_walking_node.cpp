@@ -23,6 +23,19 @@ using namespace robotis_op;
 #define MX28_1024
 
 
+int index_ = 0;
+int dxl_comm_result = COMM_TX_FAIL;             // Communication result
+int dxl_goal_position[2] = {MINIMUM_POSITION_LIMIT, MAXIMUM_POSITION_LIMIT};         // Goal position
+
+uint8_t dxl_error = 0;                          // DYNAMIXEL error
+#if defined(XL320)
+int16_t dxl_present_position = 0;               // XL-320 uses 2 byte Position data
+#else
+int32_t dxl_present_position = 0;               // Read 4 byte Position data
+#endif
+
+
+
 
 namespace robotis_op {
 using namespace Robot;
@@ -32,7 +45,10 @@ SimulationWalkingNode::SimulationWalkingNode(ros::NodeHandle nh)
     , walking_(nh)
 {
 
-    rscuad_robot_publisher = nh_.advertise<std_msgs::String>("rscuad_manager/robot",1);
+    // rscuad_robot_publisher = nh_.advertise<std_msgs::String>("rscuad_manager/robot",1);
+    rscuad::rscuad_manager *rscuad = new rscuad::rscuad_manager;
+    //initial power
+    rscuad->manager_init();
 
     ROS_WARN("SimulationWalkingNode ...");
     j_pelvis_l_publisher_ = nh_.advertise<std_msgs::Float64>("/rscuad/l_hip_yaw_position/command",1);
@@ -65,6 +81,10 @@ SimulationWalkingNode::~SimulationWalkingNode()
 
 void SimulationWalkingNode::Process()
 {
+
+     // alocation memory
+    rscuad::rscuad_manager *rscuad = new rscuad::rscuad_manager;
+ 
 
     std_msgs::Float64 j_pelvis_l_msg;
     std_msgs::Float64 j_thigh1_l_msg;
@@ -123,7 +143,7 @@ void SimulationWalkingNode::Process()
     // ROS_WARN("Proses in node ...");
     // ROS_WARN("%f", j_ankle1_r_msg.data);
 
-    //====================send to robot======================
+    //====================send to manager, but not use it======================
     //send to robot
     std_msgs::String rscuad_robot;
     std::stringstream  str_0,str_1,str_2,str_3,str_4,str_5,str_6,str_7,str_8,str_9,str_10,str_11,str_12,str_13;
@@ -173,8 +193,46 @@ void SimulationWalkingNode::Process()
                         str_11.str()+","+
                         str_12.str()+","+
                         str_13.str();
-                    
-     rscuad_robot_publisher.publish(rscuad_robot);
+                        
+    // rscuad->setup_joint();
+
+    //  rscuad_robot_publisher.publish(rscuad_robot);
+    char *newdata = (char*)rscuad_robot.data.c_str();
+    char *d="0.33";
+    rscuad->move_robot(newdata);
+    //==============================end dxl execute===============================
+
+
+
+    float offset_13 = -2046;
+    //calculation radian to degree
+    float target_angle_13 = abs(((RADIAN2DEGREE*float_3) *( MAXIMUM_POSITION_LIMIT/360)) + offset_13);
+
+
+    //=============================== dxl execute===============================
+
+    if (portHandler->setBaudRate(BAUDRATE)) {
+        printf("Succeeded to change the baudrate!\n");
+    }
+   
+
+    // Enable DYNAMIXEL Torque
+    dxl_comm_result = packetHandler->write1ByteTxRx(portHandler, DXL_ID_13, ADDR_TORQUE_ENABLE, TORQUE_ENABLE, &dxl_error);
+    if (dxl_comm_result != COMM_SUCCESS) {
+        printf(" /// %s\n", packetHandler->getTxRxResult(dxl_comm_result));
+    }
+    else if (dxl_error != 0) {
+        printf(" //// %s\n", packetHandler->getRxPacketError(dxl_error));
+    }
+    else {
+        printf("Succeeded enabling DYNAMIXEL Torque.\n");
+    }
+    
+    dxl_comm_result = packetHandler->write4ByteTxRx(portHandler, DXL_ID_13, ADDR_GOAL_POSITION, target_angle_13, &dxl_error);
+    dxl_comm_result = packetHandler->read4ByteTxRx(portHandler, DXL_ID_13, ADDR_PRESENT_POSITION, (uint32_t*)&dxl_present_position, &dxl_error);
+    ROS_INFO("join position %d", dxl_present_position);
+    //==============================end dxl execute===============================
+
    
     
 

@@ -10,6 +10,7 @@ find_package(catkin REQUIRED COMPONENTS
   sensor_msgs
   gazebo_ros
   dynamic_reconfigure
+  rscuad_manager
 )
 
 find_package(Boost REQUIRED COMPONENTS system)
@@ -31,6 +32,7 @@ catkin_package(
     dynamic_reconfigure
   DEPENDS 
     gazebo
+    
 )
 
 

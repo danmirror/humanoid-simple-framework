@@ -19,6 +19,7 @@
 #include <sstream>
 /* ROBOTIS Controller Header */
 #include "robotis_controller/robotis_controller.h"
+#include "rscuad_manager/dxl_header.h"
 
 /* Sensor Module Header */
 #include "open_cr_module/open_cr_module.h"
@@ -56,6 +57,30 @@ namespace rscuad{
         char *head_pan_position= "/rscuad/head_pan_position/command";
         char *head_tilt_position= "/rscuad/head_tilt_position/command";
 
+        float approach_angle = 0;
+        float target_angle_1 = 0;
+        float target_angle_2 = 0;
+        float target_angle_3 = 0;
+        float target_angle_4 = 0;
+        float target_angle_5 = 0;
+        float target_angle_6 = 0;
+        float target_angle_7 = 0;
+        float target_angle_8 = 0;
+        float target_angle_9 = 0;
+        float target_angle_10 = 0;
+        float target_angle_11 = 0;
+        float target_angle_12 = 0;
+        float target_angle_13 = 0;
+        float target_angle_14 = 0;
+        float target_angle_15 = 0;
+        float target_angle_16 = 0;
+        float target_angle_17 = 0;
+        float target_angle_18 = 0;
+        float target_angle_19 = 0;
+        float target_angle_20 = 0;
+
+       
+
     // char *l_hip_yaw_position;
     // char *l_hip_roll_position;
     // char *l_hip_pitch_position;
@@ -84,6 +109,15 @@ namespace rscuad{
             void move_joint(char *str); 
             int move_robot(char *str); 
             int dxl_process();
+           
+
+            
+        protected:
+            #define RADIAN2DEGREE     (180.0 / M_PI)
+            int *trigers;
+ 
+
+           
     };
 }
 #endif

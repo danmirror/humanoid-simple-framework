@@ -81,16 +81,16 @@ namespace rscuad{
             float offset_4 = 2046;
             float offset_5 = 2046;
             float offset_6 = 2046;
-            float offset_7 = 2046;
+            float offset_7 = -2046;
             float offset_8 = 2046;
-            float offset_9 = 2046;
-            float offset_10 = 2046;
-            float offset_11 = 2046;
+            float offset_9 = -2046;
+            float offset_10 = -2046;
+            float offset_11 = -2046;
             float offset_12 = 2046;
             float offset_13 = 2046;
             float offset_14 = 2046;
             float offset_15 = 2046;
-            float offset_16 = 2046;
+            float offset_16 = -2046;
             float offset_17 = 2046;
             float offset_18 = 2046;
             float offset_19 = 2046;
@@ -101,8 +101,6 @@ namespace rscuad{
                 &DXL_ID_11,&DXL_ID_12,&DXL_ID_13,&DXL_ID_14,&DXL_ID_15,&DXL_ID_16,&DXL_ID_17,&DXL_ID_18,&DXL_ID_19,&DXL_ID_20};
             
  
-
-           
     };
 }
 #endif

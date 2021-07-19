@@ -54,7 +54,7 @@ SimulationWalkingNode::SimulationWalkingNode(ros::NodeHandle nh)
     if (portHandler->setBaudRate(BAUDRATE)) {
         printf("Succeeded to change the baudrate!\n");
     }
-    for(int i =0; i<14; i++){
+    for(int i =0; i<20; i++){
 
         // Enable DYNAMIXEL Torque
         dxl_comm_result = packetHandler->write1ByteTxRx(portHandler,*ptr_ID[i], ADDR_TORQUE_ENABLE, TORQUE_ENABLE, &dxl_error);
@@ -283,6 +283,7 @@ void SimulationWalkingNode::Process()
     float target_angle_9 = abs(((RADIAN2DEGREE*float_1) *( MAXIMUM_POSITION_LIMIT/360)) - rscuad->offset_ID(9));
     float target_angle_10 = abs(((RADIAN2DEGREE*float_7) *( MAXIMUM_POSITION_LIMIT/360)) - rscuad->offset_ID(10));
     float target_angle_11 = abs(((RADIAN2DEGREE*float_2) *( MAXIMUM_POSITION_LIMIT/360)) - rscuad->offset_ID(11));
+
     float target_angle_12 = abs(((RADIAN2DEGREE*float_8) *( MAXIMUM_POSITION_LIMIT/360)) - rscuad->offset_ID(12));
     float target_angle_13 = abs(((RADIAN2DEGREE*float_3) *( MAXIMUM_POSITION_LIMIT/360)) - rscuad->offset_ID(13));
     float target_angle_14 = abs(((RADIAN2DEGREE*float_9) *( MAXIMUM_POSITION_LIMIT/360)) - rscuad->offset_ID(14));

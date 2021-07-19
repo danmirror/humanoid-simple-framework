@@ -57,22 +57,21 @@ int rscuad::rscuad_manager::manager_init()
         torque_on_count++;
     }
 
-    //=================================================setup id==========================================================
-    // Enable DYNAMIXEL Torque
-    dxl_comm_result = packetHandler->write1ByteTxRx(portHandler, DXL_ID_13, ADDR_TORQUE_ENABLE, TORQUE_ENABLE, &dxl_error);
-    if (dxl_comm_result != COMM_SUCCESS) {
-        printf(" > %s\n", packetHandler->getTxRxResult(dxl_comm_result));
-    }
-    else if (dxl_error != 0) {
-        printf(" > %s\n", packetHandler->getRxPacketError(dxl_error));
-    }
-    else {
-        printf("Succeeded enabling DYNAMIXEL Torque.\n");
-    }
+    // //=================================================setup id==========================================================
+    // // Enable DYNAMIXEL Torque
+    // dxl_comm_result = packetHandler->write1ByteTxRx(portHandler, DXL_ID_13, ADDR_TORQUE_ENABLE, TORQUE_ENABLE, &dxl_error);
+    // if (dxl_comm_result != COMM_SUCCESS) {
+    //     printf(" > %s\n", packetHandler->getTxRxResult(dxl_comm_result));
+    // }
+    // else if (dxl_error != 0) {
+    //     printf(" > %s\n", packetHandler->getRxPacketError(dxl_error));
+    // }
+    // else {
+    //     printf("Succeeded enabling DYNAMIXEL Torque.\n");
+    // }
    
     // dxl_comm_result = packetHandler->write4ByteTxRx(portHandler, DXL_ID_13, ADDR_GOAL_POSITION,2000, &dxl_error);
-
-    
+    ////=====================================================================================================================
 
     usleep(100 * 1000);
 
@@ -84,13 +83,12 @@ int rscuad::rscuad_manager::manager_init()
 
     if(_return != 0)
       ROS_ERROR("Fail to control LED [%s]", packetHandler->getRxPacketError(_return));
-
 }
 
 
 int rscuad::rscuad_manager::dxl_process(){
 
-  
+  // //=================================================setup id==========================================================
   dxl_comm_result = packetHandler->write1ByteTxRx(portHandler, DXL_ID_1, ADDR_TORQUE_ENABLE, TORQUE_ENABLE, &dxl_error);
   if (dxl_comm_result != COMM_SUCCESS) {
     printf("%s\n", packetHandler->getTxRxResult(dxl_comm_result));
@@ -101,6 +99,7 @@ int rscuad::rscuad_manager::dxl_process(){
   else {
     printf("Succeeded enabling DYNAMIXEL Torque.\n");
   }
+  ////=====================================================================================================================
 
     while(1) {
 
@@ -159,6 +158,14 @@ int rscuad::rscuad_manager::dxl_process(){
   // Close port
   portHandler->closePort();
   return 0;
+}
+
+float rscuad::rscuad_manager::offset_ID(int id){
+    float *ptr_ID[20] {
+        &offset_1,&offset_2,&offset_3,&offset_4,&offset_5,&offset_6,&offset_7,&offset_8,&offset_9,&offset_10,
+        &offset_11,&offset_12,&offset_13,&offset_14,&offset_15,&offset_16,&offset_17,&offset_18,&offset_19,&offset_20};
+
+    return *ptr_ID[id-1];
 }
 
 
@@ -262,14 +269,15 @@ int rscuad::rscuad_manager::move_robot(char *str){
 
     float offset_13 = -2046;
     // calculation
-    rscuad_joint.approach_angle =  MAXIMUM_POSITION_LIMIT/360;
+    approach_angle =  MAXIMUM_POSITION_LIMIT/360;
     
-    rscuad_joint.target_angle_13 = abs(((RADIAN2DEGREE*atof(joint_3)) * rscuad_joint.approach_angle) + offset_13);
-    ROS_WARN("target> > > %f",rscuad_joint.target_angle_13);
+    float target_angle_13 = abs(((RADIAN2DEGREE*atof(joint_3)) *approach_angle) - offset_13);
+
+    ROS_WARN("target> > > %f",target_angle_13);
 
 
 
-    //=============================== dxl execute, uncoment if used===============================
+    //=============================== dxl execute, uncomment if used===============================
     // 
 
     // // Open port
@@ -300,7 +308,7 @@ int rscuad::rscuad_manager::move_robot(char *str){
     //     printf("Succeeded enabling DYNAMIXEL Torque.\n");
     // }
     
-    // dxl_comm_result = packetHandler->write4ByteTxRx(portHandler, DXL_ID_13, ADDR_GOAL_POSITION, rscuad_joint.target_angle_13, &dxl_error);
+    // dxl_comm_result = packetHandler->write4ByteTxRx(portHandler, DXL_ID_13, ADDR_GOAL_POSITION, target_angle_13, &dxl_error);
     // dxl_comm_result = packetHandler->read4ByteTxRx(portHandler, DXL_ID_13, ADDR_PRESENT_POSITION, (uint32_t*)&dxl_present_position, &dxl_error);
     // ROS_INFO("join position %d", dxl_present_position););
     // }
@@ -326,7 +334,7 @@ int rscuad::rscuad_manager::move_robot(char *str){
     //     printf("Succeeded enabling DYNAMIXEL Torque.\n");
     // }
     
-    // dxl_comm_result = packetHandler->write4ByteTxRx(portHandler, DXL_ID_13, ADDR_GOAL_POSITION, rscuad_joint.target_angle_13, &dxl_error);
+    // dxl_comm_result = packetHandler->write4ByteTxRx(portHandler, DXL_ID_13, ADDR_GOAL_POSITION, target_angle_13, &dxl_error);
     // dxl_comm_result = packetHandler->read4ByteTxRx(portHandler, DXL_ID_13, ADDR_PRESENT_POSITION, (uint32_t*)&dxl_present_position, &dxl_error);
     // ROS_INFO("join position %d", dxl_present_position);
    
@@ -334,95 +342,104 @@ int rscuad::rscuad_manager::move_robot(char *str){
 
 
 
-void rscuad::rscuad_manager::move_joint(char *str){
+void rscuad::rscuad_manager::move_joint(char *str,int id,float velocity){
+    //parsing to string
+    std::string data;
+    data = str;
+
+    //call join in struct
     joint rscuad_joint;
     char *on_move;
+    
+    if(data == "gazebo" || data == "all"){
+        // -----------------servo selection--------------
+        if(id == 1)
+            on_move = rscuad_joint.r_sho_pitch_position; 
+        else if(id == 2)
+            on_move = rscuad_joint.l_sho_pitch_position;
+        else if(id == 3)
+            on_move = rscuad_joint.r_sho_roll_position; 
+        else if(id == 4)
+            on_move = rscuad_joint.l_sho_roll_position; 
+        else if(id == 5)
+            on_move = rscuad_joint.r_el_position; 
+        else if(id == 6)
+            on_move = rscuad_joint.l_el_position; 
+        else if(id == 7)
+            on_move = rscuad_joint.r_hip_yaw_position; 
+        else if(id == 8)
+            on_move = rscuad_joint.l_hip_yaw_position; 
+        else if(id == 9)
+            on_move = rscuad_joint.r_hip_roll_position; 
+        else if(id == 10)
+            on_move = rscuad_joint.l_hip_roll_position;
+        else if(id == 11)
+            on_move = rscuad_joint.r_hip_pitch_position; 
+        else if(id == 12)
+            on_move = rscuad_joint.l_hip_pitch_position; 
+        else if(id == 13)
+            on_move = rscuad_joint.r_knee_position; 
+        else if(id == 14)
+            on_move = rscuad_joint.l_knee_position; 
+        else if(id == 15)
+            on_move = rscuad_joint.r_ank_roll_position; 
+        else if(id == 16)
+            on_move = rscuad_joint.l_ank_roll_position; 
+        else if(id == 17)
+            on_move = rscuad_joint.r_ank_pitch_position; 
+        else if(id == 18)
+            on_move = rscuad_joint.l_ank_pitch_position; 
+        else if(id == 19)
+            on_move = rscuad_joint.head_pan_position;
+        else if(id == 20)
+            on_move = rscuad_joint.head_tilt_position;
 
-    // ------------------data parsing------------------
-    bool lock=false;
-    int memory = 0;
-    int count = 0;
-    char joint[10]="";
-    char value[10]="";
+        ros::Rate loop_rate(10);
+        ros::NodeHandle nh; 
 
-    for(int i=0; i <strlen(str);i++){
-        if(str[i] == ','){
-            count ++;
-            memory = i+1;
+        ros::Publisher pub = nh.advertise<std_msgs::Float64>(on_move, 1000);
+
+        // ROS_INFO("%s",rscuad_joint.l_hip_yaw_position);
+
+        std_msgs::Float64 move;
+        move.data = velocity;
+        while(ros::ok)
+        {
+            pub.publish(move);
+            ros::spin();
+            loop_rate.sleep();
         }
 
+    }
+    if(data == "robot" || data == "gazebo"){
+
+        // active all servo
+        if (portHandler->setBaudRate(BAUDRATE)) {
+            printf("Succeeded to change the baudrate!\n");
+        }
+
+
+        // Enable DYNAMIXEL Torque
+        dxl_comm_result = packetHandler->write1ByteTxRx(portHandler,*ptr_ID[id-1], ADDR_TORQUE_ENABLE, TORQUE_ENABLE, &dxl_error);
+        if (dxl_comm_result != COMM_SUCCESS) {
+            printf(" ID %d %s\n",id, packetHandler->getTxRxResult(dxl_comm_result));
+        }
+        else if (dxl_error != 0) {
+            printf(" ERROR ID %d %s\n",id, packetHandler->getRxPacketError(dxl_error));
+        }
         else {
-            if (count == 0)
-                joint[i] = str[i]; 
-            if (count == 1)
-                value[i-memory] = str[i]; 
+            printf("Succeeded enabling DYNAMIXEL Torque.\n");
         }
- 
+        
+
+        float target_angle = velocity *( MAXIMUM_POSITION_LIMIT/360);
+
+        dxl_comm_result = packetHandler->write4ByteTxRx(portHandler, *ptr_ID[id-1], ADDR_GOAL_POSITION, target_angle, &dxl_error);
+        dxl_comm_result = packetHandler->read4ByteTxRx(portHandler, *ptr_ID[id-1], ADDR_PRESENT_POSITION, (uint32_t*)&dxl_present_position, &dxl_error);
+        ROS_INFO("join position %d", dxl_present_position);
+
+    
     }
-    ROS_WARN("join:  %s", joint);
-    ROS_WARN("value: %f",  atof(value));
-    ROS_INFO("data masuk: %s", str);
-
-    // -----------------servo selection--------------
-    if(atoi(joint) == 1){
-        ROS_WARN(">>>>>>>>>>>>>>>");
-        ROS_ERROR("masukk");
-        on_move = rscuad_joint.r_sho_pitch_position; 
-    }
-    else if(atoi(joint) == 2)
-        on_move = rscuad_joint.l_sho_pitch_position;
-    else if(atoi(joint) == 3)
-        on_move = rscuad_joint.r_sho_roll_position; 
-    else if(atoi(joint) == 4)
-        on_move = rscuad_joint.l_sho_roll_position; 
-    else if(atoi(joint) == 5)
-        on_move = rscuad_joint.r_el_position; 
-    else if(atoi(joint) == 6)
-        on_move = rscuad_joint.l_el_position; 
-    else if(atoi(joint) == 7)
-        on_move = rscuad_joint.r_hip_yaw_position; 
-    else if(atoi(joint) == 8)
-        on_move = rscuad_joint.l_hip_yaw_position; 
-    else if(atoi(joint) == 9)
-        on_move = rscuad_joint.r_hip_roll_position; 
-    else if(atoi(joint) == 10)
-        on_move = rscuad_joint.l_hip_roll_position;
-    else if(atoi(joint) == 11)
-        on_move = rscuad_joint.r_hip_pitch_position; 
-    else if(atoi(joint) == 12)
-        on_move = rscuad_joint.l_hip_pitch_position; 
-    else if(atoi(joint) == 13)
-        on_move = rscuad_joint.r_knee_position; 
-    else if(atoi(joint) == 14)
-        on_move = rscuad_joint.l_knee_position; 
-    else if(atoi(joint) == 15)
-        on_move = rscuad_joint.r_ank_roll_position; 
-    else if(atoi(joint) == 16)
-        on_move = rscuad_joint.l_ank_roll_position; 
-    else if(atoi(joint) == 17)
-        on_move = rscuad_joint.r_ank_pitch_position; 
-    else if(atoi(joint) == 18)
-        on_move = rscuad_joint.l_ank_pitch_position; 
-    else if(atoi(joint) == 19)
-        on_move = rscuad_joint.head_pan_position;
-    else if(atoi(joint) == 20)
-        on_move = rscuad_joint.head_tilt_position;
-
-    ros::Rate loop_rate(10);
-    ros::NodeHandle nh; 
-
-    ros::Publisher pub = nh.advertise<std_msgs::Float64>(on_move, 1000);
-
-    // ROS_INFO("%s",rscuad_joint.l_hip_yaw_position);
-
-    std_msgs::Float64 move;
-    move.data = atof(value);
-    while(ros::ok)
-    {
-        pub.publish(move);
-        ros::spin();
-        loop_rate.sleep();
-    }
-
+   
 }
 

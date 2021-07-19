@@ -60,26 +60,26 @@
 #define PROTOCOL_VERSION  2.0
 
 // Factory default ID of all DYNAMIXEL is 1
-#define DXL_ID_1  1
-#define DXL_ID_2  2
-#define DXL_ID_3  3
-#define DXL_ID_4  4
-#define DXL_ID_5  5
-#define DXL_ID_6  6
-#define DXL_ID_7  7
-#define DXL_ID_8  8
-#define DXL_ID_9  9
-#define DXL_ID_10  10
-#define DXL_ID_11  11
-#define DXL_ID_12  12
-#define DXL_ID_13  13
-#define DXL_ID_14  14
-#define DXL_ID_15  15
-#define DXL_ID_16  16
-#define DXL_ID_17  17
-#define DXL_ID_18  18
-#define DXL_ID_19  19
-#define DXL_ID_20  20
+int DXL_ID_1  =1;
+int DXL_ID_2  =2;
+int DXL_ID_3  =3;
+int DXL_ID_4  =4;
+int DXL_ID_5  =5;
+int DXL_ID_6  =6;
+int DXL_ID_7  =7;
+int DXL_ID_8  =8;
+int DXL_ID_9  =9;
+int DXL_ID_10  =10;
+int DXL_ID_11  =11;
+int DXL_ID_12  =12;
+int DXL_ID_13  =13;
+int DXL_ID_14  =14;
+int DXL_ID_15  =15;
+int DXL_ID_16  =16;
+int DXL_ID_17  =17;
+int DXL_ID_18  =18;
+int DXL_ID_19  =19;
+int DXL_ID_20  =20;
 
 
 
@@ -92,6 +92,7 @@
 #define TORQUE_DISABLE                  0
 #define DXL_MOVING_STATUS_THRESHOLD     20  // DYNAMIXEL moving status threshold
 #define ESC_ASCII_VALUE                 0x1b
+
 
 //global
 dynamixel::PortHandler *portHandler = dynamixel::PortHandler::getPortHandler(DEVICENAME);

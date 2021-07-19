@@ -50,6 +50,26 @@ SimulationWalkingNode::SimulationWalkingNode(ros::NodeHandle nh)
     //initial power
     rscuad->manager_init();
 
+    // active all servo
+    if (portHandler->setBaudRate(BAUDRATE)) {
+        printf("Succeeded to change the baudrate!\n");
+    }
+    for(int i =0; i<14; i++){
+
+        // Enable DYNAMIXEL Torque
+        dxl_comm_result = packetHandler->write1ByteTxRx(portHandler,*ptr_ID[i], ADDR_TORQUE_ENABLE, TORQUE_ENABLE, &dxl_error);
+        if (dxl_comm_result != COMM_SUCCESS) {
+            printf(" ID %d %s\n",i, packetHandler->getTxRxResult(dxl_comm_result));
+        }
+        else if (dxl_error != 0) {
+            printf(" ERROR ID %d %s\n",i, packetHandler->getRxPacketError(dxl_error));
+        }
+        else {
+            printf("Succeeded enabling DYNAMIXEL Torque.\n");
+        }
+    }
+
+
     ROS_WARN("SimulationWalkingNode ...");
     j_pelvis_l_publisher_ = nh_.advertise<std_msgs::Float64>("/rscuad/l_hip_yaw_position/command",1);
     j_thigh1_l_publisher_ = nh_.advertise<std_msgs::Float64>("/rscuad/l_hip_roll_position/command",1);
@@ -143,6 +163,24 @@ void SimulationWalkingNode::Process()
     // ROS_WARN("Proses in node ...");
     // ROS_WARN("%f", j_ankle1_r_msg.data);
 
+    //===========================send to Gazebo===============================
+    j_pelvis_l_publisher_.publish(j_pelvis_l_msg);
+    j_thigh1_l_publisher_.publish(j_thigh1_l_msg);
+    j_thigh2_l_publisher_.publish(j_thigh2_l_msg);
+    j_tibia_l_publisher_.publish(j_tibia_l_msg);
+    j_ankle1_l_publisher_.publish(j_ankle1_l_msg);
+    j_ankle2_l_publisher_.publish(j_ankle2_l_msg);
+    j_shoulder_l_publisher_.publish(j_shoulder_l_msg);
+
+    j_pelvis_r_publisher_.publish(j_pelvis_r_msg);
+    j_thigh1_r_publisher_.publish(j_thigh1_r_msg);
+    j_thigh2_r_publisher_.publish(j_thigh2_r_msg);
+    j_tibia_r_publisher_.publish(j_tibia_r_msg);
+    j_ankle1_r_publisher_.publish(j_ankle1_r_msg);
+    j_ankle2_r_publisher_.publish(j_ankle2_r_msg);
+    j_shoulder_r_publisher_.publish(j_shoulder_r_msg);
+
+
     //====================send to manager, but not use it======================
     //send to robot
     std_msgs::String rscuad_robot;
@@ -195,63 +233,89 @@ void SimulationWalkingNode::Process()
                         str_13.str();
                         
     // rscuad->setup_joint();
+    //  rscuad_robot_publisher.publish(rscuad_robot);   //send to manager ROS protocol
 
-    //  rscuad_robot_publisher.publish(rscuad_robot);
-    char *newdata = (char*)rscuad_robot.data.c_str();
-    char *d="0.33";
-    rscuad->move_robot(newdata);
-    //==============================end dxl execute===============================
+    // char *newdata = (char*)rscuad_robot.data.c_str();
+
+    // rscuad->move_robot(newdata);                     //send to manager library protocol
+    //==============================end to manager===============================
 
 
+    //=============================== dxl execute================================
+    //  j_pelvis_r_msg.data = outValue[0];
+    // j_thigh1_r_msg.data = outValue[1];
+    // j_thigh2_r_msg.data = outValue[2];
+    // j_tibia_r_msg.data = outValue[3];
+    // j_ankle1_r_msg.data = outValue[4];
+    // j_ankle2_r_msg.data = outValue[5];
 
-    float offset_13 = -2046;
+    // j_pelvis_l_msg.data = outValue[6];
+    // j_thigh1_l_msg.data = outValue[7];
+    // j_thigh2_l_msg.data = outValue[8];
+    // j_tibia_l_msg.data = outValue[9];
+    // j_ankle1_l_msg.data = outValue[10];
+    // j_ankle2_l_msg.data = outValue[11];
+    // j_shoulder_r_msg.data = outValue[12];
+    // j_shoulder_l_msg.data = outValue[13];
+
+    //  j_pelvis_l_publisher_ = nh_.advertise<std_msgs::Float64>("/rscuad/l_hip_yaw_position/command",1);
+    // j_thigh1_l_publisher_ = nh_.advertise<std_msgs::Float64>("/rscuad/l_hip_roll_position/command",1);
+    // j_thigh2_l_publisher_ = nh_.advertise<std_msgs::Float64>("/rscuad/l_hip_pitch_position/command",1);
+    // j_tibia_l_publisher_ = nh_.advertise<std_msgs::Float64>("/rscuad/l_knee_position/command",1);
+    // j_ankle1_l_publisher_ = nh_.advertise<std_msgs::Float64>("/rscuad/l_ank_pitch_position/command",1);
+    // j_ankle2_l_publisher_ = nh_.advertise<std_msgs::Float64>("/rscuad/l_ank_roll_position/command",1);
+    // j_shoulder_l_publisher_ = nh_.advertise<std_msgs::Float64>("/rscuad/l_sho_pitch_position/command",1);
+
+    // j_pelvis_r_publisher_ = nh_.advertise<std_msgs::Float64>("/rscuad/r_hip_yaw_position/command",1);
+    // j_thigh1_r_publisher_ = nh_.advertise<std_msgs::Float64>("/rscuad/r_hip_roll_position/command",1);
+    // j_thigh2_r_publisher_ = nh_.advertise<std_msgs::Float64>("/rscuad/r_hip_pitch_position/command",1);
+    // j_tibia_r_publisher_ = nh_.advertise<std_msgs::Float64>("/rscuad/r_knee_position/command",1);
+    // j_ankle1_r_publisher_ = nh_.advertise<std_msgs::Float64>("/rscuad/r_ank_pitch_position/command",1);
+    // j_ankle2_r_publisher_ = nh_.advertise<std_msgs::Float64>("/rscuad/r_ank_roll_position/command",1);
+    // j_shoulder_r_publisher_ = nh_.advertise<std_msgs::Float64>("/rscuad/r_sho_pitch_position/command",1);
+
     //calculation radian to degree
-    float target_angle_13 = abs(((RADIAN2DEGREE*float_3) *( MAXIMUM_POSITION_LIMIT/360)) + offset_13);
+    float target_angle_1 = abs(((RADIAN2DEGREE*float_12) *( MAXIMUM_POSITION_LIMIT/360)) - rscuad->offset_ID(1));
+    float target_angle_2 = abs(((RADIAN2DEGREE*float_13) *( MAXIMUM_POSITION_LIMIT/360)) - rscuad->offset_ID(2));
 
-
-    //=============================== dxl execute===============================
-
-    if (portHandler->setBaudRate(BAUDRATE)) {
-        printf("Succeeded to change the baudrate!\n");
-    }
-   
-
-    // Enable DYNAMIXEL Torque
-    dxl_comm_result = packetHandler->write1ByteTxRx(portHandler, DXL_ID_13, ADDR_TORQUE_ENABLE, TORQUE_ENABLE, &dxl_error);
-    if (dxl_comm_result != COMM_SUCCESS) {
-        printf(" /// %s\n", packetHandler->getTxRxResult(dxl_comm_result));
-    }
-    else if (dxl_error != 0) {
-        printf(" //// %s\n", packetHandler->getRxPacketError(dxl_error));
-    }
-    else {
-        printf("Succeeded enabling DYNAMIXEL Torque.\n");
-    }
+    float target_angle_7 = abs(((RADIAN2DEGREE*float_0) *( MAXIMUM_POSITION_LIMIT/360)) - rscuad->offset_ID(7));
+    float target_angle_8 = abs(((RADIAN2DEGREE*float_6) *( MAXIMUM_POSITION_LIMIT/360)) - rscuad->offset_ID(8));
+    float target_angle_9 = abs(((RADIAN2DEGREE*float_1) *( MAXIMUM_POSITION_LIMIT/360)) - rscuad->offset_ID(9));
+    float target_angle_10 = abs(((RADIAN2DEGREE*float_7) *( MAXIMUM_POSITION_LIMIT/360)) - rscuad->offset_ID(10));
+    float target_angle_11 = abs(((RADIAN2DEGREE*float_2) *( MAXIMUM_POSITION_LIMIT/360)) - rscuad->offset_ID(11));
+    float target_angle_12 = abs(((RADIAN2DEGREE*float_8) *( MAXIMUM_POSITION_LIMIT/360)) - rscuad->offset_ID(12));
+    float target_angle_13 = abs(((RADIAN2DEGREE*float_3) *( MAXIMUM_POSITION_LIMIT/360)) - rscuad->offset_ID(13));
+    float target_angle_14 = abs(((RADIAN2DEGREE*float_9) *( MAXIMUM_POSITION_LIMIT/360)) - rscuad->offset_ID(14));
+    float target_angle_15 = abs(((RADIAN2DEGREE*float_4) *( MAXIMUM_POSITION_LIMIT/360)) - rscuad->offset_ID(15));
+    float target_angle_16 = abs(((RADIAN2DEGREE*float_10) *( MAXIMUM_POSITION_LIMIT/360)) - rscuad->offset_ID(16));
+    float target_angle_17 = abs(((RADIAN2DEGREE*float_5) *( MAXIMUM_POSITION_LIMIT/360)) - rscuad->offset_ID(17));
+    float target_angle_18 = abs(((RADIAN2DEGREE*float_11) *( MAXIMUM_POSITION_LIMIT/360)) - rscuad->offset_ID(18));
     
-    dxl_comm_result = packetHandler->write4ByteTxRx(portHandler, DXL_ID_13, ADDR_GOAL_POSITION, target_angle_13, &dxl_error);
-    dxl_comm_result = packetHandler->read4ByteTxRx(portHandler, DXL_ID_13, ADDR_PRESENT_POSITION, (uint32_t*)&dxl_present_position, &dxl_error);
-    ROS_INFO("join position %d", dxl_present_position);
-    //==============================end dxl execute===============================
-
-   
+    packetHandler->write4ByteTxRx(portHandler, DXL_ID_1, ADDR_GOAL_POSITION, target_angle_1, &dxl_error);
+    packetHandler->write4ByteTxRx(portHandler, DXL_ID_2, ADDR_GOAL_POSITION, target_angle_2, &dxl_error);
+    packetHandler->write4ByteTxRx(portHandler, DXL_ID_7, ADDR_GOAL_POSITION, target_angle_7, &dxl_error);
+    packetHandler->write4ByteTxRx(portHandler, DXL_ID_8, ADDR_GOAL_POSITION, target_angle_8, &dxl_error);
+    packetHandler->write4ByteTxRx(portHandler, DXL_ID_9, ADDR_GOAL_POSITION, target_angle_9, &dxl_error);
+    packetHandler->write4ByteTxRx(portHandler, DXL_ID_10, ADDR_GOAL_POSITION, target_angle_10, &dxl_error);
+    packetHandler->write4ByteTxRx(portHandler, DXL_ID_11, ADDR_GOAL_POSITION, target_angle_11, &dxl_error);
+    packetHandler->write4ByteTxRx(portHandler, DXL_ID_12, ADDR_GOAL_POSITION, target_angle_12, &dxl_error);
+    packetHandler->write4ByteTxRx(portHandler, DXL_ID_13, ADDR_GOAL_POSITION, target_angle_13, &dxl_error);
+    packetHandler->write4ByteTxRx(portHandler, DXL_ID_14, ADDR_GOAL_POSITION, target_angle_14, &dxl_error);
+    packetHandler->write4ByteTxRx(portHandler, DXL_ID_15, ADDR_GOAL_POSITION, target_angle_15, &dxl_error);
+    packetHandler->write4ByteTxRx(portHandler, DXL_ID_16, ADDR_GOAL_POSITION, target_angle_16, &dxl_error);
+    packetHandler->write4ByteTxRx(portHandler, DXL_ID_17, ADDR_GOAL_POSITION, target_angle_17, &dxl_error);
+    packetHandler->write4ByteTxRx(portHandler, DXL_ID_18, ADDR_GOAL_POSITION, target_angle_18, &dxl_error);
     
 
-    //====================send to Gazebo======================
-    j_pelvis_l_publisher_.publish(j_pelvis_l_msg);
-    j_thigh1_l_publisher_.publish(j_thigh1_l_msg);
-    j_thigh2_l_publisher_.publish(j_thigh2_l_msg);
-    j_tibia_l_publisher_.publish(j_tibia_l_msg);
-    j_ankle1_l_publisher_.publish(j_ankle1_l_msg);
-    j_ankle2_l_publisher_.publish(j_ankle2_l_msg);
-    j_shoulder_l_publisher_.publish(j_shoulder_l_msg);
 
-    j_pelvis_r_publisher_.publish(j_pelvis_r_msg);
-    j_thigh1_r_publisher_.publish(j_thigh1_r_msg);
-    j_thigh2_r_publisher_.publish(j_thigh2_r_msg);
-    j_tibia_r_publisher_.publish(j_tibia_r_msg);
-    j_ankle1_r_publisher_.publish(j_ankle1_r_msg);
-    j_ankle2_r_publisher_.publish(j_ankle2_r_msg);
-    j_shoulder_r_publisher_.publish(j_shoulder_r_msg);
+
+    // for(int i=0; i<20;i++){
+
+    //     packetHandler->read4ByteTxRx(portHandler, *ptr_ID[i], ADDR_PRESENT_POSITION, (uint32_t*)&dxl_present_position, &dxl_error);
+
+    //     ROS_INFO("join position %d", dxl_present_position);
+    // }
+    //==============================end dxl execute==============================
 
 }
 

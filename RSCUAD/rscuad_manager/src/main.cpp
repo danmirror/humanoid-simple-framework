@@ -17,9 +17,35 @@ uint8_t dxl_errors = 0;                          // DYNAMIXEL error
 void Callback(const std_msgs::String::ConstPtr& msg){
     rscuad::rscuad_manager *rscuad =  new rscuad::rscuad_manager;
     char *newdata = (char*)msg->data.c_str();
+
+      // ------------------data parsing------------------
+    bool lock=false;
+    int memory = 0;
+    int count = 0;
+    char joint[10]="";
+    char value[10]="";
+
+    for(int i=0; i <strlen(newdata);i++){
+        if(str[i] == ','){
+            count ++;
+            memory = i+1;
+        }
+
+        else {
+            if (count == 0)
+                joint[i] = newdata[i]; 
+            if (count == 1)
+                value[i-memory] = newdata[i]; 
+        }
+ 
+    }
+    ROS_WARN("join:  %s", joint);
+    ROS_WARN("value: %f",  atof(value));
+    ROS_INFO("data masuk: %s", str);
+
     // ROS_INFO("newdata");
     // ROS_INFO(newdata);
-    rscuad->move_joint(newdata);
+    rscuad->move_joint(newdata,0,0);
 }
 
 void Manager_Robot_Callback(const std_msgs::String::ConstPtr& msg){

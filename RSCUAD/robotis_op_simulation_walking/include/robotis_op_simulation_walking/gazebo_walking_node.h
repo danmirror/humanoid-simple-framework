@@ -39,6 +39,10 @@ public:
     void dynamicReconfigureCb(robotis_op_simulation_walking::robotis_op_walkingConfig &config, uint32_t level);
 
     int counter = 0;
+    int *ptr_ID[20] {
+        &DXL_ID_1,&DXL_ID_2,&DXL_ID_3,&DXL_ID_4,&DXL_ID_5,&DXL_ID_6,&DXL_ID_7,&DXL_ID_8,&DXL_ID_9,&DXL_ID_10,
+        &DXL_ID_11,&DXL_ID_12,&DXL_ID_13,&DXL_ID_14,&DXL_ID_15,&DXL_ID_16,&DXL_ID_17,&DXL_ID_18,&DXL_ID_19,&DXL_ID_20};
+        
     GazeboWalking walking_;
 protected:
 

@@ -57,64 +57,49 @@ namespace rscuad{
         char *head_pan_position= "/rscuad/head_pan_position/command";
         char *head_tilt_position= "/rscuad/head_tilt_position/command";
 
-        float approach_angle = 0;
-        float target_angle_1 = 0;
-        float target_angle_2 = 0;
-        float target_angle_3 = 0;
-        float target_angle_4 = 0;
-        float target_angle_5 = 0;
-        float target_angle_6 = 0;
-        float target_angle_7 = 0;
-        float target_angle_8 = 0;
-        float target_angle_9 = 0;
-        float target_angle_10 = 0;
-        float target_angle_11 = 0;
-        float target_angle_12 = 0;
-        float target_angle_13 = 0;
-        float target_angle_14 = 0;
-        float target_angle_15 = 0;
-        float target_angle_16 = 0;
-        float target_angle_17 = 0;
-        float target_angle_18 = 0;
-        float target_angle_19 = 0;
-        float target_angle_20 = 0;
-
-       
-
-    // char *l_hip_yaw_position;
-    // char *l_hip_roll_position;
-    // char *l_hip_pitch_position;
-    // char *l_knee_position;
-    // char *l_ank_roll_position;
-    // char *l_ank_pitch_position;
-    // char *r_hip_yaw_position;
-    // char *r_hip_roll_position;
-    // char *r_hip_pitch_position;
-    // char *r_knee_position;
-    // char *r_ank_roll_position;
-    // char *r_ank_pitch_position;
-    // char *l_sho_pitch_position;
-    // char *l_sho_roll_position;
-    // char *l_el_position; 
-    // char *r_sho_pitch_position;
-    // char *r_sho_roll_position;
-    // char *r_el_position;
-    // char *head_pan_position;
-    // char *head_tilt_position;
     } joint;
 
     class rscuad_manager{
         public:
-            int manager_init(); 
-            void move_joint(char *str); 
-            int move_robot(char *str); 
             int dxl_process();
-           
+            int manager_init(); 
+            float offset_ID(int id);
+            int move_robot(char *str); 
+            void move_joint(char *str,int id,float velocity); 
 
             
         protected:
             #define RADIAN2DEGREE     (180.0 / M_PI)
             int *trigers;
+
+            float approach_angle = 0;
+
+
+            float offset_1 = 2046;
+            float offset_2 = 2046;
+            float offset_3 = 2046;
+            float offset_4 = 2046;
+            float offset_5 = 2046;
+            float offset_6 = 2046;
+            float offset_7 = 2046;
+            float offset_8 = 2046;
+            float offset_9 = 2046;
+            float offset_10 = 2046;
+            float offset_11 = 2046;
+            float offset_12 = 2046;
+            float offset_13 = 2046;
+            float offset_14 = 2046;
+            float offset_15 = 2046;
+            float offset_16 = 2046;
+            float offset_17 = 2046;
+            float offset_18 = 2046;
+            float offset_19 = 2046;
+            float offset_20 = 2046;
+
+            int *ptr_ID[20] {
+                &DXL_ID_1,&DXL_ID_2,&DXL_ID_3,&DXL_ID_4,&DXL_ID_5,&DXL_ID_6,&DXL_ID_7,&DXL_ID_8,&DXL_ID_9,&DXL_ID_10,
+                &DXL_ID_11,&DXL_ID_12,&DXL_ID_13,&DXL_ID_14,&DXL_ID_15,&DXL_ID_16,&DXL_ID_17,&DXL_ID_18,&DXL_ID_19,&DXL_ID_20};
+            
  
 
            

@@ -83,8 +83,8 @@ namespace rscuad{
             float offset_6 = 2046;
             float offset_7 = -2046;
             float offset_8 = 2046;
-            float offset_9 = -2046;
-            float offset_10 = -2046;
+            float offset_9 = -2100;
+            float offset_10 = -2000;
             float offset_11 = -2046;
             float offset_12 = 2046;
             float offset_13 = 2046;

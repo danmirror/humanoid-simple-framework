@@ -277,6 +277,10 @@ void SimulationWalkingNode::Process()
     //calculation radian to degree
     float target_angle_1 = abs(((RADIAN2DEGREE*float_12) *( MAXIMUM_POSITION_LIMIT/360)) - rscuad->offset_ID(1));
     float target_angle_2 = abs(((RADIAN2DEGREE*float_13) *( MAXIMUM_POSITION_LIMIT/360)) - rscuad->offset_ID(2));
+    float target_angle_3 = rscuad->offset_ID(3);
+    float target_angle_4 = rscuad->offset_ID(4);
+    float target_angle_5 = rscuad->offset_ID(5);
+    float target_angle_6 = rscuad->offset_ID(6);
 
     float target_angle_7 = abs(((RADIAN2DEGREE*float_0) *( MAXIMUM_POSITION_LIMIT/360)) - rscuad->offset_ID(7));
     float target_angle_8 = abs(((RADIAN2DEGREE*float_6) *( MAXIMUM_POSITION_LIMIT/360)) - rscuad->offset_ID(8));
@@ -291,9 +295,15 @@ void SimulationWalkingNode::Process()
     float target_angle_16 = abs(((RADIAN2DEGREE*float_10) *( MAXIMUM_POSITION_LIMIT/360)) - rscuad->offset_ID(16));
     float target_angle_17 = abs(((RADIAN2DEGREE*float_5) *( MAXIMUM_POSITION_LIMIT/360)) - rscuad->offset_ID(17));
     float target_angle_18 = abs(((RADIAN2DEGREE*float_11) *( MAXIMUM_POSITION_LIMIT/360)) - rscuad->offset_ID(18));
+    float target_angle_19 = rscuad->offset_ID(19);
+    float target_angle_20 = rscuad->offset_ID(20);
     
     packetHandler->write4ByteTxRx(portHandler, DXL_ID_1, ADDR_GOAL_POSITION, target_angle_1, &dxl_error);
     packetHandler->write4ByteTxRx(portHandler, DXL_ID_2, ADDR_GOAL_POSITION, target_angle_2, &dxl_error);
+    packetHandler->write4ByteTxRx(portHandler, DXL_ID_3, ADDR_GOAL_POSITION, target_angle_3, &dxl_error);
+    packetHandler->write4ByteTxRx(portHandler, DXL_ID_4, ADDR_GOAL_POSITION, target_angle_4, &dxl_error);
+    packetHandler->write4ByteTxRx(portHandler, DXL_ID_5, ADDR_GOAL_POSITION, target_angle_5, &dxl_error);
+    packetHandler->write4ByteTxRx(portHandler, DXL_ID_6, ADDR_GOAL_POSITION, target_angle_6, &dxl_error);
     packetHandler->write4ByteTxRx(portHandler, DXL_ID_7, ADDR_GOAL_POSITION, target_angle_7, &dxl_error);
     packetHandler->write4ByteTxRx(portHandler, DXL_ID_8, ADDR_GOAL_POSITION, target_angle_8, &dxl_error);
     packetHandler->write4ByteTxRx(portHandler, DXL_ID_9, ADDR_GOAL_POSITION, target_angle_9, &dxl_error);
@@ -306,6 +316,8 @@ void SimulationWalkingNode::Process()
     packetHandler->write4ByteTxRx(portHandler, DXL_ID_16, ADDR_GOAL_POSITION, target_angle_16, &dxl_error);
     packetHandler->write4ByteTxRx(portHandler, DXL_ID_17, ADDR_GOAL_POSITION, target_angle_17, &dxl_error);
     packetHandler->write4ByteTxRx(portHandler, DXL_ID_18, ADDR_GOAL_POSITION, target_angle_18, &dxl_error);
+    packetHandler->write4ByteTxRx(portHandler, DXL_ID_19, ADDR_GOAL_POSITION, target_angle_19, &dxl_error);
+    packetHandler->write4ByteTxRx(portHandler, DXL_ID_20, ADDR_GOAL_POSITION, target_angle_20, &dxl_error);
     
 
 
@@ -369,7 +381,7 @@ void SimulationWalkingNode::dynamicReconfigureCb(robotis_op_simulation_walking::
     // ROS_INFO("%f", config.P_OFFSET);
     // ROS_INFO("%f", config.A_OFFSET);
     // ROS_INFO("%f", config.PERIOD_TIME);
-    // ROS_INFO("%f", config.DSP_RATIO);
+    ROS_ERROR(" dsp %f", config.DSP_RATIO);
     // ROS_INFO("%f", config.STEP_FB_RATIO);
     // ROS_INFO("%f", config.Z_MOVE_AMPLITUDE);
     // ROS_INFO("%f", config.Y_SWAP_AMPLITUDE);
@@ -407,7 +419,7 @@ void SimulationWalkingNode::Mission()
     walking_.Start();
 
     walking_.X_MOVE_AMPLITUDE = 10;
-    walking_.HIP_PITCH_OFFSET = 5;
+    walking_.HIP_PITCH_OFFSET = 8;
 
     if(periode > 10 ){
         walking_.A_MOVE_AMPLITUDE = 18;

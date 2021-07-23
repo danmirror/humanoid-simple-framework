@@ -19,7 +19,7 @@ int main(int argc, char **argv)
 
    while(1){
       //set joint
-      rscuad->move_joint("robot",9,180);
+      rscuad->move_joint("robot",18,190);
    }
 
     

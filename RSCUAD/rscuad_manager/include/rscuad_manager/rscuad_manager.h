@@ -76,9 +76,9 @@ namespace rscuad{
 
 
             float offset_1 = 2046;
-            float offset_2 = 2046;
-            float offset_3 = 2046;
-            float offset_4 = 2046;
+            float offset_2 = 2000;
+            float offset_3 = 1300;
+            float offset_4 = 2700;
             float offset_5 = 2046;
             float offset_6 = 2046;
             float offset_7 = -2046;
@@ -89,10 +89,10 @@ namespace rscuad{
             float offset_12 = 2046;
             float offset_13 = 2046;
             float offset_14 = 2046;
-            float offset_15 = 2046;
-            float offset_16 = -2046;
+            float offset_15 = 2060;
+            float offset_16 = -2100;
             float offset_17 = 2046;
-            float offset_18 = 2046;
+            float offset_18 = 2010;
             float offset_19 = 2046;
             float offset_20 = 2046;
 

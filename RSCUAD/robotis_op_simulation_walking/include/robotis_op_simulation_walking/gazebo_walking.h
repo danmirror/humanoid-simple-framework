@@ -166,6 +166,7 @@ private:
     */
     bool init_pos;
     float LIMIT;
+    bool WALK_READY_MODE;
   
 
 

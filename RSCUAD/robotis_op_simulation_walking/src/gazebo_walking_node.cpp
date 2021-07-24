@@ -143,22 +143,22 @@ void SimulationWalkingNode::Process()
     j_shoulder_r_msg.data = outValue[12];
     j_shoulder_l_msg.data = outValue[13];
     
-    ROS_INFO("calc R0 = %f", outValue[0]);
-    ROS_INFO("calc R1 = %f", outValue[1]);
-    ROS_INFO("calc R2 = %f", outValue[2]);
-    ROS_INFO("calc R3 = %f", outValue[3]);
-    ROS_INFO("calc R4 = %f", outValue[4]);
-    ROS_INFO("calc R5 = %f", outValue[5]);
+    // ROS_INFO("calc R0 = %f", outValue[0]);
+    // ROS_INFO("calc R1 = %f", outValue[1]);
+    // ROS_INFO("calc R2 = %f", outValue[2]);
+    // ROS_INFO("calc R3 = %f", outValue[3]);
+    // ROS_INFO("calc R4 = %f", outValue[4]);
+    // ROS_INFO("calc R5 = %f", outValue[5]);
     
-    ROS_INFO("calc L0 = %f", outValue[6]);
-    ROS_INFO("calc L1 = %f", outValue[7]);
-    ROS_INFO("calc L2 = %f", outValue[8]);
-    ROS_INFO("calc L3 = %f", outValue[9]);
-    ROS_INFO("calc L4 = %f", outValue[10]);
-    ROS_INFO("calc L5 = %f", outValue[11]);
+    // ROS_INFO("calc L0 = %f", outValue[6]);
+    // ROS_INFO("calc L1 = %f", outValue[7]);
+    // ROS_INFO("calc L2 = %f", outValue[8]);
+    // ROS_INFO("calc L3 = %f", outValue[9]);
+    // ROS_INFO("calc L4 = %f", outValue[10]);
+    // ROS_INFO("calc L5 = %f", outValue[11]);
 
-    ROS_INFO("calc L12 = %f", outValue[12]);
-    ROS_INFO("calc R13 = %f", outValue[13]);
+    // ROS_INFO("calc L12 = %f", outValue[12]);
+    // ROS_INFO("calc R13 = %f", outValue[13]);
 
     // ROS_WARN("Proses in node ...");
     // ROS_WARN("%f", j_ankle1_r_msg.data);
@@ -393,24 +393,24 @@ void SimulationWalkingNode::dynamicReconfigureCb(robotis_op_simulation_walking::
     // ROS_INFO("%f", config.BALANCE_ANKLE_ROLL_GAIN);
     // ROS_INFO("%f", config.HIP_PITCH_OFFSET);
 
-    walking_.X_OFFSET=config.X_OFFSET;
-    walking_.Y_OFFSET=config.Y_OFFSET;
-    walking_.Z_OFFSET=config.Z_OFFSET;
-    walking_.R_OFFSET=config.R_OFFSET;
-    walking_.P_OFFSET=config.P_OFFSET;
-    walking_.A_OFFSET=config.A_OFFSET;
-    walking_.PERIOD_TIME=config.PERIOD_TIME;
-    walking_.DSP_RATIO=config.DSP_RATIO;
-    walking_.STEP_FB_RATIO=config.STEP_FB_RATIO;
-    walking_.Z_MOVE_AMPLITUDE=config.Z_MOVE_AMPLITUDE;
-    walking_.Y_SWAP_AMPLITUDE=config.Y_SWAP_AMPLITUDE;
-    walking_.PELVIS_OFFSET=config.PELVIS_OFFSET;
-    walking_.ARM_SWING_GAIN=config.ARM_SWING_GAIN;
-    walking_.BALANCE_KNEE_GAIN=config.BALANCE_KNEE_GAIN;
-    walking_.BALANCE_ANKLE_PITCH_GAIN=config.BALANCE_ANKLE_PITCH_GAIN;
-    walking_.BALANCE_HIP_ROLL_GAIN=config.BALANCE_HIP_ROLL_GAIN;
-    walking_.BALANCE_ANKLE_ROLL_GAIN=config.BALANCE_ANKLE_ROLL_GAIN;
-    walking_.HIP_PITCH_OFFSET=config.HIP_PITCH_OFFSET;
+    walking_.X_OFFSET                   =   config.X_OFFSET;
+    walking_.Y_OFFSET                   =   config.Y_OFFSET;
+    walking_.Z_OFFSET                   =   config.Z_OFFSET;
+    walking_.R_OFFSET                   =   config.R_OFFSET;
+    walking_.P_OFFSET                   =   config.P_OFFSET;
+    walking_.A_OFFSET                   =   config.A_OFFSET;
+    walking_.PERIOD_TIME                =   config.PERIOD_TIME;
+    walking_.DSP_RATIO                  =   config.DSP_RATIO;
+    walking_.STEP_FB_RATIO              =   config.STEP_FB_RATIO;
+    walking_.Z_MOVE_AMPLITUDE           =   config.Z_MOVE_AMPLITUDE;
+    walking_.Y_SWAP_AMPLITUDE           =   config.Y_SWAP_AMPLITUDE;
+    walking_.PELVIS_OFFSET              =   config.PELVIS_OFFSET;
+    walking_.ARM_SWING_GAIN             =   config.ARM_SWING_GAIN;
+    walking_.BALANCE_KNEE_GAIN          =   config.BALANCE_KNEE_GAIN;
+    walking_.BALANCE_ANKLE_PITCH_GAIN   =   config.BALANCE_ANKLE_PITCH_GAIN;
+    walking_.BALANCE_HIP_ROLL_GAIN      =   config.BALANCE_HIP_ROLL_GAIN;
+    walking_.BALANCE_ANKLE_ROLL_GAIN    =   config.BALANCE_ANKLE_ROLL_GAIN;
+    walking_.HIP_PITCH_OFFSET           =   config.HIP_PITCH_OFFSET;
 }
 
 void SimulationWalkingNode::Mission()
@@ -418,16 +418,16 @@ void SimulationWalkingNode::Mission()
     int periode = walking_.periode_calc();
     walking_.Start();
 
-    walking_.X_MOVE_AMPLITUDE = 10;
+    walking_.X_MOVE_AMPLITUDE = 0;
     walking_.HIP_PITCH_OFFSET = 8;
 
-    if(periode > 10 ){
-        walking_.A_MOVE_AMPLITUDE = 18;
-        walking_.X_MOVE_AMPLITUDE = 5;
-        walking_.HIP_PITCH_OFFSET = 6;
+    // if(periode > 10 ){
+    //     walking_.A_MOVE_AMPLITUDE = 18;
+    //     walking_.X_MOVE_AMPLITUDE = 5;
+    //     walking_.HIP_PITCH_OFFSET = 6;
         
-        ROS_INFO("righ");
-    }
+    //     ROS_INFO("righ");
+    // }
     ROS_INFO("periode %d",periode);
     ROS_INFO("mission mode");
 
@@ -444,8 +444,8 @@ int main(int argc, char **argv)
 
     ros::NodeHandle nh;
     double control_rate;
-    nh.param("robotis_op_walking/control_rate", control_rate, 125.0);
-    control_rate = 125.0;
+    nh.param("robotis_op_walking/control_rate", control_rate, 100.0);
+    control_rate = 100.0;
 
     SimulationWalkingNode gazebo_walking_node(nh);
 

@@ -75,6 +75,7 @@ GazeboWalking::GazeboWalking(ros::NodeHandle nh)
     A_MOVE_AMPLITUDE = 0;
     A_MOVE_AIM_ON = true;
     BALANCE_ENABLE = true;
+    WALK_READY_MODE= true;
 
 }
 
@@ -184,7 +185,13 @@ void GazeboWalking::update(ros::Time time, ros::Duration period)
 
 double GazeboWalking::wsin(double time, double period, double period_shift, double mag, double mag_shift)
 {
-    return mag * sin(2 * 3.141592 / period * time - period_shift) + mag_shift;
+     if(INIT_MODE == true || WALK_READY_MODE == false){
+     
+        return mag * -cos(2 * 3.141592 / period * time - period_shift) + mag_shift;
+     }
+     else{
+        return mag * sin(2 * 3.141592 / period * time - period_shift) + mag_shift;
+     }
 }
 
 bool GazeboWalking::computeIK(double *out, double x, double y, double z, double a, double b, double c)
@@ -360,8 +367,8 @@ void GazeboWalking::update_param_balance()
 
 void GazeboWalking::Start()
 {
-    if(INIT_MODE == true){
-        // ROS_INFO("walking starting by main");
+    if(INIT_MODE == true || WALK_READY_MODE == false){
+        ROS_INFO("walking starting by main");
         m_Ctrl_Running = true;
         m_Real_Running = true;
     }
@@ -393,8 +400,7 @@ void GazeboWalking::Process(double *outValue)
     // int dir[14]          = {   -1,        -1,          -1,         1,         -1,            1,          -1,        -1,         -1,         -1,         -1,            1,           1,           -1      };
 
     double initAngle[14] = {   0.0,       0.0,        0.0,       0.0,        0.0,          0.0,         0.0,       0.0,        0.0,        0.0,       0.0,          0.0,       -48.345,       41.313    };
-    // double initAngle[14] = {   0.0,       5.0,        -10.0,       12.0,        4.0,          0.0,         -3.0,       -5.0,        8.0,        -12.0,       -4.0,          0.0,       -3,	3 };
-
+    // double initAngle[14] = {   4.0,       3.0,        -17.0,       7.0,        -7.0,          3.0,         -2.0,       -4.0,        15.0,        -9.0,      7.0,          -3.0,       -15,       15    };
     // Update walk parameters
     if(m_Time == 0)
     {
@@ -455,69 +461,74 @@ void GazeboWalking::Process(double *outValue)
     x_swap = wsin(m_Time, m_X_Swap_PeriodTime, m_X_Swap_Phase_Shift, m_X_Swap_Amplitude, m_X_Swap_Amplitude_Shift);
     y_swap = wsin(m_Time, m_Y_Swap_PeriodTime, m_Y_Swap_Phase_Shift, m_Y_Swap_Amplitude, m_Y_Swap_Amplitude_Shift);
     z_swap = wsin(m_Time, m_Z_Swap_PeriodTime, m_Z_Swap_Phase_Shift, m_Z_Swap_Amplitude, m_Z_Swap_Amplitude_Shift);
+
+    // ROS_ERROR("x_swap >>>>>>>>>>>>>>>> %f",x_swap);
+    //   ROS_ERROR("y_swap >>>>>>>>>>>>>>>>%f",y_swap);
+        // ROS_ERROR("z_swap >>>>>>>>>>>>>>>>%f",z_swap);
+
     a_swap = 0;
     b_swap = 0;
     c_swap = 0;
 
     if(m_Time <= m_SSP_Time_Start_L)
     {
-        ROS_ERROR("l start >>>>>>>>>>>>>>>>");
+        // ROS_ERROR("l start >>>>>>>>>>>>>>>>");
         x_move_l = wsin(m_SSP_Time_Start_L, m_X_Move_PeriodTime, m_X_Move_Phase_Shift + 2 *  M_PI / m_X_Move_PeriodTime * m_SSP_Time_Start_L, m_X_Move_Amplitude, m_X_Move_Amplitude_Shift);
         y_move_l = wsin(m_SSP_Time_Start_L, m_Y_Move_PeriodTime, m_Y_Move_Phase_Shift + 2 *  M_PI / m_Y_Move_PeriodTime * m_SSP_Time_Start_L, m_Y_Move_Amplitude, m_Y_Move_Amplitude_Shift);
-        z_move_l = wsin(m_SSP_Time_Start_L, m_Z_Move_PeriodTime, m_Z_Move_Phase_Shift - 2 *  M_PI / m_Z_Move_PeriodTime * m_SSP_Time_Start_L, m_Z_Move_Amplitude, m_Z_Move_Amplitude_Shift);
+        z_move_l = wsin(m_SSP_Time_Start_L, m_Z_Move_PeriodTime, m_Z_Move_Phase_Shift + 2 *  M_PI / m_Z_Move_PeriodTime * m_SSP_Time_Start_L, m_Z_Move_Amplitude, m_Z_Move_Amplitude_Shift);
         c_move_l = wsin(m_SSP_Time_Start_L, m_A_Move_PeriodTime, m_A_Move_Phase_Shift + 2 *  M_PI / m_A_Move_PeriodTime * m_SSP_Time_Start_L, m_A_Move_Amplitude, m_A_Move_Amplitude_Shift);
         x_move_r = wsin(m_SSP_Time_Start_L, m_X_Move_PeriodTime, m_X_Move_Phase_Shift + 2 *  M_PI / m_X_Move_PeriodTime * m_SSP_Time_Start_L, -m_X_Move_Amplitude, -m_X_Move_Amplitude_Shift);
         y_move_r = wsin(m_SSP_Time_Start_L, m_Y_Move_PeriodTime, m_Y_Move_Phase_Shift + 2 *  M_PI / m_Y_Move_PeriodTime * m_SSP_Time_Start_L, -m_Y_Move_Amplitude, -m_Y_Move_Amplitude_Shift);
-        z_move_r = wsin(m_SSP_Time_Start_R, m_Z_Move_PeriodTime, m_Z_Move_Phase_Shift - 2 *  M_PI / m_Z_Move_PeriodTime * m_SSP_Time_Start_R, m_Z_Move_Amplitude, m_Z_Move_Amplitude_Shift);
+        z_move_r = wsin(m_SSP_Time_Start_R, m_Z_Move_PeriodTime, m_Z_Move_Phase_Shift + 2 *  M_PI / m_Z_Move_PeriodTime * m_SSP_Time_Start_R, m_Z_Move_Amplitude, m_Z_Move_Amplitude_Shift);
         c_move_r = wsin(m_SSP_Time_Start_L, m_A_Move_PeriodTime, m_A_Move_Phase_Shift + 2 *  M_PI / m_A_Move_PeriodTime * m_SSP_Time_Start_L, -m_A_Move_Amplitude, -m_A_Move_Amplitude_Shift);
         pelvis_offset_l = 0;
         pelvis_offset_r = 0;
     }
     else if(m_Time <= m_SSP_Time_End_L)
     {
-         ROS_ERROR("l end >>>>>>>>>>>>>>>>");
+        //  ROS_ERROR("l end >>>>>>>>>>>>>>>>");
         x_move_l = wsin(m_Time, m_X_Move_PeriodTime, m_X_Move_Phase_Shift + 2 *  M_PI / m_X_Move_PeriodTime * m_SSP_Time_Start_L, m_X_Move_Amplitude, m_X_Move_Amplitude_Shift);
         y_move_l = wsin(m_Time, m_Y_Move_PeriodTime, m_Y_Move_Phase_Shift + 2 *  M_PI / m_Y_Move_PeriodTime * m_SSP_Time_Start_L, m_Y_Move_Amplitude, m_Y_Move_Amplitude_Shift);
-        z_move_l = wsin(m_Time, m_Z_Move_PeriodTime, m_Z_Move_Phase_Shift - 2 *  M_PI / m_Z_Move_PeriodTime * m_SSP_Time_Start_L, m_Z_Move_Amplitude, m_Z_Move_Amplitude_Shift);
+        z_move_l = wsin(m_Time, m_Z_Move_PeriodTime, m_Z_Move_Phase_Shift + 2 *  M_PI / m_Z_Move_PeriodTime * m_SSP_Time_Start_L, m_Z_Move_Amplitude, m_Z_Move_Amplitude_Shift);
         c_move_l = wsin(m_Time, m_A_Move_PeriodTime, m_A_Move_Phase_Shift + 2 *  M_PI / m_A_Move_PeriodTime * m_SSP_Time_Start_L, m_A_Move_Amplitude, m_A_Move_Amplitude_Shift);
         x_move_r = wsin(m_Time, m_X_Move_PeriodTime, m_X_Move_Phase_Shift + 2 *  M_PI / m_X_Move_PeriodTime * m_SSP_Time_Start_L, -m_X_Move_Amplitude, -m_X_Move_Amplitude_Shift);
         y_move_r = wsin(m_Time, m_Y_Move_PeriodTime, m_Y_Move_Phase_Shift + 2 *  M_PI / m_Y_Move_PeriodTime * m_SSP_Time_Start_L, -m_Y_Move_Amplitude, -m_Y_Move_Amplitude_Shift);
-        z_move_r = wsin(m_SSP_Time_Start_R, m_Z_Move_PeriodTime, m_Z_Move_Phase_Shift - 2 *  M_PI / m_Z_Move_PeriodTime * m_SSP_Time_Start_R, m_Z_Move_Amplitude, m_Z_Move_Amplitude_Shift);
+        z_move_r = wsin(m_SSP_Time_Start_R, m_Z_Move_PeriodTime, m_Z_Move_Phase_Shift + 2 *  M_PI / m_Z_Move_PeriodTime * m_SSP_Time_Start_R, m_Z_Move_Amplitude, m_Z_Move_Amplitude_Shift);
         c_move_r = wsin(m_Time, m_A_Move_PeriodTime, m_A_Move_Phase_Shift + 2 *  M_PI / m_A_Move_PeriodTime * m_SSP_Time_Start_L, -m_A_Move_Amplitude, -m_A_Move_Amplitude_Shift);
         pelvis_offset_l = wsin(m_Time, m_Z_Move_PeriodTime, m_Z_Move_Phase_Shift + 2 *  M_PI / m_Z_Move_PeriodTime * m_SSP_Time_Start_L, m_Pelvis_Swing / 2, m_Pelvis_Swing / 2);
         pelvis_offset_r = wsin(m_Time, m_Z_Move_PeriodTime, m_Z_Move_Phase_Shift + 2 *  M_PI / m_Z_Move_PeriodTime * m_SSP_Time_Start_L, -m_Pelvis_Offset / 2, -m_Pelvis_Offset / 2);
     }
     else if(m_Time <= m_SSP_Time_Start_R)
     {
-        ROS_ERROR("RR start >>>>>>>>>>>>>>>>");
+        // ROS_ERROR("R start >>>>>>>>>>>>>>>>");
         x_move_l = wsin(m_SSP_Time_End_L, m_X_Move_PeriodTime, m_X_Move_Phase_Shift + 2 *  M_PI / m_X_Move_PeriodTime * m_SSP_Time_Start_L, m_X_Move_Amplitude, m_X_Move_Amplitude_Shift);
         y_move_l = wsin(m_SSP_Time_End_L, m_Y_Move_PeriodTime, m_Y_Move_Phase_Shift + 2 *  M_PI / m_Y_Move_PeriodTime * m_SSP_Time_Start_L, m_Y_Move_Amplitude, m_Y_Move_Amplitude_Shift);
-        z_move_l = wsin(m_SSP_Time_End_L, m_Z_Move_PeriodTime, m_Z_Move_Phase_Shift - 2 *  M_PI / m_Z_Move_PeriodTime * m_SSP_Time_Start_L, m_Z_Move_Amplitude, m_Z_Move_Amplitude_Shift);
+        z_move_l = wsin(m_SSP_Time_End_L, m_Z_Move_PeriodTime, m_Z_Move_Phase_Shift + 2 *  M_PI / m_Z_Move_PeriodTime * m_SSP_Time_Start_L, m_Z_Move_Amplitude, m_Z_Move_Amplitude_Shift);
         c_move_l = wsin(m_SSP_Time_End_L, m_A_Move_PeriodTime, m_A_Move_Phase_Shift + 2 *  M_PI / m_A_Move_PeriodTime * m_SSP_Time_Start_L, m_A_Move_Amplitude, m_A_Move_Amplitude_Shift);
         x_move_r = wsin(m_SSP_Time_End_L, m_X_Move_PeriodTime, m_X_Move_Phase_Shift + 2 *  M_PI / m_X_Move_PeriodTime * m_SSP_Time_Start_L, -m_X_Move_Amplitude, -m_X_Move_Amplitude_Shift);
         y_move_r = wsin(m_SSP_Time_End_L, m_Y_Move_PeriodTime, m_Y_Move_Phase_Shift + 2 *  M_PI / m_Y_Move_PeriodTime * m_SSP_Time_Start_L, -m_Y_Move_Amplitude, -m_Y_Move_Amplitude_Shift);
-        z_move_r = wsin(m_SSP_Time_Start_R, m_Z_Move_PeriodTime, m_Z_Move_Phase_Shift - 2 *  M_PI / m_Z_Move_PeriodTime * m_SSP_Time_Start_R, m_Z_Move_Amplitude, m_Z_Move_Amplitude_Shift);
+        z_move_r = wsin(m_SSP_Time_Start_R, m_Z_Move_PeriodTime, m_Z_Move_Phase_Shift + 2 *  M_PI / m_Z_Move_PeriodTime * m_SSP_Time_Start_R, m_Z_Move_Amplitude, m_Z_Move_Amplitude_Shift);
         c_move_r = wsin(m_SSP_Time_End_L, m_A_Move_PeriodTime, m_A_Move_Phase_Shift + 2 *  M_PI / m_A_Move_PeriodTime * m_SSP_Time_Start_L, -m_A_Move_Amplitude, -m_A_Move_Amplitude_Shift);
         pelvis_offset_l = 0;
         pelvis_offset_r = 0;
     }
     else if(m_Time <= m_SSP_Time_End_R)
     {
-         ROS_ERROR("R end >>>>>>>>>>>>>>>>");
+        //  ROS_ERROR("R end >>>>>>>>>>>>>>>>");
         x_move_l = wsin(m_Time, m_X_Move_PeriodTime, m_X_Move_Phase_Shift + 2 *  M_PI / m_X_Move_PeriodTime * m_SSP_Time_Start_R +  M_PI, m_X_Move_Amplitude, m_X_Move_Amplitude_Shift);
         y_move_l = wsin(m_Time, m_Y_Move_PeriodTime, m_Y_Move_Phase_Shift + 2 *  M_PI / m_Y_Move_PeriodTime * m_SSP_Time_Start_R +  M_PI, m_Y_Move_Amplitude, m_Y_Move_Amplitude_Shift);
-        z_move_l = wsin(m_SSP_Time_End_L, m_Z_Move_PeriodTime, m_Z_Move_Phase_Shift - 2 *  M_PI / m_Z_Move_PeriodTime * m_SSP_Time_Start_L, m_Z_Move_Amplitude, m_Z_Move_Amplitude_Shift);
+        z_move_l = wsin(m_SSP_Time_End_L, m_Z_Move_PeriodTime, m_Z_Move_Phase_Shift + 2 *  M_PI / m_Z_Move_PeriodTime * m_SSP_Time_Start_L, m_Z_Move_Amplitude, m_Z_Move_Amplitude_Shift);
         c_move_l = wsin(m_Time, m_A_Move_PeriodTime, m_A_Move_Phase_Shift + 2 *  M_PI / m_A_Move_PeriodTime * m_SSP_Time_Start_R +  M_PI, m_A_Move_Amplitude, m_A_Move_Amplitude_Shift);
         x_move_r = wsin(m_Time, m_X_Move_PeriodTime, m_X_Move_Phase_Shift + 2 *  M_PI / m_X_Move_PeriodTime * m_SSP_Time_Start_R +  M_PI, -m_X_Move_Amplitude, -m_X_Move_Amplitude_Shift);
         y_move_r = wsin(m_Time, m_Y_Move_PeriodTime, m_Y_Move_Phase_Shift + 2 *  M_PI / m_Y_Move_PeriodTime * m_SSP_Time_Start_R +  M_PI, -m_Y_Move_Amplitude, -m_Y_Move_Amplitude_Shift);
-        z_move_r = wsin(m_Time, m_Z_Move_PeriodTime, m_Z_Move_Phase_Shift - 2 *  M_PI / m_Z_Move_PeriodTime * m_SSP_Time_Start_R, m_Z_Move_Amplitude, m_Z_Move_Amplitude_Shift);
+        z_move_r = wsin(m_Time, m_Z_Move_PeriodTime, m_Z_Move_Phase_Shift + 2 *  M_PI / m_Z_Move_PeriodTime * m_SSP_Time_Start_R, m_Z_Move_Amplitude, m_Z_Move_Amplitude_Shift);
         c_move_r = wsin(m_Time, m_A_Move_PeriodTime, m_A_Move_Phase_Shift + 2 *  M_PI / m_A_Move_PeriodTime * m_SSP_Time_Start_R +  M_PI, -m_A_Move_Amplitude, -m_A_Move_Amplitude_Shift);
         pelvis_offset_l = wsin(m_Time, m_Z_Move_PeriodTime, m_Z_Move_Phase_Shift + 2 *  M_PI / m_Z_Move_PeriodTime * m_SSP_Time_Start_R, m_Pelvis_Offset / 2, m_Pelvis_Offset / 2);
         pelvis_offset_r = wsin(m_Time, m_Z_Move_PeriodTime, m_Z_Move_Phase_Shift + 2 *  M_PI / m_Z_Move_PeriodTime * m_SSP_Time_Start_R, -m_Pelvis_Swing / 2, -m_Pelvis_Swing / 2);
     }
     else
     {
-        ROS_ERROR("---------NORMAL------------------------");
+        // ROS_ERROR("---------NORMAL------------------------");
         x_move_l = wsin(m_SSP_Time_End_R, m_X_Move_PeriodTime, m_X_Move_Phase_Shift + 2 *  M_PI / m_X_Move_PeriodTime * m_SSP_Time_Start_R +  M_PI, m_X_Move_Amplitude, m_X_Move_Amplitude_Shift);
         y_move_l = wsin(m_SSP_Time_End_R, m_Y_Move_PeriodTime, m_Y_Move_Phase_Shift + 2 *  M_PI / m_Y_Move_PeriodTime * m_SSP_Time_Start_R +  M_PI, m_Y_Move_Amplitude, m_Y_Move_Amplitude_Shift);
         z_move_l = wsin(m_SSP_Time_End_L, m_Z_Move_PeriodTime, m_Z_Move_Phase_Shift + 2 *  M_PI / m_Z_Move_PeriodTime * m_SSP_Time_Start_L, m_Z_Move_Amplitude, m_Z_Move_Amplitude_Shift);
@@ -597,7 +608,8 @@ void GazeboWalking::Process(double *outValue)
         // m_Time += 1;
         // if(m_Time >= m_PeriodTime/4)
         //     m_Time = m_PeriodTime/4;
-        walk_ready();
+        if(WALK_READY_MODE ==true )
+            walk_ready();
         // update_param_move();
     }
 

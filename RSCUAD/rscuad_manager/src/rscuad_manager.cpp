@@ -410,7 +410,7 @@ void rscuad::rscuad_manager::move_joint(char *str,int id,float velocity){
         }
 
     }
-    if(data == "robot" || data == "gazebo"){
+    if(data == "robot" || data == "all"){
 
         // active all servo
         if (portHandler->setBaudRate(BAUDRATE)) {

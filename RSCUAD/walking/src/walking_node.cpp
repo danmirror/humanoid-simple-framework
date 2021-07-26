@@ -392,6 +392,7 @@ void WalkingNode::dynamicReconfigureCb(walking::walk_tunnerConfig &config, uint3
 
     walking_.X_OFFSET                   =   config.X_OFFSET;
     walking_.Y_OFFSET                   =   config.Y_OFFSET;
+    
     walking_.Z_OFFSET                   =   config.Z_OFFSET;
     walking_.R_OFFSET                   =   config.R_OFFSET;
     walking_.P_OFFSET                   =   config.P_OFFSET;
@@ -413,21 +414,25 @@ void WalkingNode::dynamicReconfigureCb(walking::walk_tunnerConfig &config, uint3
 
 void WalkingNode::Mission()
 {
-    int periode = walking_.periode_calc();
-    walking_.Start();
+    if( walking_.init_status()== true)
+    {
+        int periode = walking_.periode_calc();
+        walking_.Start();
 
-    walking_.X_MOVE_AMPLITUDE = 10;
-    walking_.HIP_PITCH_OFFSET = 8;
+        walking_.X_MOVE_AMPLITUDE = 10;
+        walking_.HIP_PITCH_OFFSET = 15;
+        walking_.X_OFFSET = 0;
 
-    // if(periode > 10 ){
-    //     walking_.A_MOVE_AMPLITUDE = 18;
-    //     walking_.X_MOVE_AMPLITUDE = 5;
-    //     walking_.HIP_PITCH_OFFSET = 6;
-        
-    //     ROS_INFO("righ");
-    // }
-    ROS_INFO("periode %d",periode);
-    ROS_INFO("mission mode");
+        // if(periode > 10 ){
+        //     walking_.A_MOVE_AMPLITUDE = 18;
+        //     walking_.X_MOVE_AMPLITUDE = 5;
+        //     walking_.HIP_PITCH_OFFSET = 6;
+            
+        //     ROS_INFO("righ");
+        // }
+        ROS_INFO("periode %d",periode);
+        ROS_INFO("mission mode");
+    }
 
 }
 }
@@ -455,8 +460,8 @@ int main(int argc, char **argv)
     ROS_INFO("Starting walking");
     //walking.Start();
 
-    // walking_node.walking_.Initialize();   //make very smooth
-
+    walking_node.walking_.Initialize();    // make very smooth
+    // walking_node.walking_.walk_ready(); // make smooth but not perfect
 
     dynamic_reconfigure::Server<walking::walk_tunnerConfig> srv;
     dynamic_reconfigure::Server<walking::walk_tunnerConfig>::CallbackType cb;

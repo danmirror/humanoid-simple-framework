@@ -24,7 +24,7 @@ value reduction mess rscuad
   
   <xacro:add_sim_harness harnessed_link="body"/>
 
-  <link name="world">
+  <!-- <link name="world">
   </link>
   <joint name="world_fixed" type="fixed">
     <origin xyz="0 0 0" rpy="0 0 0"/>
@@ -37,7 +37,7 @@ value reduction mess rscuad
     <origin xyz="0 0 0" rpy="0 0 0"/>
     <parent link="base"/>
     <child link="body"/>
-  </joint>
+  </joint> -->
  
   <link
     name="body">

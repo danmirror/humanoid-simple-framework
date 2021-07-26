@@ -75,7 +75,7 @@ namespace rscuad{
             float approach_angle = 0;
 
 
-            float offset_1 = 2046;
+            float offset_1 = 2000;
             float offset_2 = 2000;
             float offset_3 = 1300;
             float offset_4 = 2700;

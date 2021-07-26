@@ -24,6 +24,7 @@ public:
 
 
     int periode_calc();
+    int init_status();
     void walk_ready();
     void Initialize();
     void InitializeMode();

@@ -24,6 +24,8 @@ int iter = 0;
 double LIMIT_Z = 0;
 bool INIT_MODE;
 int periode_counter = 0;
+float Z_OFFSET_MEM = 60;
+float counter_z=0;
     
 
 namespace robotis_op {
@@ -75,7 +77,7 @@ Walking::Walking(ros::NodeHandle nh)
     A_MOVE_AMPLITUDE = 0;
     A_MOVE_AIM_ON = true;
     BALANCE_ENABLE = true;
-    WALK_READY_MODE= false;
+    WALK_READY_MODE= false;     // if you want make faster initial used this, but not perfect
 
 }
 
@@ -87,10 +89,26 @@ int Walking::periode_calc()
 {
     return periode_counter;
 }
+int Walking::init_status(){
+    return INIT_MODE;
+}
 
 void Walking::walk_ready()
 {
+    ROS_INFO("Z_OFFSET >> %f",Z_OFFSET);
+    counter_z +=0.1;
+    Z_OFFSET = counter_z;
 
+    
+    
+    if(Z_OFFSET >= Z_OFFSET_MEM)
+    {
+        // if(counter_z >= 100){
+            INIT_MODE = true;
+        // }
+    }
+    // else
+    //     Z_OFFSET = counter_z;
 }
 void Walking::Initialize()
 {

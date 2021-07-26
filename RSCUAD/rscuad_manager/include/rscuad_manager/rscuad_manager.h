@@ -1,10 +1,10 @@
 /*
- des  : rscuad control gazebo
- year :2021
- 
-*/
+ * desc : rscuad manager.h
+ * year : 2021
+ * dev  : danu andrean
+ *
+ */
 
-// author : danu andrean
 
 #ifndef RSCUAD_MANAGER_H_
 #define RSCUAD_MANAGER_H_

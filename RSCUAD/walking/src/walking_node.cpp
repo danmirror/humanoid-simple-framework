@@ -1,15 +1,12 @@
 /*
- des  : rscuad walking node 
- year : 2021
- 
-*/
-
-// dev : danu andrean
-
+ * desc : rscuad walking node 
+ * year : 2021
+ * dev  : danu andrean
+ *
+ */
 
 
-
-#include <robotis_op_simulation_walking/gazebo_walking_node.h>
+#include <walking/walking_node.h>
 
 using namespace robotis_op;
 
@@ -19,7 +16,7 @@ using namespace robotis_op;
 #include <std_msgs/Float64.h>
 #include <math.h>
 
-#include <robotis_op_simulation_walking/math/Matrix.h>
+#include <walking/math/Matrix.h>
 #define MX28_1024
 
 
@@ -40,7 +37,7 @@ int32_t dxl_present_position = 0;               // Read 4 byte Position data
 namespace robotis_op {
 using namespace Robot;
 
-SimulationWalkingNode::SimulationWalkingNode(ros::NodeHandle nh)
+WalkingNode::WalkingNode(ros::NodeHandle nh)
     : nh_(nh)
     , walking_(nh)
 {
@@ -70,7 +67,7 @@ SimulationWalkingNode::SimulationWalkingNode(ros::NodeHandle nh)
     }
 
 
-    ROS_WARN("SimulationWalkingNode ...");
+    ROS_WARN("WalkingNode ...");
     j_pelvis_l_publisher_ = nh_.advertise<std_msgs::Float64>("/rscuad/l_hip_yaw_position/command",1);
     j_thigh1_l_publisher_ = nh_.advertise<std_msgs::Float64>("/rscuad/l_hip_roll_position/command",1);
     j_thigh2_l_publisher_ = nh_.advertise<std_msgs::Float64>("/rscuad/l_hip_pitch_position/command",1);
@@ -87,19 +84,19 @@ SimulationWalkingNode::SimulationWalkingNode(ros::NodeHandle nh)
     j_ankle2_r_publisher_ = nh_.advertise<std_msgs::Float64>("/rscuad/r_ank_roll_position/command",1);
     j_shoulder_r_publisher_ = nh_.advertise<std_msgs::Float64>("/rscuad/r_sho_pitch_position/command",1);
 
-    cmd_vel_subscriber_ = nh_.subscribe("/rscuad/cmd_vel", 100, &SimulationWalkingNode::cmdVelCb, this);
-    enable_walking_subscriber_ = nh_.subscribe("/rscuad/enable_walking", 100, &SimulationWalkingNode::enableWalkCb, this);
-    imu_subscriber_ = nh_.subscribe("/rscuad/imu", 100, &SimulationWalkingNode::imuCb, this);
+    cmd_vel_subscriber_ = nh_.subscribe("/rscuad/cmd_vel", 100, &WalkingNode::cmdVelCb, this);
+    enable_walking_subscriber_ = nh_.subscribe("/rscuad/enable_walking", 100, &WalkingNode::enableWalkCb, this);
+    imu_subscriber_ = nh_.subscribe("/rscuad/imu", 100, &WalkingNode::imuCb, this);
 }
 
-SimulationWalkingNode::~SimulationWalkingNode()
+WalkingNode::~WalkingNode()
 {
 }
 
 
 
 
-void SimulationWalkingNode::Process()
+void WalkingNode::Process()
 {
 
      // alocation memory
@@ -332,7 +329,7 @@ void SimulationWalkingNode::Process()
 
 }
 
-void SimulationWalkingNode::cmdVelCb(const geometry_msgs::Twist::ConstPtr& msg)
+void WalkingNode::cmdVelCb(const geometry_msgs::Twist::ConstPtr& msg)
 {
     ROS_ERROR("cmdval start");
     double period = walking_.PERIOD_TIME;
@@ -344,7 +341,7 @@ void SimulationWalkingNode::cmdVelCb(const geometry_msgs::Twist::ConstPtr& msg)
 }
 
 
-void SimulationWalkingNode::enableWalkCb(std_msgs::BoolConstPtr enable)
+void WalkingNode::enableWalkCb(std_msgs::BoolConstPtr enable)
 {
     if(enable->data)
     {
@@ -364,34 +361,34 @@ void SimulationWalkingNode::enableWalkCb(std_msgs::BoolConstPtr enable)
 
 
 
-void SimulationWalkingNode::imuCb(sensor_msgs::ImuConstPtr msg)
+void WalkingNode::imuCb(sensor_msgs::ImuConstPtr msg)
 {
     walking_.fbGyroErr = msg->linear_acceleration.x*0.1;
     walking_.rlGyroErr = -msg->linear_acceleration.y*0.02;
 }
 
 
-void SimulationWalkingNode::dynamicReconfigureCb(robotis_op_simulation_walking::robotis_op_walkingConfig &config, uint32_t level)
+void WalkingNode::dynamicReconfigureCb(walking::walk_tunnerConfig &config, uint32_t level)
 {
-    // ROS_INFO("%f", config.X_OFFSET);
-    // ROS_INFO("%f", config.X_OFFSET);
-    // ROS_INFO("%f", config.Y_OFFSET);
-    // ROS_INFO("%f", config.Z_OFFSET);
-    // ROS_INFO("%f", config.R_OFFSET);
-    // ROS_INFO("%f", config.P_OFFSET);
-    // ROS_INFO("%f", config.A_OFFSET);
-    // ROS_INFO("%f", config.PERIOD_TIME);
-    ROS_ERROR(" dsp %f", config.DSP_RATIO);
-    // ROS_INFO("%f", config.STEP_FB_RATIO);
-    // ROS_INFO("%f", config.Z_MOVE_AMPLITUDE);
-    // ROS_INFO("%f", config.Y_SWAP_AMPLITUDE);
-    // ROS_INFO("%f", config.PELVIS_OFFSET);
-    // ROS_INFO("%f", config.ARM_SWING_GAIN);
-    // ROS_INFO("%f", config.BALANCE_KNEE_GAIN);
-    // ROS_INFO("%f", config.BALANCE_ANKLE_PITCH_GAIN);
-    // ROS_INFO("%f", config.BALANCE_HIP_ROLL_GAIN);
-    // ROS_INFO("%f", config.BALANCE_ANKLE_ROLL_GAIN);
-    // ROS_INFO("%f", config.HIP_PITCH_OFFSET);
+    ROS_INFO("%f", config.X_OFFSET);
+    ROS_INFO("%f", config.X_OFFSET);
+    ROS_INFO("%f", config.Y_OFFSET);
+    ROS_INFO("%f", config.Z_OFFSET);
+    ROS_INFO("%f", config.R_OFFSET);
+    ROS_INFO("%f", config.P_OFFSET);
+    ROS_INFO("%f", config.A_OFFSET);
+    ROS_INFO("%f", config.PERIOD_TIME);
+    ROS_INFO(" dsp %f", config.DSP_RATIO);
+    ROS_INFO("%f", config.STEP_FB_RATIO);
+    ROS_INFO("%f", config.Z_MOVE_AMPLITUDE);
+    ROS_INFO("%f", config.Y_SWAP_AMPLITUDE);
+    ROS_INFO("%f", config.PELVIS_OFFSET);
+    ROS_INFO("%f", config.ARM_SWING_GAIN);
+    ROS_INFO("%f", config.BALANCE_KNEE_GAIN);
+    ROS_INFO("%f", config.BALANCE_ANKLE_PITCH_GAIN);
+    ROS_INFO("%f", config.BALANCE_HIP_ROLL_GAIN);
+    ROS_INFO("%f", config.BALANCE_ANKLE_ROLL_GAIN);
+    ROS_INFO("%f", config.HIP_PITCH_OFFSET);
 
     walking_.X_OFFSET                   =   config.X_OFFSET;
     walking_.Y_OFFSET                   =   config.Y_OFFSET;
@@ -413,12 +410,13 @@ void SimulationWalkingNode::dynamicReconfigureCb(robotis_op_simulation_walking::
     walking_.HIP_PITCH_OFFSET           =   config.HIP_PITCH_OFFSET;
 }
 
-void SimulationWalkingNode::Mission()
+
+void WalkingNode::Mission()
 {
     int periode = walking_.periode_calc();
     walking_.Start();
 
-    walking_.X_MOVE_AMPLITUDE = 0;
+    walking_.X_MOVE_AMPLITUDE = 10;
     walking_.HIP_PITCH_OFFSET = 8;
 
     // if(periode > 10 ){
@@ -444,10 +442,10 @@ int main(int argc, char **argv)
 
     ros::NodeHandle nh;
     double control_rate;
-    nh.param("robotis_op_walking/control_rate", control_rate, 100.0);
+    nh.param("walk_tunner/control_rate", control_rate, 100.0);
     control_rate = 100.0;
 
-    SimulationWalkingNode gazebo_walking_node(nh);
+    WalkingNode walking_node(nh);
 
     ros::AsyncSpinner spinner(4);
     spinner.start();
@@ -455,13 +453,14 @@ int main(int argc, char **argv)
     ros::Time last_time = ros::Time::now();
     ros::Rate rate(control_rate);
     ROS_INFO("Starting walking");
-    //gazebo_walking.Start();
-    gazebo_walking_node.walking_.Initialize();
+    //walking.Start();
+
+    // walking_node.walking_.Initialize();   //make very smooth
 
 
-    dynamic_reconfigure::Server<robotis_op_simulation_walking::robotis_op_walkingConfig> srv;
-    dynamic_reconfigure::Server<robotis_op_simulation_walking::robotis_op_walkingConfig>::CallbackType cb;
-    cb = boost::bind(&SimulationWalkingNode::dynamicReconfigureCb, &gazebo_walking_node, _1, _2);
+    dynamic_reconfigure::Server<walking::walk_tunnerConfig> srv;
+    dynamic_reconfigure::Server<walking::walk_tunnerConfig>::CallbackType cb;
+    cb = boost::bind(&WalkingNode::dynamicReconfigureCb, &walking_node, _1, _2);
     srv.setCallback(cb);
 
 
@@ -471,12 +470,12 @@ int main(int argc, char **argv)
     {
         
         // make mission
-        gazebo_walking_node.Mission();
+        walking_node.Mission();
 
         rate.sleep();
         ros::Time current_time = ros::Time::now();
         ros::Duration elapsed_time = current_time - last_time;
-        gazebo_walking_node.Process();
+        walking_node.Process();
 
         last_time = current_time;
 

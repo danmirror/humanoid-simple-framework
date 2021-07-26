@@ -1,20 +1,20 @@
 /*
- des  : rscuad walking node 
- year : 2021
- 
-*/
+ * desc : rscuad walking node 
+ * year : 2021
+ * dev  : danu andrean
+ *
+ */
 
-// dev : danu andrean
 
 
-#include <robotis_op_simulation_walking/gazebo_walking.h>
+#include <walking/walking.h>
 #include <iostream>
 
 #include <stdlib.h>     /* srand, rand */
 #include <std_msgs/Float64.h>
 #include <math.h>
 
-#include <robotis_op_simulation_walking/math/Matrix.h>
+#include <walking/math/Matrix.h>
 #define MX28_1024
 
 /*  new paramater temp
@@ -31,12 +31,12 @@ using namespace Robot;
 
 
 
-GazeboWalking::GazeboWalking(ros::NodeHandle nh)
+Walking::Walking(ros::NodeHandle nh)
     : nh_(nh)
 {
     ROS_WARN("Constructor");
 
-    init_pos = true;
+    init_pos = false;
     LIMIT = 1;
     INIT_MODE = false;
 
@@ -75,21 +75,29 @@ GazeboWalking::GazeboWalking(ros::NodeHandle nh)
     A_MOVE_AMPLITUDE = 0;
     A_MOVE_AIM_ON = true;
     BALANCE_ENABLE = true;
-    WALK_READY_MODE= true;
+    WALK_READY_MODE= false;
 
 }
 
-GazeboWalking::~GazeboWalking()
+Walking::~Walking()
 {
 }
 
-void GazeboWalking::Initialize(){
-    init_pos=true;
-}
-int GazeboWalking::periode_calc(){
+int Walking::periode_calc()
+{
     return periode_counter;
 }
-void GazeboWalking::walk_ready(){
+
+void Walking::walk_ready()
+{
+
+}
+void Walking::Initialize()
+{
+    init_pos=true;
+}
+void Walking::InitializeMode()
+{
 
     /*
     *   all of this function, make initial smooth before running 
@@ -179,22 +187,22 @@ void GazeboWalking::walk_ready(){
 
 }
 
-void GazeboWalking::update(ros::Time time, ros::Duration period)
+void Walking::update(ros::Time time, ros::Duration period)
 {
 }
 
-double GazeboWalking::wsin(double time, double period, double period_shift, double mag, double mag_shift)
+double Walking::wsin(double time, double period, double period_shift, double mag, double mag_shift)
 {
-     if(INIT_MODE == true || WALK_READY_MODE == false){
+     if((init_pos == false && WALK_READY_MODE == false)|| INIT_MODE == true ){
      
         return mag * -cos(2 * 3.141592 / period * time - period_shift) + mag_shift;
      }
-     else{
+     else {
         return mag * sin(2 * 3.141592 / period * time - period_shift) + mag_shift;
      }
 }
 
-bool GazeboWalking::computeIK(double *out, double x, double y, double z, double a, double b, double c)
+bool Walking::computeIK(double *out, double x, double y, double z, double a, double b, double c)
 {
     // ROS_WARN("IK activate");
     Matrix3D Tad, Tda, Tcd, Tdc, Tac;
@@ -280,7 +288,7 @@ bool GazeboWalking::computeIK(double *out, double x, double y, double z, double 
     return true;
 }
 
-void GazeboWalking::update_param_time()
+void Walking::update_param_time()
 {
     ROS_ERROR("update time???????????????");
     m_PeriodTime = PERIOD_TIME;
@@ -310,7 +318,7 @@ void GazeboWalking::update_param_time()
     m_Arm_Swing_Gain = ARM_SWING_GAIN;
 }
 
-void GazeboWalking::update_param_move()
+void Walking::update_param_move()
 {
     // X_MOVE_AMPLITUDE = 10; //manuals
     // HIP_PITCH_OFFSET = 0;
@@ -351,7 +359,7 @@ void GazeboWalking::update_param_move()
     }
 }
 
-void GazeboWalking::update_param_balance()
+void Walking::update_param_balance()
 {
     m_X_Offset = X_OFFSET;
     m_Y_Offset = Y_OFFSET;
@@ -365,26 +373,26 @@ void GazeboWalking::update_param_balance()
 
 
 
-void GazeboWalking::Start()
+void Walking::Start()
 {
-    if(INIT_MODE == true || WALK_READY_MODE == false){
+    if(INIT_MODE == true || (WALK_READY_MODE == false && init_pos == false)){
         ROS_INFO("walking starting by main");
         m_Ctrl_Running = true;
         m_Real_Running = true;
     }
 }
 
-void GazeboWalking::Stop()
+void Walking::Stop()
 {
     m_Ctrl_Running = false;
 }
 
-bool GazeboWalking::IsRunning()
+bool Walking::IsRunning()
 {
     return m_Real_Running;
 }
 
-void GazeboWalking::Process(double *outValue)
+void Walking::Process(double *outValue)
 {
 
     double x_swap, y_swap, z_swap, a_swap, b_swap, c_swap;
@@ -564,7 +572,7 @@ void GazeboWalking::Process(double *outValue)
     ep[10] = b_swap + b_move_l + m_P_Offset;
     ep[11] = c_swap + c_move_l + m_A_Offset / 2;
 
-    // ROS_WARN("init walking gazebo 2");
+    // ROS_WARN("init walking  2");
     // Compute body swing
     if(m_Time <= m_SSP_Time_End_L)
     {
@@ -603,16 +611,17 @@ void GazeboWalking::Process(double *outValue)
             periode_counter +=1;
         }
     }
-     /* init position*/
-    if(init_pos == true && m_Real_Running == false) {
-        // m_Time += 1;
-        // if(m_Time >= m_PeriodTime/4)
-        //     m_Time = m_PeriodTime/4;
-        if(WALK_READY_MODE ==true )
-            walk_ready();
-        // update_param_move();
-    }
 
+     /* init position*/
+    if ( m_Real_Running == false)
+    {
+        if(init_pos == true)
+            InitializeMode();   //VERY SLOW
+
+        if(WALK_READY_MODE ==true)
+            walk_ready();       //under construction
+
+    }
     // make iteration global
     iter ++; 
 

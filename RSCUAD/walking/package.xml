@@ -1,16 +1,12 @@
 <?xml version="1.0"?>
 <package>
-  <name>robotis_op_simulation_walking</name>
+  <name>walking</name>
   <version>0.1.0</version>
-  <description>Provides simulation walking for ROBOTIS OP2 model in ROS. Fake walking based on the darwin_gazebo package by Philippe Capdepuy.</description>
-
-  <maintainer email="inna@robotis.com">Inna Tlisov (ROBOTIS)</maintainer>
-
-
+  <description>RSCUAD walking development from ROBOTIS</description>
+  
   <license>BSD</license>
-  <url type="website">http://wiki.ros.org/robotis_op_gazebo</url>
-
   <author email="kevin.daun@freenet.de">Kevin Daun</author>
+  <maintainer email="danu1700022001@webmail.uad.ac.id">Danu andrean (RSCUAD)</maintainer>
 
 
   <buildtool_depend>catkin</buildtool_depend>

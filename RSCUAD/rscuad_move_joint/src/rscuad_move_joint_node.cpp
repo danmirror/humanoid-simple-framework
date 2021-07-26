@@ -1,10 +1,9 @@
-// /*
-//  des  : rscuad manager | joint movement
-//  year : 2021
- 
-// */
-
-// // author : danu andrea
+/*
+ * desc : rscuad move joint
+ * year : 2021
+ * dev  : danu andrean
+ *
+ */
 
 #include "rscuad_manager/rscuad_manager.h"
 

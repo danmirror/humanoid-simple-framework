@@ -1,10 +1,9 @@
 /*
- des  : rscuad manager 
- year : 2021
- 
-*/
-
-// author : danu andrean
+ * desc : rscuad manager 
+ * year : 2021
+ * dev  : danu andrean
+ *
+ */
 
 
 #include "rscuad_manager/rscuad_manager.h"

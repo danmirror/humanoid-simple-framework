@@ -1,20 +1,19 @@
 /*
- des  : rscuad walking node 
- year : 2021
- 
-*/
+ * desc : rscuad walking node 
+ * year : 2021
+ * dev  : danu andrean
+ *
+ */
 
-// dev : danu andrean
-
-#ifndef GAZEBO_WALKING_NODE_H
-#define GAZEBO_WALKING_NODE_H
+#ifndef WALKING_NODE_H
+#define WALKING_NODE_H
 
 #include <ros/ros.h>
 #include "std_msgs/String.h"
 #include "rscuad_manager/rscuad_manager.h"
 
 #include <sstream>
-#include <robotis_op_simulation_walking/gazebo_walking.h>
+#include <walking/walking.h>
 
 #include <std_msgs/Bool.h>
 #include <geometry_msgs/Twist.h>
@@ -22,28 +21,29 @@
 
 // Dynamic reconfigure
 #include <dynamic_reconfigure/server.h>
-#include <robotis_op_simulation_walking/robotis_op_walkingConfig.h>
+#include <walking/walk_tunnerConfig.h>
 
 namespace robotis_op {
 
-class SimulationWalkingNode {
+class WalkingNode {
 public:
-    SimulationWalkingNode(ros::NodeHandle nh);
-    ~SimulationWalkingNode();
+    WalkingNode(ros::NodeHandle nh);
+    ~WalkingNode();
 
     void Mission();
     void Process();
+    void walk_tunner();
     void enableWalkCb(std_msgs::BoolConstPtr enable);
     void cmdVelCb(const geometry_msgs::Twist::ConstPtr& msg);
     void imuCb(const sensor_msgs::ImuConstPtr msg);
-    void dynamicReconfigureCb(robotis_op_simulation_walking::robotis_op_walkingConfig &config, uint32_t level);
+    void dynamicReconfigureCb(walking::walk_tunnerConfig &config, uint32_t level);
 
     int counter = 0;
     int *ptr_ID[20] {
         &DXL_ID_1,&DXL_ID_2,&DXL_ID_3,&DXL_ID_4,&DXL_ID_5,&DXL_ID_6,&DXL_ID_7,&DXL_ID_8,&DXL_ID_9,&DXL_ID_10,
         &DXL_ID_11,&DXL_ID_12,&DXL_ID_13,&DXL_ID_14,&DXL_ID_15,&DXL_ID_16,&DXL_ID_17,&DXL_ID_18,&DXL_ID_19,&DXL_ID_20};
         
-    GazeboWalking walking_;
+    Walking walking_;
 protected:
 
 
@@ -77,4 +77,4 @@ private:
 };
 
 }
-#endif //GAZEBO_WALKING_NODE_H
+#endif //WALKING_NODE_H

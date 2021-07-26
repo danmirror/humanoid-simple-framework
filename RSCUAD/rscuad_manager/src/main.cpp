@@ -1,10 +1,9 @@
-// /*
-//  des  : rscuad manager | if using it activate execute in makefiles
-//  year : 2021
- 
-// */
-
-// // author : danu andrean
+/*
+ * desc : rscuad manager | if using it activate execute in makefiles
+ * year : 2021
+ * dev  : danu andrean
+ *
+ */
 
 
 

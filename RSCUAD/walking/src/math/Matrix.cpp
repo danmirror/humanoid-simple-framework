@@ -6,7 +6,7 @@
  */
 
 #include <math.h>
-#include <robotis_op_simulation_walking/math/Matrix.h>
+#include <walking/math/Matrix.h>
 
 using namespace Robot;
 

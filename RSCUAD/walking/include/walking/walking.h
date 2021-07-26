@@ -1,13 +1,21 @@
-#ifndef GAZEBO_WALKING_H
-#define GAZEBO_WALKING_H
+/*
+ * desc : rscuad walking 
+ * year : 2021
+ * dev  : danu andrean
+ *
+ */
+
+
+#ifndef WALKING_H
+#define WALKING_H
 #include <ros/ros.h>
 
 namespace robotis_op {
 
-class GazeboWalking {
+class Walking {
 public:
-    GazeboWalking(ros::NodeHandle nh);
-    ~GazeboWalking();
+    Walking(ros::NodeHandle nh);
+    ~Walking();
 
     void update(ros::Time time, ros::Duration period);
     int GetCurrentPhase()		{ return m_Phase; }
@@ -15,9 +23,10 @@ public:
     double GetBodySwingZ()		{ return m_Body_Swing_Z; }
 
 
-    void Initialize();
     int periode_calc();
     void walk_ready();
+    void Initialize();
+    void InitializeMode();
     void Start();
     void Stop();
     void Process(double *outValue);
@@ -174,4 +183,4 @@ private:
 };
 
 }
-#endif //GAZEBO_WALKING_H
+#endif //_WALKING_H

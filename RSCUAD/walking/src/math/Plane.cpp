@@ -5,7 +5,7 @@
  *
  */
 
-#include <robotis_op_simulation_walking/math/Plane.h>
+#include <walking/math/Plane.h>
 
 using namespace Robot;
 

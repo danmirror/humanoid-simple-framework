@@ -1,6 +1,9 @@
-// dxl==================================================
-
-
+/*
+ * desc : rscuad dxl 
+ * year : 2021
+ * dev  : danu andrean
+ *
+ */
 
 #if defined(__linux__) || defined(__APPLE__)
 #include <fcntl.h>

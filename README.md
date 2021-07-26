@@ -1,8 +1,8 @@
-# rscuad-control
+# Rscuad kinematic and control
 > simple control
 
 
-#### running simple joint
+### Running simple joint
 
 - [x] Gazebo running
 > $ roslaunch rscuad_gazebo rscuad_world.launch
@@ -13,7 +13,7 @@
 > $ rosrun rscuad_move_joint rscuad_move_joint_node
 
 
-#### running walking
+### Running walking
 
 - [x] Gazebo running
 > $ roslaunch rscuad_gazebo rscuad_world.launch
@@ -21,7 +21,7 @@
 - [x]  walking
 > $ roslaunch rscuad_demo demo.launch
 
-## ROS API
+### ROS API
 
 All topics are provided in the /robotis_op namespace.
 

@@ -23,7 +23,7 @@
 
 ### ROS API
 
-All topics are provided in the /robotis_op namespace.
+All topics are provided in the /rscuad namespace.
 
 Actuators (radians for position control, arbitrary normalized speed):
 

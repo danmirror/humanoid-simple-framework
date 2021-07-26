@@ -17,7 +17,13 @@ int main(int argc, char **argv)
     rscuad->manager_init();
 
    while(1){
-      //set joint
+      /* set joint want to move
+      *  
+      *  robot    -> just hardware robot
+      *  gazebo   -> just simulation using gazebo
+      *  all      -> gazebo and robot
+      *
+      */
       rscuad->move_joint("robot",18,190);
    }
 

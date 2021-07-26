@@ -1,9 +1,8 @@
 <?xml version="1.0"?>
 <package format="2">
-  <name>rscuad_move_joint</name>
+  <name>rscuad_demo</name>
   <version>0.0.0</version>
-  <description>The rscuad_move_joint package</description>
-
+  <description>The rscuad_demo package</description>
 
   <license>BSD</license>
   <author email="danu1700022001@webmail.uad.ac.id">Danu andrean (RSCUAD)</author>
@@ -19,8 +18,10 @@
   <exec_depend>roscpp</exec_depend>
   <exec_depend>rospy</exec_depend>
   <exec_depend>std_msgs</exec_depend>
-  <depend>roslib</depend>
-  <depend>rscuad_manager</depend>
+  <exec_depend>roslib</exec_depend>
+
+  <exec_depend>walking</exec_depend>
+
 
   <!-- The export tag contains other, unspecified, tags -->
   <export>

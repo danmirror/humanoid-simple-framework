@@ -439,6 +439,5 @@ void rscuad::rscuad_manager::move_joint(char *str,int id,float velocity){
 
     
     }
-   
 }
 

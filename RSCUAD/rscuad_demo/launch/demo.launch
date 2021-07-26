@@ -1,0 +1,5 @@
+<launch>
+
+   <node pkg="walking" type="walking_node" name="walking_node" output="screen"/>
+
+</launch>

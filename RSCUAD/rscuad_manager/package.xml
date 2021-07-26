@@ -3,10 +3,10 @@
   <name>rscuad_manager</name>
   <version>0.0.0</version>
   <description>The rscuad_manager package</description>
-  
-  <maintainer email="danu1700022001@webmail.uad.ac.id">Danu andrean (RSCUAD)</maintainer>
-  <author email="danu1700022001@webmail.uad.ac.id">Danu andrean (RSCUAD)</author>
+
   <license>BSD</license>
+  <author email="danu1700022001@webmail.uad.ac.id">Danu andrean (RSCUAD)</author>
+  <maintainer email="danu1700022001@webmail.uad.ac.id">Danu andrean (RSCUAD)</maintainer>
 
   <!--   <doc_depend>doxygen</doc_depend> -->
   <buildtool_depend>catkin</buildtool_depend>

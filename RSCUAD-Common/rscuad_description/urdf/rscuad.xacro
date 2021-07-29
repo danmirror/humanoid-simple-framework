@@ -12,6 +12,10 @@ value reduction op3
 
 update 6 june 
 value reduction mess rscuad
+
+update 29 july 
+add camera
+
 -->
 
 <robot name="rscuad" xmlns:xacro="http://www.ros.org/wiki/xacro">
@@ -23,7 +27,9 @@ value reduction mess rscuad
   <xacro:include filename="$(find rscuad_description)/urdf/gazebo_harness.xacro" />
   
   <xacro:add_sim_harness harnessed_link="body"/>
+  <xacro:property name="camera_link" value="0.01" /> <!-- Size of square 'camera' box -->
 
+  <!-- ============== harness initial ================ -->
   <!-- <link name="world">
   </link>
   <joint name="world_fixed" type="fixed">
@@ -38,6 +44,7 @@ value reduction mess rscuad
     <parent link="base"/>
     <child link="body"/>
   </joint> -->
+
  
   <link
     name="body">
@@ -1123,4 +1130,37 @@ value reduction mess rscuad
      <limit effort="1000" velocity="1" lower="${-pi*0.9}" upper="${pi*0.9}" />
   </joint>
   <insert_transmission name="r_ank_roll"/>
+
+
+  <joint name="camera_joint" type="fixed">
+    <axis xyz="0 1 0" />
+    <origin xyz="0.0 0.0500 0.03"
+      rpy="-1.5708 -1.500 0" />
+    <parent link="head_tilt"/>
+    <child link="camera_link"/>
+  </joint> 
+
+  <!-- Camera -->
+  <link name="camera_link">
+    <collision>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <geometry>
+    <box size="${camera_link} ${camera_link} ${camera_link}"/>
+      </geometry>
+    </collision>
+
+    <visual>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <geometry>
+    <box size="${camera_link} ${camera_link} ${camera_link}"/>
+      </geometry>
+    </visual>
+
+    <inertial>
+      <mass value="1e-5" />
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <inertia ixx="1e-6" ixy="0" ixz="0" iyy="1e-6" iyz="0" izz="1e-6" />
+    </inertial>
+  </link>
+
 </robot>

@@ -1,8 +1,24 @@
+
+
 <launch>
-  <include file="$(find gazebo_ros)/launch/empty_world.launch" >
-     <arg name="paused" value="true"/>
-     <!-- <arg name="world_name" value="$(find rscuad_gazebo)/worlds/rscuad.world"/>	     -->
+<!-- these are the arguments you can pass this launch file, for example paused:=true -->
+  <arg name="paused" default="true"/>
+  <arg name="use_sim_time" default="true"/>
+  <arg name="gui" default="true"/>
+  <arg name="headless" default="false"/>
+  <arg name="debug" default="false"/>
+
+  <!-- We resume the logic in empty_world.launch, changing only the name of the world to be launched -->
+  <include file="$(find gazebo_ros)/launch/empty_world.launch">
+    <arg name="verbose" value="true"/>
+    <arg name="world_name" value="$(find rscuad_gazebo)/worlds/rscuad.world"/>
+    <arg name="debug" value="$(arg debug)" />
+    <arg name="gui" value="$(arg gui)" />
+    <arg name="paused" value="$(arg paused)"/>
+    <arg name="use_sim_time" value="$(arg use_sim_time)"/>
+    <arg name="headless" value="$(arg headless)"/>
   </include>
+
 
   <rosparam file="$(find rscuad_gazebo)/config/joint_names_rscuad.yaml" command="load"/>
 
@@ -57,3 +73,5 @@
     <!-- rscuad listen-->
     <node pkg="rscuad_gazebo" type="rscuad_gazebo_listener" name="rscuad_gazebo_listener" output="screen"/>
 </launch>
+
+

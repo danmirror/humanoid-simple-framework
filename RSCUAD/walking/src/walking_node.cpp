@@ -20,15 +20,16 @@ using namespace robotis_op;
 #define MX28_1024
 
 
-int index_ = 0;
-int dxl_comm_result = COMM_TX_FAIL;             // Communication result
-int dxl_goal_position[2] = {MINIMUM_POSITION_LIMIT, MAXIMUM_POSITION_LIMIT};         // Goal position
+int index_                          = 0;
+int dxl_comm_result                 = COMM_TX_FAIL;                                            // Communication result
+int dxl_goal_position[2]            = {MINIMUM_POSITION_LIMIT, MAXIMUM_POSITION_LIMIT};        // Goal position
 
-uint8_t dxl_error = 0;                          // DYNAMIXEL error
+uint8_t dxl_error                   = 0;                                                       // DYNAMIXEL error
+
 #if defined(XL320)
-int16_t dxl_present_position = 0;               // XL-320 uses 2 byte Position data
+    int16_t dxl_present_position    = 0;                                                       // XL-320 uses 2 byte Position data
 #else
-int32_t dxl_present_position = 0;               // Read 4 byte Position data
+    int32_t dxl_present_position    = 0;                                                       // Read 4 byte Position data
 #endif
 
 
@@ -127,14 +128,14 @@ void WalkingNode::Process()
     j_pelvis_r_msg.data = outValue[0];
     j_thigh1_r_msg.data = outValue[1];
     j_thigh2_r_msg.data = outValue[2];
-    j_tibia_r_msg.data = outValue[3];
+    j_tibia_r_msg.data  = outValue[3];
     j_ankle1_r_msg.data = outValue[4];
     j_ankle2_r_msg.data = outValue[5];
 
     j_pelvis_l_msg.data = outValue[6];
     j_thigh1_l_msg.data = outValue[7];
     j_thigh2_l_msg.data = outValue[8];
-    j_tibia_l_msg.data = outValue[9];
+    j_tibia_l_msg.data  = outValue[9];
     j_ankle1_l_msg.data = outValue[10];
     j_ankle2_l_msg.data = outValue[11];
     j_shoulder_r_msg.data = outValue[12];
@@ -160,22 +161,25 @@ void WalkingNode::Process()
     // ROS_WARN("Proses in node ...");
     // ROS_WARN("%f", j_ankle1_r_msg.data);
 
-    //===========================send to Gazebo===============================
-    j_pelvis_l_publisher_.publish(j_pelvis_l_msg);
-    j_thigh1_l_publisher_.publish(j_thigh1_l_msg);
-    j_thigh2_l_publisher_.publish(j_thigh2_l_msg);
-    j_tibia_l_publisher_.publish(j_tibia_l_msg);
-    j_ankle1_l_publisher_.publish(j_ankle1_l_msg);
-    j_ankle2_l_publisher_.publish(j_ankle2_l_msg);
-    j_shoulder_l_publisher_.publish(j_shoulder_l_msg);
+    if(GAZEBO == true || ALL == true)
+    {
+        //===========================send to Gazebo===============================
+        j_pelvis_l_publisher_.publish(j_pelvis_l_msg);
+        j_thigh1_l_publisher_.publish(j_thigh1_l_msg);
+        j_thigh2_l_publisher_.publish(j_thigh2_l_msg);
+        j_tibia_l_publisher_.publish(j_tibia_l_msg);
+        j_ankle1_l_publisher_.publish(j_ankle1_l_msg);
+        j_ankle2_l_publisher_.publish(j_ankle2_l_msg);
+        j_shoulder_l_publisher_.publish(j_shoulder_l_msg);
 
-    j_pelvis_r_publisher_.publish(j_pelvis_r_msg);
-    j_thigh1_r_publisher_.publish(j_thigh1_r_msg);
-    j_thigh2_r_publisher_.publish(j_thigh2_r_msg);
-    j_tibia_r_publisher_.publish(j_tibia_r_msg);
-    j_ankle1_r_publisher_.publish(j_ankle1_r_msg);
-    j_ankle2_r_publisher_.publish(j_ankle2_r_msg);
-    j_shoulder_r_publisher_.publish(j_shoulder_r_msg);
+        j_pelvis_r_publisher_.publish(j_pelvis_r_msg);
+        j_thigh1_r_publisher_.publish(j_thigh1_r_msg);
+        j_thigh2_r_publisher_.publish(j_thigh2_r_msg);
+        j_tibia_r_publisher_.publish(j_tibia_r_msg);
+        j_ankle1_r_publisher_.publish(j_ankle1_r_msg);
+        j_ankle2_r_publisher_.publish(j_ankle2_r_msg);
+        j_shoulder_r_publisher_.publish(j_shoulder_r_msg);
+    }
 
 
     //====================send to manager, but not use it======================
@@ -239,90 +243,60 @@ void WalkingNode::Process()
 
 
     //=============================== dxl execute================================
-    //  j_pelvis_r_msg.data = outValue[0];
-    // j_thigh1_r_msg.data = outValue[1];
-    // j_thigh2_r_msg.data = outValue[2];
-    // j_tibia_r_msg.data = outValue[3];
-    // j_ankle1_r_msg.data = outValue[4];
-    // j_ankle2_r_msg.data = outValue[5];
+    if(ROBOT == true || ALL ==true)
+    {
+        //calculation radian to degree
+        float target_angle_1 = abs(((RADIAN2DEGREE*float_12) *( MAXIMUM_POSITION_LIMIT/360)) - rscuad->offset_ID(1));
+        float target_angle_2 = abs(((RADIAN2DEGREE*float_13) *( MAXIMUM_POSITION_LIMIT/360)) - rscuad->offset_ID(2));
+        float target_angle_3 = rscuad->offset_ID(3);
+        float target_angle_4 = rscuad->offset_ID(4);
+        float target_angle_5 = rscuad->offset_ID(5);
+        float target_angle_6 = rscuad->offset_ID(6);
 
-    // j_pelvis_l_msg.data = outValue[6];
-    // j_thigh1_l_msg.data = outValue[7];
-    // j_thigh2_l_msg.data = outValue[8];
-    // j_tibia_l_msg.data = outValue[9];
-    // j_ankle1_l_msg.data = outValue[10];
-    // j_ankle2_l_msg.data = outValue[11];
-    // j_shoulder_r_msg.data = outValue[12];
-    // j_shoulder_l_msg.data = outValue[13];
+        float target_angle_7 = abs(((RADIAN2DEGREE*float_0) *( MAXIMUM_POSITION_LIMIT/360)) - rscuad->offset_ID(7));
+        float target_angle_8 = abs(((RADIAN2DEGREE*float_6) *( MAXIMUM_POSITION_LIMIT/360)) - rscuad->offset_ID(8));
+        float target_angle_9 = abs(((RADIAN2DEGREE*float_1) *( MAXIMUM_POSITION_LIMIT/360)) - rscuad->offset_ID(9));
+        float target_angle_10 = abs(((RADIAN2DEGREE*float_7) *( MAXIMUM_POSITION_LIMIT/360)) - rscuad->offset_ID(10));
+        float target_angle_11 = abs(((RADIAN2DEGREE*float_2) *( MAXIMUM_POSITION_LIMIT/360)) - rscuad->offset_ID(11));
 
-    //  j_pelvis_l_publisher_ = nh_.advertise<std_msgs::Float64>("/rscuad/l_hip_yaw_position/command",1);
-    // j_thigh1_l_publisher_ = nh_.advertise<std_msgs::Float64>("/rscuad/l_hip_roll_position/command",1);
-    // j_thigh2_l_publisher_ = nh_.advertise<std_msgs::Float64>("/rscuad/l_hip_pitch_position/command",1);
-    // j_tibia_l_publisher_ = nh_.advertise<std_msgs::Float64>("/rscuad/l_knee_position/command",1);
-    // j_ankle1_l_publisher_ = nh_.advertise<std_msgs::Float64>("/rscuad/l_ank_pitch_position/command",1);
-    // j_ankle2_l_publisher_ = nh_.advertise<std_msgs::Float64>("/rscuad/l_ank_roll_position/command",1);
-    // j_shoulder_l_publisher_ = nh_.advertise<std_msgs::Float64>("/rscuad/l_sho_pitch_position/command",1);
-
-    // j_pelvis_r_publisher_ = nh_.advertise<std_msgs::Float64>("/rscuad/r_hip_yaw_position/command",1);
-    // j_thigh1_r_publisher_ = nh_.advertise<std_msgs::Float64>("/rscuad/r_hip_roll_position/command",1);
-    // j_thigh2_r_publisher_ = nh_.advertise<std_msgs::Float64>("/rscuad/r_hip_pitch_position/command",1);
-    // j_tibia_r_publisher_ = nh_.advertise<std_msgs::Float64>("/rscuad/r_knee_position/command",1);
-    // j_ankle1_r_publisher_ = nh_.advertise<std_msgs::Float64>("/rscuad/r_ank_pitch_position/command",1);
-    // j_ankle2_r_publisher_ = nh_.advertise<std_msgs::Float64>("/rscuad/r_ank_roll_position/command",1);
-    // j_shoulder_r_publisher_ = nh_.advertise<std_msgs::Float64>("/rscuad/r_sho_pitch_position/command",1);
-
-    //calculation radian to degree
-    float target_angle_1 = abs(((RADIAN2DEGREE*float_12) *( MAXIMUM_POSITION_LIMIT/360)) - rscuad->offset_ID(1));
-    float target_angle_2 = abs(((RADIAN2DEGREE*float_13) *( MAXIMUM_POSITION_LIMIT/360)) - rscuad->offset_ID(2));
-    float target_angle_3 = rscuad->offset_ID(3);
-    float target_angle_4 = rscuad->offset_ID(4);
-    float target_angle_5 = rscuad->offset_ID(5);
-    float target_angle_6 = rscuad->offset_ID(6);
-
-    float target_angle_7 = abs(((RADIAN2DEGREE*float_0) *( MAXIMUM_POSITION_LIMIT/360)) - rscuad->offset_ID(7));
-    float target_angle_8 = abs(((RADIAN2DEGREE*float_6) *( MAXIMUM_POSITION_LIMIT/360)) - rscuad->offset_ID(8));
-    float target_angle_9 = abs(((RADIAN2DEGREE*float_1) *( MAXIMUM_POSITION_LIMIT/360)) - rscuad->offset_ID(9));
-    float target_angle_10 = abs(((RADIAN2DEGREE*float_7) *( MAXIMUM_POSITION_LIMIT/360)) - rscuad->offset_ID(10));
-    float target_angle_11 = abs(((RADIAN2DEGREE*float_2) *( MAXIMUM_POSITION_LIMIT/360)) - rscuad->offset_ID(11));
-
-    float target_angle_12 = abs(((RADIAN2DEGREE*float_8) *( MAXIMUM_POSITION_LIMIT/360)) - rscuad->offset_ID(12));
-    float target_angle_13 = abs(((RADIAN2DEGREE*float_3) *( MAXIMUM_POSITION_LIMIT/360)) - rscuad->offset_ID(13));
-    float target_angle_14 = abs(((RADIAN2DEGREE*float_9) *( MAXIMUM_POSITION_LIMIT/360)) - rscuad->offset_ID(14));
-    float target_angle_15 = abs(((RADIAN2DEGREE*float_4) *( MAXIMUM_POSITION_LIMIT/360)) - rscuad->offset_ID(15));
-    float target_angle_16 = abs(((RADIAN2DEGREE*float_10) *( MAXIMUM_POSITION_LIMIT/360)) - rscuad->offset_ID(16));
-    float target_angle_17 = abs(((RADIAN2DEGREE*float_5) *( MAXIMUM_POSITION_LIMIT/360)) - rscuad->offset_ID(17));
-    float target_angle_18 = abs(((RADIAN2DEGREE*float_11) *( MAXIMUM_POSITION_LIMIT/360)) - rscuad->offset_ID(18));
-    float target_angle_19 = rscuad->offset_ID(19);
-    float target_angle_20 = rscuad->offset_ID(20);
-    
-    packetHandler->write4ByteTxRx(portHandler, DXL_ID_1, ADDR_GOAL_POSITION, target_angle_1, &dxl_error);
-    packetHandler->write4ByteTxRx(portHandler, DXL_ID_2, ADDR_GOAL_POSITION, target_angle_2, &dxl_error);
-    packetHandler->write4ByteTxRx(portHandler, DXL_ID_3, ADDR_GOAL_POSITION, target_angle_3, &dxl_error);
-    packetHandler->write4ByteTxRx(portHandler, DXL_ID_4, ADDR_GOAL_POSITION, target_angle_4, &dxl_error);
-    packetHandler->write4ByteTxRx(portHandler, DXL_ID_5, ADDR_GOAL_POSITION, target_angle_5, &dxl_error);
-    packetHandler->write4ByteTxRx(portHandler, DXL_ID_6, ADDR_GOAL_POSITION, target_angle_6, &dxl_error);
-    packetHandler->write4ByteTxRx(portHandler, DXL_ID_7, ADDR_GOAL_POSITION, target_angle_7, &dxl_error);
-    packetHandler->write4ByteTxRx(portHandler, DXL_ID_8, ADDR_GOAL_POSITION, target_angle_8, &dxl_error);
-    packetHandler->write4ByteTxRx(portHandler, DXL_ID_9, ADDR_GOAL_POSITION, target_angle_9, &dxl_error);
-    packetHandler->write4ByteTxRx(portHandler, DXL_ID_10, ADDR_GOAL_POSITION, target_angle_10, &dxl_error);
-    packetHandler->write4ByteTxRx(portHandler, DXL_ID_11, ADDR_GOAL_POSITION, target_angle_11, &dxl_error);
-    packetHandler->write4ByteTxRx(portHandler, DXL_ID_12, ADDR_GOAL_POSITION, target_angle_12, &dxl_error);
-    packetHandler->write4ByteTxRx(portHandler, DXL_ID_13, ADDR_GOAL_POSITION, target_angle_13, &dxl_error);
-    packetHandler->write4ByteTxRx(portHandler, DXL_ID_14, ADDR_GOAL_POSITION, target_angle_14, &dxl_error);
-    packetHandler->write4ByteTxRx(portHandler, DXL_ID_15, ADDR_GOAL_POSITION, target_angle_15, &dxl_error);
-    packetHandler->write4ByteTxRx(portHandler, DXL_ID_16, ADDR_GOAL_POSITION, target_angle_16, &dxl_error);
-    packetHandler->write4ByteTxRx(portHandler, DXL_ID_17, ADDR_GOAL_POSITION, target_angle_17, &dxl_error);
-    packetHandler->write4ByteTxRx(portHandler, DXL_ID_18, ADDR_GOAL_POSITION, target_angle_18, &dxl_error);
-    packetHandler->write4ByteTxRx(portHandler, DXL_ID_19, ADDR_GOAL_POSITION, target_angle_19, &dxl_error);
-    packetHandler->write4ByteTxRx(portHandler, DXL_ID_20, ADDR_GOAL_POSITION, target_angle_20, &dxl_error);
-    
+        float target_angle_12 = abs(((RADIAN2DEGREE*float_8) *( MAXIMUM_POSITION_LIMIT/360)) - rscuad->offset_ID(12));
+        float target_angle_13 = abs(((RADIAN2DEGREE*float_3) *( MAXIMUM_POSITION_LIMIT/360)) - rscuad->offset_ID(13));
+        float target_angle_14 = abs(((RADIAN2DEGREE*float_9) *( MAXIMUM_POSITION_LIMIT/360)) - rscuad->offset_ID(14));
+        float target_angle_15 = abs(((RADIAN2DEGREE*float_4) *( MAXIMUM_POSITION_LIMIT/360)) - rscuad->offset_ID(15));
+        float target_angle_16 = abs(((RADIAN2DEGREE*float_10) *( MAXIMUM_POSITION_LIMIT/360)) - rscuad->offset_ID(16));
+        float target_angle_17 = abs(((RADIAN2DEGREE*float_5) *( MAXIMUM_POSITION_LIMIT/360)) - rscuad->offset_ID(17));
+        float target_angle_18 = abs(((RADIAN2DEGREE*float_11) *( MAXIMUM_POSITION_LIMIT/360)) - rscuad->offset_ID(18));
+        float target_angle_19 = rscuad->offset_ID(19);
+        float target_angle_20 = rscuad->offset_ID(20);
+        
+        packetHandler->write4ByteTxRx(portHandler, DXL_ID_1, ADDR_GOAL_POSITION, target_angle_1, &dxl_error);
+        packetHandler->write4ByteTxRx(portHandler, DXL_ID_2, ADDR_GOAL_POSITION, target_angle_2, &dxl_error);
+        packetHandler->write4ByteTxRx(portHandler, DXL_ID_3, ADDR_GOAL_POSITION, target_angle_3, &dxl_error);
+        packetHandler->write4ByteTxRx(portHandler, DXL_ID_4, ADDR_GOAL_POSITION, target_angle_4, &dxl_error);
+        packetHandler->write4ByteTxRx(portHandler, DXL_ID_5, ADDR_GOAL_POSITION, target_angle_5, &dxl_error);
+        packetHandler->write4ByteTxRx(portHandler, DXL_ID_6, ADDR_GOAL_POSITION, target_angle_6, &dxl_error);
+        packetHandler->write4ByteTxRx(portHandler, DXL_ID_7, ADDR_GOAL_POSITION, target_angle_7, &dxl_error);
+        packetHandler->write4ByteTxRx(portHandler, DXL_ID_8, ADDR_GOAL_POSITION, target_angle_8, &dxl_error);
+        packetHandler->write4ByteTxRx(portHandler, DXL_ID_9, ADDR_GOAL_POSITION, target_angle_9, &dxl_error);
+        packetHandler->write4ByteTxRx(portHandler, DXL_ID_10, ADDR_GOAL_POSITION, target_angle_10, &dxl_error);
+        packetHandler->write4ByteTxRx(portHandler, DXL_ID_11, ADDR_GOAL_POSITION, target_angle_11, &dxl_error);
+        packetHandler->write4ByteTxRx(portHandler, DXL_ID_12, ADDR_GOAL_POSITION, target_angle_12, &dxl_error);
+        packetHandler->write4ByteTxRx(portHandler, DXL_ID_13, ADDR_GOAL_POSITION, target_angle_13, &dxl_error);
+        packetHandler->write4ByteTxRx(portHandler, DXL_ID_14, ADDR_GOAL_POSITION, target_angle_14, &dxl_error);
+        packetHandler->write4ByteTxRx(portHandler, DXL_ID_15, ADDR_GOAL_POSITION, target_angle_15, &dxl_error);
+        packetHandler->write4ByteTxRx(portHandler, DXL_ID_16, ADDR_GOAL_POSITION, target_angle_16, &dxl_error);
+        packetHandler->write4ByteTxRx(portHandler, DXL_ID_17, ADDR_GOAL_POSITION, target_angle_17, &dxl_error);
+        packetHandler->write4ByteTxRx(portHandler, DXL_ID_18, ADDR_GOAL_POSITION, target_angle_18, &dxl_error);
+        packetHandler->write4ByteTxRx(portHandler, DXL_ID_19, ADDR_GOAL_POSITION, target_angle_19, &dxl_error);
+        packetHandler->write4ByteTxRx(portHandler, DXL_ID_20, ADDR_GOAL_POSITION, target_angle_20, &dxl_error);
+    }
 
 
+    /* get position servo */
 
-    // for(int i=0; i<20;i++){
-
+    // for(int i=0; i<20;i++)
+    // {
     //     packetHandler->read4ByteTxRx(portHandler, *ptr_ID[i], ADDR_PRESENT_POSITION, (uint32_t*)&dxl_present_position, &dxl_error);
-
     //     ROS_INFO("join position %d", dxl_present_position);
     // }
     //==============================end dxl execute==============================
@@ -370,25 +344,25 @@ void WalkingNode::imuCb(sensor_msgs::ImuConstPtr msg)
 
 void WalkingNode::dynamicReconfigureCb(walking::walk_tunnerConfig &config, uint32_t level)
 {
-    ROS_INFO("%f", config.X_OFFSET);
-    ROS_INFO("%f", config.X_OFFSET);
-    ROS_INFO("%f", config.Y_OFFSET);
-    ROS_INFO("%f", config.Z_OFFSET);
-    ROS_INFO("%f", config.R_OFFSET);
-    ROS_INFO("%f", config.P_OFFSET);
-    ROS_INFO("%f", config.A_OFFSET);
-    ROS_INFO("%f", config.PERIOD_TIME);
-    ROS_INFO(" dsp %f", config.DSP_RATIO);
-    ROS_INFO("%f", config.STEP_FB_RATIO);
-    ROS_INFO("%f", config.Z_MOVE_AMPLITUDE);
-    ROS_INFO("%f", config.Y_SWAP_AMPLITUDE);
-    ROS_INFO("%f", config.PELVIS_OFFSET);
-    ROS_INFO("%f", config.ARM_SWING_GAIN);
-    ROS_INFO("%f", config.BALANCE_KNEE_GAIN);
-    ROS_INFO("%f", config.BALANCE_ANKLE_PITCH_GAIN);
-    ROS_INFO("%f", config.BALANCE_HIP_ROLL_GAIN);
-    ROS_INFO("%f", config.BALANCE_ANKLE_ROLL_GAIN);
-    ROS_INFO("%f", config.HIP_PITCH_OFFSET);
+    // ROS_INFO("%f", config.X_OFFSET);
+    // ROS_INFO("%f", config.X_OFFSET);
+    // ROS_INFO("%f", config.Y_OFFSET);
+    // ROS_INFO("%f", config.Z_OFFSET);
+    // ROS_INFO("%f", config.R_OFFSET);
+    // ROS_INFO("%f", config.P_OFFSET);
+    // ROS_INFO("%f", config.A_OFFSET);
+    // ROS_INFO("%f", config.PERIOD_TIME);
+    // ROS_INFO("%f", config.DSP_RATIO);
+    // ROS_INFO("%f", config.STEP_FB_RATIO);
+    // ROS_INFO("%f", config.Z_MOVE_AMPLITUDE);
+    // ROS_INFO("%f", config.Y_SWAP_AMPLITUDE);
+    // ROS_INFO("%f", config.PELVIS_OFFSET);
+    // ROS_INFO("%f", config.ARM_SWING_GAIN);
+    // ROS_INFO("%f", config.BALANCE_KNEE_GAIN);
+    // ROS_INFO("%f", config.BALANCE_ANKLE_PITCH_GAIN);
+    // ROS_INFO("%f", config.BALANCE_HIP_ROLL_GAIN);
+    // ROS_INFO("%f", config.BALANCE_ANKLE_ROLL_GAIN);
+    // ROS_INFO("%f", config.HIP_PITCH_OFFSET);
 
     walking_.X_OFFSET                   =   config.X_OFFSET;
     walking_.Y_OFFSET                   =   config.Y_OFFSET;

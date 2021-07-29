@@ -49,6 +49,12 @@ Actuators (radians for position control, arbitrary normalized speed):
       /rscuad/head_tilt_position/command
 
 
+### camera
+> rosrun image_view image_view image:=/camera/rgb/image_raw
+
+### camera API
+> rostopic echo /light_sensor_plugin/lightSensor 
+
 #### checker flow urdf
 > $ rosrun xacro xacro.py src/rscuad/urdf/rscuad.xacro 
 

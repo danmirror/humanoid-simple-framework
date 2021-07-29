@@ -38,6 +38,10 @@ public:
     void imuCb(const sensor_msgs::ImuConstPtr msg);
     void dynamicReconfigureCb(walking::walk_tunnerConfig &config, uint32_t level);
 
+    bool ROBOT  = false;
+    bool GAZEBO = true;
+    bool ALL    = false;
+
     int counter = 0;
     int *ptr_ID[20] {
         &DXL_ID_1,&DXL_ID_2,&DXL_ID_3,&DXL_ID_4,&DXL_ID_5,&DXL_ID_6,&DXL_ID_7,&DXL_ID_8,&DXL_ID_9,&DXL_ID_10,

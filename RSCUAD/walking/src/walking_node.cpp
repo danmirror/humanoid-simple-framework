@@ -7,8 +7,11 @@
 
 
 #include <walking/walking_node.h>
-
 using namespace robotis_op;
+
+#include <fstream>
+using namespace std;
+ofstream MyFile("/home/robotis/catkin_rscuad/src/filename.txt");
 
 #include <iostream>
 
@@ -203,6 +206,7 @@ void WalkingNode::Process()
     float_12 = outValue[12];
     float_13 = outValue[13];
 
+
     str_0 << float_0;
     str_1 << float_1;
     str_2 << float_2;
@@ -241,6 +245,34 @@ void WalkingNode::Process()
     // rscuad->move_robot(newdata);                     //send to manager library protocol
     //==============================end to manager===============================
 
+
+    /*
+     *
+     * Export
+     *
+     */
+   
+    cout<< "write >>>>>>>>" <<endl;
+    int periode = walking_.periode_calc();  
+    // Write to the file
+    MyFile << " periode -> "<<periode<<endl;
+    MyFile <<float_0<<endl;
+    MyFile <<float_1<<endl;
+    MyFile <<float_2<<endl;
+    MyFile <<float_3<<endl;
+    MyFile <<float_4<<endl;
+    MyFile <<float_5<<endl;
+    MyFile <<float_6<<endl;
+    MyFile <<float_7<<endl;
+    MyFile <<float_8<<endl;
+    MyFile <<float_9<<endl;
+    MyFile <<float_10<<endl;
+    MyFile <<float_11<<endl;
+    MyFile <<float_12<<endl;
+    MyFile <<float_13<<endl;
+    MyFile << " ---------- \n";
+    //----------------------------------------------
+  
 
     //=============================== dxl execute================================
     if(ROBOT == true || ALL ==true)
@@ -391,19 +423,24 @@ void WalkingNode::Mission()
     if( walking_.init_status()== true)
     {
         int periode = walking_.periode_calc();
-        walking_.Start();
+        
 
-        walking_.X_MOVE_AMPLITUDE = 10;
-        walking_.HIP_PITCH_OFFSET = 15;
-        walking_.X_OFFSET = 0;
-
-        // if(periode > 10 ){
-        //     walking_.A_MOVE_AMPLITUDE = 18;
-        //     walking_.X_MOVE_AMPLITUDE = 5;
-        //     walking_.HIP_PITCH_OFFSET = 6;
+        if(periode > 10 ){
+             walking_.Stop();
+            // walking_.A_MOVE_AMPLITUDE = 18;
+            // walking_.X_MOVE_AMPLITUDE = 5;
+            // walking_.HIP_PITCH_OFFSET = 6;
             
-        //     ROS_INFO("righ");
-        // }
+            // ROS_INFO("righ");
+        }
+        else
+        {
+            walking_.Start();
+
+            walking_.X_MOVE_AMPLITUDE = 10;
+            walking_.HIP_PITCH_OFFSET = 15;
+            walking_.X_OFFSET = 0;
+        }
         ROS_INFO("periode %d",periode);
         ROS_INFO("mission mode");
     }
@@ -415,7 +452,6 @@ void WalkingNode::Mission()
 
 int main(int argc, char **argv)
 {
-    int i = 0;
 
     ros::init(argc, argv, ROS_PACKAGE_NAME);
 
@@ -434,8 +470,15 @@ int main(int argc, char **argv)
     ROS_INFO("Starting walking");
     //walking.Start();
 
-    walking_node.walking_.Initialize();    // make very smooth
-    // walking_node.walking_.walk_ready(); // make smooth but not perfect
+    /* ==============================================**
+     *   CHANGE MODE INITIAL
+     *
+     */
+
+    // walking_node.walking_.Initialize();    // make very smooth
+    walking_node.walking_.walk_ready();     // make smooth but not perfect
+
+    /*================================================*/
 
     dynamic_reconfigure::Server<walking::walk_tunnerConfig> srv;
     dynamic_reconfigure::Server<walking::walk_tunnerConfig>::CallbackType cb;

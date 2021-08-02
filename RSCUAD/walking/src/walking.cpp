@@ -77,7 +77,14 @@ Walking::Walking(ros::NodeHandle nh)
     A_MOVE_AMPLITUDE = 0;
     A_MOVE_AIM_ON = true;
     BALANCE_ENABLE = true;
-    WALK_READY_MODE= false;     // if you want make faster initial used this, but not perfect
+    
+    /*
+     *  JUST CHANGE IN MISSION, DON'T CHANGE IN BELOW
+     *   if you want make faster initial used this, but not perfect
+     *
+     */
+
+    WALK_READY_MODE= false;    
 
 }
 
@@ -95,20 +102,31 @@ int Walking::init_status(){
 
 void Walking::walk_ready()
 {
-    ROS_INFO("Z_OFFSET >> %f",Z_OFFSET);
-    counter_z +=0.1;
-    Z_OFFSET = counter_z;
+    WALK_READY_MODE= true;
+
+    /*--------------------------------
+     *
+     *  COMMENT IF YOU WANT NOT USING INITIAL
+     *  just => INIT_MODE = true;
+     * 
+     *--------------------------------*/
+    INIT_MODE = true;
+    // ROS_INFO("Z_OFFSET >> %f",Z_OFFSET);
+    // counter_z +=0.1;
+    // Z_OFFSET = counter_z;
 
     
     
-    if(Z_OFFSET >= Z_OFFSET_MEM)
-    {
-        // if(counter_z >= 100){
-            INIT_MODE = true;
-        // }
-    }
-    // else
-    //     Z_OFFSET = counter_z;
+    // if(Z_OFFSET >= Z_OFFSET_MEM)
+    // {
+    //     // if(counter_z >= 100){
+    //         INIT_MODE = true;
+    //     // }
+    // }
+    // // else
+    // //     Z_OFFSET = counter_z;
+
+     /*--------------------------------*/
 }
 void Walking::Initialize()
 {

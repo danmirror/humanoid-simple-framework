@@ -7,6 +7,20 @@
       </plugin>
     </gazebo>
 
+    <!-- odometry -->
+    <gazebo>
+      <plugin name="p3d_base_controller" filename="libgazebo_ros_p3d.so">
+        <alwaysOn>true</alwaysOn>
+        <updateRate>50.0</updateRate>
+        <bodyName>body</bodyName>
+        <topicName>ground_truth/state</topicName>
+        <gaussianNoise>0.01</gaussianNoise>
+        <frameName>world</frameName>
+        <xyzOffsets>0 0 0</xyzOffsets>
+        <rpyOffsets>0 0 0</rpyOffsets>
+      </plugin>
+    </gazebo>
+
     <!-- try not using gravity -->
 
     <gazebo reference="l_hip_yaw">

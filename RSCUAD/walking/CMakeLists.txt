@@ -74,3 +74,7 @@ add_dependencies(${PROJECT_NAME} ${PROJECT_NAME}_gencfg)
 target_link_libraries(${PROJECT_NAME} ${catkin_LIBRARIES})
 target_link_libraries(walking_node ${PROJECT_NAME} )
 
+catkin_install_python(PROGRAMS
+  src/odom.py
+  DESTINATION ${CATKIN_PACKAGE_BIN_DESTINATION}
+)

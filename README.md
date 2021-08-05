@@ -55,6 +55,16 @@ Actuators (radians for position control, arbitrary normalized speed):
 ### camera API
 > rostopic echo /light_sensor_plugin/lightSensor 
 
+### get odometry
+- [x] get name model
+> $ rosservice call /gazebo/get_world_properties 
+- [x] call odom
+> $ rosservice call /gazebo/get_model_state "model_name: 'the_name_of_your_robot' relative_entity_name: ' ' "
+
+- [x] using program
+>  $ rosrun walking odom.py
+
+
 #### checker flow urdf
 > $ rosrun xacro xacro.py src/rscuad/urdf/rscuad.xacro 
 

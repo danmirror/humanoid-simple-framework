@@ -5,4 +5,4 @@
     <arg name="world_name" value="$(find rscuad_gazebo)/worlds/rscuad.world"/>
     <!-- more default parameters can be changed here -->
   </include>
-</launch> 
+</launch>

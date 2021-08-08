@@ -425,20 +425,36 @@ void WalkingNode::Mission()
         int periode = walking_.periode_calc();
         
 
-        if(periode > 10 ){
-             walking_.Stop();
-            // walking_.A_MOVE_AMPLITUDE = 18;
-            // walking_.X_MOVE_AMPLITUDE = 5;
-            // walking_.HIP_PITCH_OFFSET = 6;
+        if(periode > 25 && periode < 35 )
+        {
+            walking_.Start();
+            walking_.A_MOVE_AMPLITUDE = 10;
+            // walking_.Y_MOVE_AMPLITUDE = 30;
+
+            walking_.X_MOVE_AMPLITUDE = 8;
+            walking_.HIP_PITCH_OFFSET = 6;
             
-            // ROS_INFO("righ");
+            ROS_INFO("righ");
         }
+        else if(periode > 35 && periode < 40){
+            walking_.A_MOVE_AMPLITUDE = 0;
+            walking_.X_MOVE_AMPLITUDE = 10;
+            walking_.HIP_PITCH_OFFSET = 7;
+            walking_.X_OFFSET = 0;
+        }
+        else if(periode > 40)
+        {
+            walking_.Stop();
+        }
+        /*
+        * first
+        */
         else
         {
             walking_.Start();
 
             walking_.X_MOVE_AMPLITUDE = 10;
-            walking_.HIP_PITCH_OFFSET = 15;
+            walking_.HIP_PITCH_OFFSET = 7;
             walking_.X_OFFSET = 0;
         }
         ROS_INFO("periode %d",periode);

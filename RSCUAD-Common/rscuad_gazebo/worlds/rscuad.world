@@ -48,8 +48,6 @@
          </box>
        </geometry>
      </visual>
-
-
      <sensor name='camera' type='camera'>
        <camera name='__default__'>
          <horizontal_fov>1.047</horizontal_fov>
@@ -82,8 +80,6 @@
          <robotNamespace>/</robotNamespace>
        </plugin>
      </sensor>
-
-     
      <self_collide>0</self_collide>
      <kinematic>0</kinematic>
      <gravity>1</gravity>

@@ -491,8 +491,8 @@ int main(int argc, char **argv)
      *
      */
 
-    // walking_node.walking_.Initialize();    // make very smooth
-    walking_node.walking_.walk_ready();     // make smooth but not perfect
+    walking_node.walking_.Initialize();    // make very smooth
+    // walking_node.walking_.walk_ready();     // make smooth but not perfect
 
     /*================================================*/
 

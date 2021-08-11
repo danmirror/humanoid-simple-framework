@@ -38,8 +38,8 @@ public:
     void imuCb(const sensor_msgs::ImuConstPtr msg);
     void dynamicReconfigureCb(walking::walk_tunnerConfig &config, uint32_t level);
 
-    bool ROBOT  = true;
-    bool GAZEBO = false;
+    bool ROBOT  = false;
+    bool GAZEBO = true;
     bool ALL    = false;
 
     int counter = 0;

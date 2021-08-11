@@ -25,7 +25,7 @@
 
 All topics are provided in the /rscuad namespace.
 
-Actuators (radians for position control, arbitrary normalized speed):
+Actuators (radians for position control):
 
       /rscuad/l_hip_yaw_position/command
       /rscuad/l_hip_roll_position/command

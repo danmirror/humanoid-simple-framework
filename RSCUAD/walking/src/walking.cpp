@@ -1,5 +1,5 @@
 /*
- * desc : rscuad walking 
+ * desc : rscuad walking
  * year : 2021
  * dev  : danu andrean
  *
@@ -206,8 +206,7 @@ void Walking::InitializeMode()
     // m_X_Swap_Amplitude = 0;
 
     // m_Z_Move_Amplitude = -8.4;
-    // m_Z_Move_Amplit
-        m_Y_Move_Amplitude_Shift =ude_Shift = -8.4;
+    // m_Z_Move_Amplitude_Shift = -8.4;
     // m_Z_Swap_Amplitude = -8.4;
     // m_Z_Swap_Amplitude_Shift = -8.5;
     // HIP_PITCH_OFFSET =-8.4;

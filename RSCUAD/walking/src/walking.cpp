@@ -110,22 +110,25 @@ void Walking::walk_ready()
      *  just => INIT_MODE = true;
      * 
      *--------------------------------*/
-    INIT_MODE = true;
-    // ROS_INFO("Z_OFFSET >> %f",Z_OFFSET);
-    // counter_z +=0.1;
-    // Z_OFFSET = counter_z;
+    // INIT_MODE = true;
+    ROS_INFO("Z_OFFSET >> %f",Z_OFFSET);
 
-    
-    
-    // if(Z_OFFSET >= Z_OFFSET_MEM)
-    // {
-    //     // if(counter_z >= 100){
-    //         INIT_MODE = true;
-    //     // }
-    // }
-    // // else
-    // //     Z_OFFSET = counter_z;
+    if(counter_z >= Z_OFFSET_MEM)
+    {
+        counter_z = Z_OFFSET_MEM;
+    }
+    else
+    {
+        counter_z +=0.1;
+    }
 
+    Z_OFFSET = counter_z;
+
+    if(Z_OFFSET >= Z_OFFSET_MEM)
+    {
+            INIT_MODE = true;
+        
+    }
      /*--------------------------------*/
 }
 void Walking::Initialize()
@@ -443,7 +446,7 @@ void Walking::Process(double *outValue)
     int dir[14]          = {   -1,        -1,          -1,         1,         -1,            1,          -1,        -1,         -1,         -1,         -1,            1,           1,           -1      };
     // int dir[14]          = {   -1,        -1,          -1,         1,         -1,            1,          -1,        -1,         -1,         -1,         -1,            1,           1,           -1      };
 
-    double initAngle[14] = {   0.0,       0.0,        0.0,       0.0,        0.0,          0.0,         0.0,       0.0,        0.0,        0.0,       0.0,          0.0,       -48.345,       41.313    };
+    double initAngle[14] = {   0.0,       0.0,        0.0,       0.0,        0.0,          0.0,         0.0,       0.0,        0.0,        0.0,       0.0,          3.0,       -48.345,       41.313    };
     // double initAngle[14] = {   4.0,       3.0,        -17.0,       7.0,        -7.0,          3.0,         -2.0,       -4.0,        15.0,        -9.0,      7.0,          -3.0,       -15,       15    };
     // Update walk parameters
     if(m_Time == 0)

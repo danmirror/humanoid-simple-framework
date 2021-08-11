@@ -54,9 +54,9 @@ add camera
         rpy="0 0 0" />
       <mass
         value="0.0845681147773924" />
-      <inertia ixx="0.00340499" ixy="0.00000572" ixz="-0.00004256"
-             iyy="0.296939" iyz="-0.00000059"
-             izz="0.00317331" />
+      <inertia ixx="0.00340499" ixy="0.00572" ixz="-0.4256"
+             iyy="0.296939" iyz="-0.59"
+             izz="0.0317331" />
     </inertial>
     <visual>
       <origin

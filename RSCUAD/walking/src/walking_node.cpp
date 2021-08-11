@@ -252,25 +252,25 @@ void WalkingNode::Process()
      *
      */
    
-    cout<< "write >>>>>>>>" <<endl;
-    int periode = walking_.periode_calc();  
-    // Write to the file
-    MyFile << " periode -> "<<periode<<endl;
-    MyFile <<float_0<<endl;
-    MyFile <<float_1<<endl;
-    MyFile <<float_2<<endl;
-    MyFile <<float_3<<endl;
-    MyFile <<float_4<<endl;
-    MyFile <<float_5<<endl;
-    MyFile <<float_6<<endl;
-    MyFile <<float_7<<endl;
-    MyFile <<float_8<<endl;
-    MyFile <<float_9<<endl;
-    MyFile <<float_10<<endl;
-    MyFile <<float_11<<endl;
-    MyFile <<float_12<<endl;
-    MyFile <<float_13<<endl;
-    MyFile << " ---------- \n";
+    // cout<< "write >>>>>>>>" <<endl;
+    // int periode = walking_.periode_calc();  
+    // // Write to the file
+    // MyFile << " periode -> "<<periode<<endl;
+    // MyFile <<float_0<<endl;
+    // MyFile <<float_1<<endl;
+    // MyFile <<float_2<<endl;
+    // MyFile <<float_3<<endl;
+    // MyFile <<float_4<<endl;
+    // MyFile <<float_5<<endl;
+    // MyFile <<float_6<<endl;
+    // MyFile <<float_7<<endl;
+    // MyFile <<float_8<<endl;
+    // MyFile <<float_9<<endl;
+    // MyFile <<float_10<<endl;
+    // MyFile <<float_11<<endl;
+    // MyFile <<float_12<<endl;
+    // MyFile <<float_13<<endl;
+    // MyFile << " ---------- \n";
     //----------------------------------------------
   
 
@@ -432,14 +432,14 @@ void WalkingNode::Mission()
             // walking_.Y_MOVE_AMPLITUDE = 30;
 
             walking_.X_MOVE_AMPLITUDE = 8;
-            walking_.HIP_PITCH_OFFSET = 6;
+            walking_.HIP_PITCH_OFFSET = 5;
             
             ROS_INFO("righ");
         }
         else if(periode > 35 && periode < 40){
             walking_.A_MOVE_AMPLITUDE = 0;
             walking_.X_MOVE_AMPLITUDE = 10;
-            walking_.HIP_PITCH_OFFSET = 7;
+            walking_.HIP_PITCH_OFFSET = 4;
             walking_.X_OFFSET = 0;
         }
         else if(periode > 40)
@@ -454,7 +454,7 @@ void WalkingNode::Mission()
             walking_.Start();
 
             walking_.X_MOVE_AMPLITUDE = 10;
-            walking_.HIP_PITCH_OFFSET = 7;
+            walking_.HIP_PITCH_OFFSET = 4;
             walking_.X_OFFSET = 0;
         }
         ROS_INFO("periode %d",periode);
@@ -491,8 +491,8 @@ int main(int argc, char **argv)
      *
      */
 
-    walking_node.walking_.Initialize();    // make very smooth
-    // walking_node.walking_.walk_ready();     // make smooth but not perfect
+    // walking_node.walking_.Initialize();    // make very smooth
+    walking_node.walking_.walk_ready();     // make smooth but not perfect
 
     /*================================================*/
 

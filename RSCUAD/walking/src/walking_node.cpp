@@ -432,14 +432,14 @@ void WalkingNode::Mission()
             // walking_.Y_MOVE_AMPLITUDE = 30;
 
             walking_.X_MOVE_AMPLITUDE = 8;
-            walking_.HIP_PITCH_OFFSET = 5;
+            walking_.HIP_PITCH_OFFSET = 6; //3
             
             ROS_INFO("righ");
         }
         else if(periode > 35 && periode < 40){
             walking_.A_MOVE_AMPLITUDE = 0;
             walking_.X_MOVE_AMPLITUDE = 10;
-            walking_.HIP_PITCH_OFFSET = 4;
+            walking_.HIP_PITCH_OFFSET = 7; //3
             walking_.X_OFFSET = 0;
         }
         else if(periode > 40)
@@ -454,7 +454,7 @@ void WalkingNode::Mission()
             walking_.Start();
 
             walking_.X_MOVE_AMPLITUDE = 10;
-            walking_.HIP_PITCH_OFFSET = 4;
+            walking_.HIP_PITCH_OFFSET = 7; //3
             walking_.X_OFFSET = 0;
         }
         ROS_INFO("periode %d",periode);

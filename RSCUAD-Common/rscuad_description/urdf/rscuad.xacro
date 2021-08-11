@@ -55,7 +55,7 @@ add camera
       <mass
         value="0.0845681147773924" />
       <inertia ixx="0.00340499" ixy="0.00572" ixz="-0.4256"
-             iyy="0.296939" iyz="-0.59"
+             iyy="0.0296939" iyz="-0.0059"
              izz="0.0317331" />
     </inertial>
     <visual>
@@ -806,7 +806,7 @@ add camera
     type="revolute">
     <origin
       xyz="0 0 0"
-      rpy="0 0 3.14159265358979" />
+      rpy="0 0 3.10" />
     <parent
       link="l_ank_pitch" />
     <child

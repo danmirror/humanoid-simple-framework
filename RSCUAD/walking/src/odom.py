@@ -5,6 +5,7 @@ from nav_msgs.msg import Odometry
 from std_msgs.msg import Header
 from gazebo_msgs.srv import GetModelState
 from gazebo_msgs.srv import GetModelState, GetModelStateRequest
+import matplotlib.pyplot as plt 
 
 rospy.init_node('odom_info')
 
@@ -25,7 +26,11 @@ r = rospy.Rate(2)
 
 while not rospy.is_shutdown():
    result = get_model_srv(model)
-   rospy.loginfo(result.pose)
+   rospy.loginfo(result.pose.position.x)
+   
+   plt.scatter(result.pose.position.x, result.pose.position.y)
+   plt.pause(0.02)
+
    # rospy.logwarn("---\n")
    odom.pose.pose = result.pose
    odom.twist.twist = result.twist
@@ -35,4 +40,6 @@ while not rospy.is_shutdown():
 
    odom_pub.publish (odom)
 
+
    r.sleep()
+plt.show()

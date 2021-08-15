@@ -423,26 +423,43 @@ void WalkingNode::Mission()
     if( walking_.init_status()== true)
     {
         int periode = walking_.periode_calc();
-        
 
-        if(periode > 25 && periode < 35 )
+        /*
+        * lurus
+        */
+        // if(periode < 35)
+        // {
+        //     walking_.Start();
+
+        //     walking_.X_MOVE_AMPLITUDE = 10;
+        //     walking_.HIP_PITCH_OFFSET = 3; //7
+        //     walking_.X_OFFSET = 0;
+        // }
+        // else{
+        //      walking_.Stop();
+        // }
+        
+        /*
+        * L
+        */
+        if(periode > 25 && periode < 55 )
         {
             walking_.Start();
-            walking_.A_MOVE_AMPLITUDE = 10;
+            walking_.A_MOVE_AMPLITUDE = 15;
             // walking_.Y_MOVE_AMPLITUDE = 30;
 
             walking_.X_MOVE_AMPLITUDE = 8;
-            walking_.HIP_PITCH_OFFSET = 6; //3
+            walking_.HIP_PITCH_OFFSET = 3; //3
             
             ROS_INFO("righ");
         }
-        else if(periode > 35 && periode < 40){
+        else if(periode > 55 && periode < 70){
             walking_.A_MOVE_AMPLITUDE = 0;
             walking_.X_MOVE_AMPLITUDE = 10;
-            walking_.HIP_PITCH_OFFSET = 7; //3
+            walking_.HIP_PITCH_OFFSET = 3; //3
             walking_.X_OFFSET = 0;
         }
-        else if(periode > 40)
+        else if(periode > 70)
         {
             walking_.Stop();
         }
@@ -454,7 +471,7 @@ void WalkingNode::Mission()
             walking_.Start();
 
             walking_.X_MOVE_AMPLITUDE = 10;
-            walking_.HIP_PITCH_OFFSET = 7; //3
+            walking_.HIP_PITCH_OFFSET = 3; //3
             walking_.X_OFFSET = 0;
         }
         ROS_INFO("periode %d",periode);

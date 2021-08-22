@@ -252,25 +252,25 @@ void WalkingNode::Process()
      *
      */
    
-    // cout<< "write >>>>>>>>" <<endl;
-    // int periode = walking_.periode_calc();  
-    // // Write to the file
-    // MyFile << " periode -> "<<periode<<endl;
-    // MyFile <<float_0<<endl;
-    // MyFile <<float_1<<endl;
-    // MyFile <<float_2<<endl;
-    // MyFile <<float_3<<endl;
-    // MyFile <<float_4<<endl;
-    // MyFile <<float_5<<endl;
-    // MyFile <<float_6<<endl;
-    // MyFile <<float_7<<endl;
-    // MyFile <<float_8<<endl;
-    // MyFile <<float_9<<endl;
-    // MyFile <<float_10<<endl;
-    // MyFile <<float_11<<endl;
-    // MyFile <<float_12<<endl;
-    // MyFile <<float_13<<endl;
-    // MyFile << " ---------- \n";
+    cout<< "write >>>>>>>>" <<endl;
+    int periode = walking_.periode_calc();  
+    // Write to the file
+    MyFile << " periode -> "<<periode<<endl;
+    MyFile <<abs(RADIAN2DEGREE*float_0)<<endl;
+    MyFile <<abs(RADIAN2DEGREE*float_1)<<endl;
+    MyFile <<abs(RADIAN2DEGREE*float_2)<<endl;
+    MyFile <<abs(RADIAN2DEGREE*float_3)<<endl;
+    MyFile <<abs(RADIAN2DEGREE*float_4)<<endl;
+    MyFile <<abs(RADIAN2DEGREE*float_5)<<endl;
+    MyFile <<abs(RADIAN2DEGREE*float_6)<<endl;
+    MyFile <<abs(RADIAN2DEGREE*float_7)<<endl;
+    MyFile <<abs(RADIAN2DEGREE*float_8)<<endl;
+    MyFile <<abs(RADIAN2DEGREE*float_9)<<endl;
+    MyFile <<abs(RADIAN2DEGREE*float_10)<<endl;
+    MyFile <<abs(RADIAN2DEGREE*float_11)<<endl;
+    MyFile <<abs(RADIAN2DEGREE*float_12)<<endl;
+    MyFile <<abs(RADIAN2DEGREE*float_13)<<endl;
+    MyFile << " ---------- \n";
     //----------------------------------------------
   
 
@@ -427,7 +427,7 @@ void WalkingNode::Mission()
         /*
         * lurus
         */
-        // if(periode < 35)
+        // if(periode < 25)
         // {
         //     walking_.Start();
 
@@ -442,7 +442,7 @@ void WalkingNode::Mission()
         /*
         * L
         */
-        if(periode > 25 && periode < 55 )
+        if(periode > 25 && periode < 33)
         {
             walking_.Start();
             walking_.A_MOVE_AMPLITUDE = 15;
@@ -453,13 +453,13 @@ void WalkingNode::Mission()
             
             ROS_INFO("righ");
         }
-        else if(periode > 55 && periode < 70){
+        else if(periode > 33 && periode < 36){
             walking_.A_MOVE_AMPLITUDE = 0;
             walking_.X_MOVE_AMPLITUDE = 10;
             walking_.HIP_PITCH_OFFSET = 3; //3
             walking_.X_OFFSET = 0;
         }
-        else if(periode > 70)
+        else if(periode > 36)
         {
             walking_.Stop();
         }
